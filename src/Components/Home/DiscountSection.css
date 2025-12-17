@@ -1,0 +1,234 @@
+/* 
+.discount-backcolor {
+  height: 130px;
+  border-radius: 12px;
+  background: radial-gradient(circle, #676767 0%, #3a3b3c 100%);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+
+.discount-backcolor:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+
+.discount-title {
+  color: #ffffff;
+  font-family: Cairo, sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 34px;
+}
+
+
+.discount-btn {
+  margin-top: 10px;
+  background: #ffcc00;
+  color: #333;
+  font-weight: bold;
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.discount-btn:hover {
+  background: #e6b800;
+  transform: scale(1.05);
+}
+
+
+.dicount-img {
+  max-height: 120px;
+  max-width: 75%;
+  animation: float 3s ease-in-out infinite;
+}
+
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .discount-backcolor {
+    height: auto;
+    text-align: center;
+    padding: 20px 10px;
+    flex-direction: column !important;
+  }
+
+  .text-section {
+    margin-bottom: 15px;
+  }
+
+  .discount-title {
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  .dicount-img {
+    max-width: 60%;
+  }
+
+  .discount-btn {
+    padding: 6px 18px;
+    font-size: 14px;
+  }
+} */
+
+.discount-section {
+  background: linear-gradient(120deg, #915970 0%, #a66d8b 50%, #c07c99 100%);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(145, 89, 112, 0.3);
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.discount-section:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px rgba(145, 89, 112, 0.4);
+}
+
+/* Laptop Image */
+.discount-laptop-img {
+  width: 100%;
+  max-width: 550px;
+  height: auto;
+  transition: transform 0.6s ease;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+}
+
+.discount-section:hover .discount-laptop-img {
+  transform: translateX(20px) scale(1.05);
+}
+
+/* Discount Circle */
+.discount-circle {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: pulse 3s infinite;
+}
+
+.discount-percent {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.discount-number {
+  font-size: 42px;
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+}
+
+/* Text Content */
+.discount-main-title {
+  font-size: 36px;
+  font-weight: 900;
+  color: white;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.highlight {
+  color: #fff8e1;
+  font-size: 48px;
+}
+
+.discount-subtitle {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+/* CTA Button */
+.discount-cta-btn {
+  background: white !important;
+  color: #915970 !important;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 14px 36px;
+  border-radius: 50px;
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.discount-cta-btn:hover {
+  background: #fff !important;
+  color: #915970 !important;
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .discount-main-title {
+    font-size: 28px;
+  }
+  .highlight {
+    font-size: 36px;
+  }
+  .discount-circle {
+    width: 100px;
+    height: 100px;
+  }
+  .discount-number {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .discount-section {
+    text-align: center;
+  }
+  .discount-laptop-img {
+    max-width: 300px;
+    margin: 20px auto;
+  }
+  .discount-circle {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .discount-main-title {
+    font-size: 24px;
+  }
+  .highlight {
+    font-size: 32px;
+  }
+}

@@ -1,0 +1,39 @@
+/* -------------------------------------- */
+/* UserFavorite.css */
+/* -------------------------------------- */
+
+.user-favorite-wrapper {
+    /* تطبيق الخلفية والظل للحاوية الرئيسية */
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    direction: rtl;
+    font-family: 'Almarai', sans-serif;
+    min-height: 550px; /* لضمان وجود مساحة كافية */
+}
+
+/* توحيد نمط العنوان (Header Title) */
+.content-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #555;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    text-align: right;
+}
+
+/* -------------------------------------- */
+/* التجاوبية (Mobile Responsiveness) */
+/* -------------------------------------- */
+
+@media (max-width: 768px) {
+    .content-title {
+        font-size: 24px;
+        text-align: center;
+    }
+    .user-favorite-wrapper {
+        padding: 15px;
+    }
+}

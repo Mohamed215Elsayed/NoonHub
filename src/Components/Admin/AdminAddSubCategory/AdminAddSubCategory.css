@@ -1,0 +1,95 @@
+.admin-add-subcategory-wrapper {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  direction: rtl;
+  font-family: "Almarai", sans-serif;
+}
+
+.admin-content-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #555;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 25px !important;
+  text-align: right;
+}
+
+.text-form {
+  font-size: 16px;
+  font-weight: 700;
+  color: #444;
+  text-align: right;
+}
+
+.input-form,
+.select-form-control {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 16px;
+  font-family: "Almarai", sans-serif;
+  transition: all 0.3s;
+  width: 100%;
+  color: #495057;
+  background-color: #fff;
+  height: 48px;
+}
+
+.input-form:focus,
+.select-form-control:focus {
+  border-color: #915970;
+  
+  box-shadow: 0 0 0 0.25rem rgba(145, 89, 112, 0.25);
+  outline: none;
+}
+
+.select-form-control {
+  appearance: none; /* لإزالة السهم الافتراضي في بعض المتصفحات */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat;
+  background-position: left 1rem center;
+  background-size: 1.25rem 1.25rem;
+  padding-right: 15px;
+  padding-left: 2.5rem;
+}
+/* .select-form-control option:checked {
+    background-color: #915970; 
+    color: white;
+} */
+
+
+/* .select-form-control option[selected] {
+    background-color: #915970; 
+    color: white;
+} */
+
+.btn-save-subcategory {
+  background-color: #915970;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: background-color 0.3s;
+}
+
+.btn-save-subcategory:hover {
+  background-color: #7b4c62;
+}
+
+@media (max-width: 767px) {
+  .admin-content-title {
+    font-size: 24px;
+    text-align: center;
+  }
+  .text-form {
+    text-align: center;
+  }
+
+  .d-flex.justify-content-end {
+    justify-content: center !important;
+  }
+}

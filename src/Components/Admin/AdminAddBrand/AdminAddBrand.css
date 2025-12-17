@@ -1,0 +1,100 @@
+.admin-add-brand-wrapper {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  direction: rtl;
+  font-family: "Almarai", sans-serif;
+}
+
+.admin-content-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #555;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 25px !important;
+  text-align: right;
+}
+
+.text-form {
+  font-size: 16px;
+  font-weight: 700;
+  color: #444;
+  text-align: right;
+}
+
+#upload-image-input {
+  display: none;
+}
+.image-upload-area {
+  display: inline-block;
+  width: 120px;
+  height: 100px;
+  border: 3px dashed #bbb;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background-color: #f9f9f9;
+}
+
+.image-upload-area:hover {
+  border-color: #915970;
+  box-shadow: 0 0 0 4px rgba(145, 89, 112, 0.1);
+}
+
+.brand-preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.input-form {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 16px;
+  font-family: "Almarai", sans-serif;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.input-form:focus {
+  border-color: #915970;
+  box-shadow: 0 0 0 0.25rem rgba(145, 89, 112, 0.25);
+  outline: none;
+}
+
+.btn-save-brand {
+  background-color: #915970;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: background-color 0.3s;
+}
+
+.btn-save-brand:hover {
+  background-color: #7b4c62;
+}
+
+@media (max-width: 767px) {
+  .admin-content-title {
+    font-size: 24px;
+    text-align: center;
+  }
+  .text-form {
+    text-align: center;
+  }
+
+  .row > col.d-flex.justify-content-end {
+    justify-content: center !important;
+  }
+
+  .input-form {
+    width: 100%;
+  }
+}

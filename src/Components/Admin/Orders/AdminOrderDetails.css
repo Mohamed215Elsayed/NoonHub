@@ -1,0 +1,146 @@
+.order-details-wrapper {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  direction: rtl;
+  font-family: "Almarai", sans-serif;
+}
+
+/* عنوان الصفحة (تفاصيل الطلب رقم #...) */
+.admin-content-text {
+  color: #555550;
+  font-family: "Almarai", sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 32px;
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.client-details-card {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.client-header {
+  /* تنسيق خاص بالعنوان داخل البطاقة */
+  font-size: 22px;
+  font-weight: 800;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px !important;
+  margin-bottom: 15px !important;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-family: "Almarai", sans-serif;
+}
+
+.detail-label {
+  color: #555550;
+  font-weight: 700;
+  font-size: 16px;
+  min-width: 90px; /* لتنسيق محاذاة القيم */
+}
+
+.detail-value {
+  color: #777; /* لون أغمق قليلاً من السابق لزيادة الوضوح */
+  font-weight: 500;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.order-summary-box {
+  background-color: #e9f5e9;
+  border: 1px solid #28a745; /* حدود خضراء */
+  color: #333;
+  font-family: "Almarai", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 8px;
+  padding: 10px 20px !important;
+  text-align: center;
+}
+
+.final-price {
+  font-weight: 900;
+  color: #915970; /* اللون المميز الذي تستخدمه */
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.order-status-control {
+  padding: 10px 0;
+}
+
+.select-status-input {
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-family: "Almarai", sans-serif;
+  font-size: 15px;
+  color: #555;
+  max-width: 250px;
+  cursor: pointer;
+}
+
+.select-status-input:focus {
+  border-color: #915970;
+  box-shadow: 0 0 0 0.25rem rgba(145, 89, 112, 0.25);
+  outline: none;
+}
+
+.btn-update-status {
+  background-color: #915970;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  height: 40px;
+  transition: background-color 0.3s;
+}
+
+.btn-update-status:hover {
+  background-color: #7b4c62;
+}
+
+@media (max-width: 576px) {
+  .admin-content-text {
+    font-size: 24px;
+    text-align: center;
+  }
+  .client-header {
+    font-size: 20px;
+  }
+  .order-summary-box {
+    font-size: 16px;
+    display: block !important; 
+    width: 100%;
+    text-align: center;
+    padding: 10px 15px !important;
+  }
+  .final-price {
+    font-size: 18px;
+  }
+
+  .order-status-control {
+    flex-direction: column;
+    align-items: center;
+  }
+  .select-status-input {
+    width: 100% !important;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+  .btn-update-status {
+    width: 100%;
+    margin: 0 !important;
+  }
+}

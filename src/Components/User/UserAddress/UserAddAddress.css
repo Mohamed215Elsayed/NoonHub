@@ -1,0 +1,77 @@
+.user-add-address-container {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  direction: rtl;
+  font-family: "Almarai", sans-serif;
+}
+
+.content-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #555;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #ddd;
+  text-align: right;
+}
+
+.input-form {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 16px;
+  font-family: "Almarai", sans-serif;
+  transition: all 0.3s;
+  width: 100%;
+  color: #495057;
+  background-color: #fff;
+  height: 48px;
+}
+
+.input-form-area {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.input-form:focus,
+.input-form-area:focus {
+  border-color: #915970;
+  box-shadow: 0 0 0 0.25rem rgba(145, 89, 112, 0.25);
+  outline: none;
+}
+
+.btn-save-address {
+  background-color: #915970;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: background-color 0.3s;
+  font-size: 18px;
+}
+
+.btn-save-address:hover {
+  background-color: #7b4c62;
+}
+
+@media (max-width: 768px) {
+  .content-title {
+    font-size: 24px;
+    text-align: center;
+  }
+  .user-add-address-container {
+    padding: 15px;
+  }
+
+  .btn-save-address {
+    width: 100%;
+    margin-top: 15px !important;
+  }
+
+  .d-flex.justify-content-end {
+    justify-content: center !important;
+  }
+}

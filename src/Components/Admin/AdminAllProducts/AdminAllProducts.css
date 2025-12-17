@@ -1,0 +1,120 @@
+.admin-content-text {
+  color: #555550;
+  font-family: "Almarai", sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 32px;
+  text-align: right;
+  margin-bottom: 24px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eeeeee;
+}
+
+.card {
+  width: 100% !important;
+  height: 350px !important;
+  border-radius: 8px !important;
+  border: 1px solid #e0e0e0 !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+  direction: rtl;
+  position: relative;
+}
+.card:hover {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 10px 15px !important;
+}
+
+.card-img {
+  height: 228px !important;
+  width: 100% !important;
+  object-fit: contain;
+  padding: 10px;
+}
+
+.card-title {
+  font-family: "Almarai", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333333 !important;
+  height: 40px;
+  overflow: hidden;
+  margin-bottom: 5px !important;
+}
+
+.card-rate {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffc107;
+  margin-left: 5px;
+  /* color: #333 !important;  */
+}
+
+.card-price {
+  font-size: 20px;
+  font-weight: 900;
+  color: #915970;
+}
+.card-currency {
+  font-size: 15px;
+  color: #6c757d;
+  font-weight: 600;
+  margin-top: 2px;
+}
+.admin-actions-bar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+.admin-action-btn {
+  display: flex;
+  align-items: center;
+  font-family: "Almarai", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+}
+.admin-action-btn .icon {
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+.delete-btn {
+  color: #dc3545;
+}
+.delete-btn:hover {
+  background-color: #f8d7da;
+}
+
+.edit-btn {
+  color: #007bff;
+}
+.edit-btn:hover {
+  background-color: #cce5ff;
+}
+
+.product-price-section {
+  order: 2;
+}
+
+.product-rate-section {
+  order: 1;
+}
+
+.star-icon {
+  font-size: 16px;
+  margin-left: 5px;
+  color: #ffc107;
+}

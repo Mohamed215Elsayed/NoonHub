@@ -1,0 +1,45 @@
+/* CategoryContainer.css   ← ديزاين فقط */
+
+.cat-page {
+  background: linear-gradient(135deg, #fff7fb, #fdf6f9);
+  border-radius: 32px;
+  margin: 50px auto;
+  padding: 80px 20px 100px;
+  box-shadow: 0 20px 60px rgba(145,89,112,0.14);
+}
+
+.cat-page-title {
+  text-align: center;
+  font-size: 46px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #915970, #c77ea0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 0 25px;
+}
+
+.cat-page-line {
+  width: 150px;
+  height: 8px;
+  background: linear-gradient(90deg, #915970, #d89ab5);
+  margin: 0 auto 70px;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(145,89,112,0.4);
+}
+
+/* حجم الكروت في صفحة كل التصنيفات */
+.modern-cat-img-wrapper {
+  width: 185px !important;
+  height: 185px !important;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .modern-cat-img-wrapper { width: 160px !important; height: 160px !important; }
+  .cat-page-title { font-size: 38px; }
+}
+@media (max-width: 576px) {
+  .modern-cat-img-wrapper { width: 140px !important; height: 140px !important; }
+  .cat-page-title { font-size: 32px; }
+  .cat-page-line { width: 110px; height: 6px; margin-bottom: 50px; }
+}

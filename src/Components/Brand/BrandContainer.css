@@ -1,0 +1,100 @@
+.brand-container {
+  padding: 70px 20px 110px;
+  background: transparent;
+}
+
+.brand-title {
+  text-align: center;
+  font-size: 48px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #915970, #c77ea0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 30px;
+  padding-top: 20px;
+}
+
+.brand-line {
+  width: 170px;
+  height: 8px;
+  background: linear-gradient(90deg, #915970, #d89ab5);
+  margin: 0 auto 80px;
+  border-radius: 4px;
+  box-shadow: 0 12px 35px rgba(145, 89, 112, 0.45);
+}
+
+.brand-card {
+  background: #ffffff;
+  height: 190px;
+  border-radius: 34px;
+  border: none;
+  box-shadow: 0 14px 45px rgba(145, 89, 112, 0.16);
+  overflow: hidden;
+  transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.brand-card:hover {
+  transform: translateY(-20px);
+  box-shadow: 0 35px 75px rgba(145, 89, 112, 0.38);
+}
+
+.brand-card-img {
+  max-width: 94%;
+  max-height: 94%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  filter: none;
+  transition: transform 0.5s ease;
+}
+
+.brand-card:hover .brand-card-img {
+  transform: scale(1.12);
+}
+
+@media (max-width: 1200px) {
+  .brand-card {
+    height: 180px;
+    padding: 30px;
+  }
+}
+@media (max-width: 992px) {
+  .brand-card {
+    height: 170px;
+    padding: 28px;
+  }
+}
+@media (max-width: 768px) {
+  .brand-card {
+    height: 150px;
+    padding: 24px;
+  }
+  .brand-title {
+    font-size: 42px;
+  }
+}
+@media (max-width: 576px) {
+  .brand-card {
+    height: 135px;
+    padding: 20px;
+  }
+  .brand-title {
+    font-size: 38px;
+  }
+  .brand-line {
+    width: 140px;
+    margin-bottom: 60px;
+  }
+}
+@media (max-width: 400px) {
+  .brand-title {
+    font-size: 34px;
+  }
+}

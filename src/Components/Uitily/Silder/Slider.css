@@ -1,0 +1,226 @@
+/* .slider-background1,
+.slider-background2,
+.slider-background3,
+.slider-background4 {
+  height: 296px !important;
+  width: 294.26px;
+}
+.slider-background1 {
+  background: linear-gradient(173.68deg, #ffedf5 0%, #ffd5e7 100%);
+}
+.slider-background2 {
+  background: linear-gradient(174.76deg, #d3deff 0%, #a8baff 100%);
+}
+.slider-background3 {
+  background: linear-gradient(176.69deg, #f8f0d5 0%, #efdcab 100%);
+}
+.slider-background4 {
+  background: linear-gradient(175.24deg, #b2e8f0 0%, #7bccdc 100%);
+}
+.slider-title {
+  color: #915970;
+  font-family: Almarai;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: 32px;
+  text-align: center;
+}
+.slider-text {
+  color: #915970;
+  font-family: Almarai;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 53px;
+  text-align: center;
+}
+
+
+@media (max-width: 768px) {
+  .carousel-item .d-flex {
+    flex-direction: column !important;
+    text-align: center;
+  }
+
+  .carousel-item img {
+    width: 200px !important;
+    height: auto !important;
+    margin-bottom: 15px;
+  }
+  .slider-title {
+    font-size: 1.2rem;
+  }
+  .slider-text {
+    font-size: 1.5rem;
+  }
+} */
+
+.hero-carousel {
+  margin: 20px auto;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+  max-width: 1340px;
+}
+
+.hero-slide {
+  height: 480px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.hero-slide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  border-radius: 24px;
+}
+
+.slide-1 {
+  background-image: linear-gradient(
+      135deg,
+      rgba(145, 89, 112, 0.85),
+      rgba(168, 102, 133, 0.7)
+    ),
+    url("https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1400");
+}
+.slide-2 {
+  background-image: linear-gradient(
+      135deg,
+      rgba(0, 123, 255, 0.85),
+      rgba(51, 153, 255, 0.7)
+    ),
+    url("https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=1400");
+}
+.slide-3 {
+  background-image: linear-gradient(
+      135deg,
+      rgba(255, 152, 0, 0.85),
+      rgba(255, 193, 7, 0.7)
+    ),
+    url("https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1400");
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  text-align: right;
+  padding-right: 80px;
+  max-width: 600px;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: #fff;
+  color: #915970;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-size: 52px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.hero-title .highlight {
+  color: #ffd700;
+  font-size: 64px;
+}
+
+.hero-subtitle {
+  font-size: 22px;
+  opacity: 0.95;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.hero-btn {
+  background: #fff;
+  color: #915970;
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 18px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.4s;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.hero-btn:hover {
+  background: #915970;
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(145, 89, 112, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .hero-slide {
+    height: 420px;
+  }
+  .hero-content {
+    padding-right: 40px;
+  }
+  .hero-title {
+    font-size: 42px;
+  }
+  .hero-title .highlight {
+    font-size: 52px;
+  }
+  .hero-subtitle {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-slide {
+    height: 500px;
+  }
+  .hero-content {
+    text-align: center;
+    padding: 0 20px;
+  }
+  .hero-title {
+    font-size: 36px;
+  }
+  .hero-title .highlight {
+    font-size: 46px;
+  }
+  .hero-subtitle {
+    font-size: 18px;
+  }
+  .hero-btn {
+    padding: 14px 32px;
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 30px;
+  }
+  .hero-title .highlight {
+    font-size: 38px;
+  }
+  .hero-btn {
+    padding: 12px 28px;
+  }
+}

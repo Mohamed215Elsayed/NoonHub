@@ -1,0 +1,28 @@
+.search-count-result {
+  background: #ffffff;
+  border-bottom: 1px solid #f0e6ea;
+  margin-bottom: 30px;
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 8px 30px rgba(145, 89, 112, 0.08);
+}
+
+.result-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #915970;
+  margin: 0;
+}
+
+.sort-dropdown {
+  min-width: 280px;
+}
+
+@media (max-width: 576px) {
+  .result-title {
+    font-size: 20px;
+  }
+  .sort-dropdown {
+    width: 100%;
+    min-width: auto;
+  }
+}

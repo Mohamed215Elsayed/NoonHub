@@ -1,0 +1,198 @@
+.admin-add-products-wrapper {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  direction: rtl;
+  font-family: "Almarai", sans-serif;
+}
+
+.admin-content-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #555;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 25px !important;
+  text-align: right;
+}
+.text-form {
+  font-size: 16px;
+  font-weight: 700;
+  color: #444;
+  text-align: right;
+}
+.input-form-area {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.input-form,
+.select-form-control {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 16px;
+  font-family: "Almarai", sans-serif;
+  transition: all 0.3s;
+  width: 100%;
+  color: #495057;
+  background-color: #fff;
+  height: 48px;
+}
+
+.input-form:focus,
+.select-form-control:focus {
+  border-color: #915970;
+  box-shadow: 0 0 0 0.25rem rgba(145, 89, 112, 0.25);
+  outline: none;
+}
+.select-form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 1rem center;
+  background-size: 1.25rem 1.25rem;
+  padding-right: 15px;
+  padding-left: 2.5rem;
+}
+.product-images-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.image-upload-area {
+  display: inline-block;
+  width: 120px;
+  height: 100px;
+  border: 3px dashed #bbb;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.3s;
+  background-color: #f9f9f9;
+}
+
+.image-upload-area:hover {
+  border-color: #915970;
+}
+#upload-image-input {
+  display: none;
+}
+
+.product-preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.react-select__control {
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  min-height: 48px !important;
+  transition: all 0.3s;
+  background-color: #fff !important;
+}
+
+.react-select__control--is-focused {
+  border-color: #915970 !important;
+  box-shadow: 0 0 0 0.25rem rgba(145, 89, 112, 0.25) !important;
+}
+
+.react-select__multi-value {
+  background-color: #915970 !important;
+  color: white !important;
+  border-radius: 4px;
+  padding-right: 8px;
+  padding-left: 2px;
+  margin: 3px 6px 3px 0 !important;
+}
+
+.react-select__multi-value__label {
+  color: white !important;
+  font-size: 14px;
+  font-family: "Almarai", sans-serif;
+}
+
+.react-select__multi-value__remove {
+  color: rgba(255, 255, 255, 0.7) !important;
+  transition: color 0.2s;
+}
+
+.react-select__multi-value__remove:hover {
+  color: white !important;
+  background-color: #7b4c62 !important;
+}
+
+.react-select__option--is-focused {
+  background-color: #f7f3f9 !important;
+}
+
+.react-select__option--is-selected {
+  background-color: #915970 !important;
+  color: white !important;
+}
+
+.react-select__menu {
+  text-align: right;
+  direction: rtl;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.react-select__placeholder,
+.react-select__input-container {
+  padding-left: 10px !important;
+  padding-right: 0 !important;
+  margin: 0 !important;
+  text-align: right;
+}
+
+.react-select__value-container {
+  padding: 0 8px !important;
+}
+.btn-save-product {
+  background-color: #915970;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: background-color 0.3s;
+}
+
+.btn-save-product:hover {
+  background-color: #7b4c62;
+}
+
+.product-colors-list {
+  align-items: center;
+}
+
+.color-swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 3px #915970;
+}
+
+.add-color-icon {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+  margin-right: 15px;
+}
+
+.add-color-icon:hover {
+  opacity: 1;
+}

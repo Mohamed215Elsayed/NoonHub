@@ -1,0 +1,26 @@
+.rate-container {
+  width: 100%;
+  padding: 10px 25px 10px 25px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+  margin-bottom: 8px;
+}
+
+.sub-title {
+  color: #915970;
+  font-size: 24px;
+}
+.cat-rate {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffc107;
+}
+.rate-count {
+  color: #6c757d;
+  font-family: "Almarai", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 24px;
+}

@@ -1,0 +1,133 @@
+.admin-content-text {
+  color: #915970; /* #555550;*/
+  font-family: "Almarai", sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 32px;
+  text-align: right;
+  margin-bottom: 26px;
+}
+
+.payment-methods-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.payment-option {
+  display: flex;
+  align-items:flex-start;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  background-color: #f9f9f9;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  position: relative;
+}
+
+.payment-option:hover {
+  background-color: #f0f0f0;
+  border-color: #ddd;
+}
+
+.payment-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.payment-option .custom-radio {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  margin-left: 15px; 
+  margin-top: 2px; 
+  position: relative;
+  flex-shrink: 0; /* منع الدائرة من الانكماش */
+  transition: all 0.3s ease;
+}
+
+.payment-option input[type="radio"]:checked + .custom-radio {
+  border-color:#915970;/* #007bff;*/
+  background-color: #915970;/* #007bff;*/
+}
+
+.payment-option input[type="radio"]:checked + .custom-radio::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: white;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.payment-option-label {
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
+  flex-grow: 1;
+}
+
+.checkout-footer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px; 
+  align-items: center;
+  margin-top: 30px;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+}
+
+.total-price {
+  font-size: 20px;
+  font-weight: 800;
+  color: #333;
+  background-color: #f8f8f8;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.complete-purchase-btn {
+  background-color: #915970;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 14px 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(145, 89, 112, 0.3);
+}
+
+.complete-purchase-btn:hover {
+  background-color: #7a4a60;
+}
+
+@media (max-width: 768px) {
+  .checkout-footer {
+    flex-direction: column-reverse;
+    gap: 15px;
+
+    width: 100%;
+  }
+  .complete-purchase-btn {
+    width: 100%;
+    text-align: center;
+  }
+  .total-price {
+    width: 100%;
+    text-align: center;
+  }
+}

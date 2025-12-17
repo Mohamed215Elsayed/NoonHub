@@ -1,0 +1,243 @@
+/* ===============================
+   LOGO
+================================== */
+/* .logo {
+  width: 50px;
+  height: 46px;
+  object-fit: contain;
+  transition: 0.3s ease;
+}
+.logo:hover {
+  transform: scale(1.07) rotate(1deg);
+} */
+
+/* ===============================
+   NAVBAR (Noon Style)
+================================== */
+/* .navbar {
+  background: rgba(0, 0, 0, 0.65) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  padding: 10px 0;
+} */
+
+/* ===============================
+   SEARCH INPUT
+================================== */
+/* .navbar .form-control {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50px;
+  padding: 10px 20px;
+  color: white;
+  border: 1px solid transparent;
+  transition: 0.25s ease;
+}
+.navbar .form-control::placeholder {
+  color: #ddd;
+}
+.navbar .form-control:focus {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.15);
+} */
+
+/* ===============================
+   ICONS (Cart + User)
+================================== */
+/* .icon-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  transition: 0.25s;
+}
+.icon-img:hover {
+  transform: translateY(-2px) scale(1.08);
+} */
+
+/* ===============================
+   NAV ITEMS
+================================== */
+/* .nav-link-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  transition: 0.25s ease;
+}
+.nav-link-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px) scale(1.02);
+}
+.nav-link-item span {
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+} */
+
+/* ===============================
+   CART BADGE 
+================================== */
+/* .cart-img-container {
+  position: relative;
+} */
+
+/* .cart-img-container::after { */
+  /* display: none; */
+  /* content: "3"; 
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  background: #ff3e3e;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  animation: pulse 1.4s infinite ease-in-out;
+} */
+
+/* Pulse animation */
+/* @keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+} */
+
+/* =============== MAIN NAVBAR =============== */
+.main-navbar {
+  background: #ffffff !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 12px 0;
+  z-index: 1030;
+  transition: all 0.3s ease;
+}
+
+.main-navbar.scrolled {
+  padding: 8px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* =============== LOGO =============== */
+.logo {
+  width: 55px;
+  height: 50px;
+  object-fit: contain;
+  transition: 0.3s ease;
+}
+.logo:hover {
+  transform: scale(1.1);
+}
+
+/* =============== SEARCH BAR =============== */
+.search-form {
+  max-width: 550px;
+  width: 100%;
+}
+
+.search-input {
+  background: #f5f5f5 !important;
+  border: 1.5px solid transparent;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  background: #fff !important;
+  border-color: #915970 !important;
+  box-shadow: 0 0 0 4px rgba(145, 89, 112, 0.15) !important;
+}
+
+.search-input::placeholder {
+  color: #999;
+  font-size: 14px;
+}
+
+/* =============== ICON LINKS =============== */
+.icon-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #444 !important;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.icon-link:hover {
+  color: #915970 !important;
+  background: #faf5f8;
+  transform: translateY(-2px);
+}
+
+.nav-icon {
+  font-size: 20px;
+  color: #666;
+  transition: 0.3s;
+}
+
+.icon-link:hover .nav-icon {
+  color: #915970;
+}
+
+/* =============== CART BADGE =============== */
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #915970;
+  color: white;
+  font-size: 11px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* =============== ACCENT BORDER UNDER NAVBAR =============== */
+.navbar-accent-border {
+  height: 4px;
+  background: linear-gradient(90deg, #915970, #a66d8b);
+  width: 100%;
+}
+
+/* =============== RESPONSIVE =============== */
+@media (max-width: 768px) {
+  .search-form {
+    order: 1;
+    margin: 15px 0;
+  }
+  
+  .icon-link span {
+    display: none;
+  }
+  
+  .icon-link {
+    padding: 10px;
+  }
+}

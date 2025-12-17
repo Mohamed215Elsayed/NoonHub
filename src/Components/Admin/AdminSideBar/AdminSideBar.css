@@ -1,0 +1,109 @@
+.sidebar {
+  background-color: #ffffff;
+
+  min-height: 100vh;
+  padding: 15px 0;
+  border-left: 1px solid #eeeeee;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  direction: rtl;
+  max-width: 250px;
+}
+
+.sidebar a {
+  text-decoration: none;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.admin-side-text {
+  color: #333333;
+  font-family: "Almarai", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 12px 15px !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: right !important;
+  border-right: 4px solid transparent;
+}
+
+.admin-side-text:hover {
+  background-color: #f7f3f9;
+  color: #915970;
+  border-right: 4px solid #915970;
+}
+
+.icon-style {
+  font-size: 18px;
+  color: #666;
+}
+
+.admin-side-text-link.active .admin-side-text {
+  background-color: #915970;
+  color: white;
+  font-weight: 800;
+
+  border-right: 4px solid #5a3648 !important;
+  border-left: none !important;
+}
+
+.admin-side-text-link.active .icon-style {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    min-height: auto;
+    padding: 10px 0;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .d-flex.flex-column {
+    flex-direction: row !important;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 0 5px;
+  }
+
+  .admin-side-text-link {
+    flex: 1 1 auto;
+    min-width: 85px;
+  }
+
+  .admin-side-text {
+    font-size: 12px;
+    padding: 8px 5px !important;
+    margin: 5px 2px !important;
+    border-radius: 6px;
+    text-align: center !important;
+    flex-direction: column !important;
+    border-right: 1px solid #ddd !important;
+  }
+
+  .icon-style {
+    margin-bottom: 3px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .admin-side-text-link .admin-side-text {
+    border: 1px solid #eee !important;
+    background-color: white;
+    color: #333;
+    border-right: 1px solid #eee !important;
+  }
+
+  .admin-side-text-link.active .admin-side-text {
+    background-color: #915970 !important;
+    color: white !important;
+    border: 1px solid #915970 !important;
+    box-shadow: 0 2px 5px rgba(145, 89, 112, 0.4);
+
+    border-right: 1px solid #915970 !important;
+  }
+}
