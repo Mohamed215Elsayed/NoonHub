@@ -1,0 +1,44 @@
+.pot-spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+
+/* الحلة */
+.pot-spinner {
+  position: relative;
+  animation: rotatePot 1.2s linear infinite;
+}
+
+/* جسم الحلة */
+.pot-body {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 65%;
+  background: #272727;
+  border-radius: 0 0 20px 20px;
+}
+
+/* الغطا */
+.pot-lid {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 70%;
+  height: 18%;
+  background: #555;
+  border-radius: 20px;
+  transform: translateX(-50%);
+}
+
+/* الحركة */
+@keyframes rotatePot {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

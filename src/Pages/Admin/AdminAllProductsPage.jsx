@@ -2,8 +2,10 @@ import { Container, Row, Col } from "react-bootstrap";
 import AdminSideBar from "../../Components/Admin/AdminSideBar/AdminSideBar";
 import AdminAllProducts from "../../Components/Admin/AdminAllProducts/AdminAllProducts";
 import Pagination from "../../Components/Uitily/Pagination/Pagination";
+import ViewProductAdminHook from "../../Hook/admin/view-product-admin-hook";
 
 function AdminAllProductsPage() {
+  const { items, currentPage, pageCount,getPage, loading } = ViewProductAdminHook();//items, pagination, onPress, loading
   return (
     <Container>
       <Row className="py-3">
@@ -11,8 +13,10 @@ function AdminAllProductsPage() {
           <AdminSideBar />
         </Col>
         <Col sm="9" xs="10" md="10">
-          <AdminAllProducts />
-          <Pagination />
+          <AdminAllProducts products={items} loading={loading} currentPage={currentPage} />
+          {pageCount > 1 && (
+          <Pagination onPress={getPage} currentPage={currentPage}  pageCount={pageCount} />
+          )}
         </Col>
       </Row>
     </Container>

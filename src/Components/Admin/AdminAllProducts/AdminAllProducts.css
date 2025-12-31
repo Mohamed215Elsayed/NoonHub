@@ -68,12 +68,18 @@
 .admin-actions-bar {
   position: absolute;
   top: 10px;
-  left: 10px;
+  left: 0;
+  right: 0;
   display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
   gap: 8px;
   z-index: 10;
+  pointer-events: none;
 }
+
 .admin-action-btn {
+  pointer-events: auto;
   display: flex;
   align-items: center;
   font-family: "Almarai", sans-serif;
@@ -83,9 +89,11 @@
   padding: 4px 10px;
   border-radius: 6px;
   transition: all 0.2s ease;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.95);
   border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 .admin-action-btn .icon {
   margin-right: 5px;
   font-size: 14px;

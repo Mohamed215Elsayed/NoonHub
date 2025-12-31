@@ -1,8 +1,9 @@
 import "./AllBrandPage.css";
 import BrandContainer from "../../Components/Brand/BrandContainer";
 import Pagination from "../../Components/Uitily/Pagination/Pagination";
-
+import AllBrandHook from "../../Hook/brand/all-brand-page-hook";
 const AllBrandPage = () => {
+  const [brand, loading, pageCount, currentPage, getPage] = AllBrandHook();
   return (
     <div className="all-brand-page">
       <div className="all-brand-header">
@@ -12,15 +13,14 @@ const AllBrandPage = () => {
         </p>
       </div>
 
-      <BrandContainer />
-      {/* <BrandContainer showTitle={true} /> */}
-      <BrandContainer showTitle={false} />
-
-      <Pagination
-        pageCount={15}
-        onPageChange={(page) => console.log("صفحة الماركات:", page)}
-        forcePage={1}
-      />
+      <BrandContainer brand={brand.data} loading={loading} />
+      {pageCount > 1 && (
+        <Pagination
+          pageCount={pageCount}
+          onPress={getPage}
+          currentPage={currentPage}
+        />
+      )}
     </div>
   );
 };

@@ -25,3 +25,8 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+.Toastify__toast {
+  font-family: 'Almarai', sans-serif !important;
+  direction: rtl;
+}

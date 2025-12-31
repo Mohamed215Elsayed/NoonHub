@@ -1,26 +1,3 @@
-// import { Container, Row, Col } from "react-bootstrap";
-// import laptops from "../../Assets/Images/laptops.png";
-// import "./DiscountSection.css";
-// function DiscountSection() {
-//   return (
-//     <Container>
-//       <Row className="discount-backcolor my-3  mx-2 d-flex text-center align-items-center">
-//         <Col sm="6" className="text-section">
-//           <div className="discount-title">
-//             خصم يصل حتي ٣٠٪ علي اجهازه اللاب توب
-//           </div>
-//           <button className="discount-btn">تسوق الآن</button>
-//         </Col>
-//         <Col sm="6" className="image-section">
-//           <img className="dicount-img" src={laptops} alt="discount-img" />
-//         </Col>
-//       </Row>
-//     </Container>
-//   );
-// }
-
-// export default DiscountSection;
-import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import laptops from "../../Assets/Images/laptops.png";
@@ -47,10 +24,8 @@ function DiscountSection() {
           <p className="discount-subtitle mb-4">
             عروض لفترة محدودة · أفضل الماركات · شحن مجاني
           </p>
-          <Link to="/category/laptops">
-            <Button className="discount-cta-btn">
-              تسوق الآن
-            </Button>
+          <Link to="/products/category/654321">
+            <Button className="discount-cta-btn">تسوق الآن</Button>
           </Link>
         </Col>
       </Row>

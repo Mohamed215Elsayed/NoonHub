@@ -6,7 +6,7 @@ import Footer from "./Components/Uitily/layouts/Footer/Footer";
 import ScrollToTopButton from "./Components/Uitily/ScrollToTop/ScrollToTopButton";
 import LoginPage from "./Pages/Auth/LoginPage";
 import RegisterPage from "./Pages/Auth/RegisterPage";
-import AllCategoryPage from "./Pages/Category/AllCategoryPag";
+import AllCategoryPage from "./Pages/Category/AllCategoryPage";
 import AllBrandPage from "./Pages/Brand/AllBrandPage";
 import ShopProductsPage from "./Pages/Products/ShopProductsPage";
 import ProductDetailsPage from "./Pages/Products/ProductDetailsPage";
@@ -25,6 +25,8 @@ import UserAllAddresPage from "./Pages/User/UserAllAddresPage";
 import UserAddAddressPage from "./Pages/User/UserAddAddressPage";
 import UserEditAddressPage from "./Pages/User/UserEditAddressPage";
 import UserProfilePage from "./Pages/User/UserProfilePage";
+import AdminEditProductsPage from "./Pages/Admin/AdminEditProductsPage";
+import { ToastContainer } from "react-toastify";
 function App() {
   return (
     <div className="font">
@@ -37,6 +39,11 @@ function App() {
         <Route path="/allcategory" element={<AllCategoryPage />} />
         <Route path="/allbrand" element={<AllBrandPage />} />
         <Route path="/products" element={<ShopProductsPage />} />
+        <Route
+          path="/products/category/:categoryId"
+          element={<ShopProductsPage />}
+        />
+        {/* زرار الخصم */}
         <Route path="/products/:id" element={<ProductDetailsPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/order/paymethoud" element={<ChoosePayMethoudPage />} />
@@ -56,7 +63,22 @@ function App() {
         <Route path="/user/add-address" element={<UserAddAddressPage />} />
         <Route path="/user/edit-address" element={<UserEditAddressPage />} />
         <Route path="/user/profile" element={<UserProfilePage />} />
+        <Route
+          path="/admin/editproduct/:id"
+          element={<AdminEditProductsPage />}
+        />
       </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
 
       <Footer />
       <ScrollToTopButton />

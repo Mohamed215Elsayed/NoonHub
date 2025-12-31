@@ -1,8 +1,8 @@
 import { Row, Col } from "react-bootstrap";
 import ProductGallery from "../ProductGallery/ProductGallery";
 import ProductText from "../ProductText/ProductText";
-// import "./ProductDetails.css";
-function ProductDetails() {
+
+function ProductDetails({id}) {
   return (
     <div>
       <Row className="py-3">

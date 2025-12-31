@@ -29,29 +29,37 @@
 }
 
 .image-upload-area {
-  display: inline-block;
+  /* display: inline-block; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 120px;
-  height: 100px;
-  border: 3px dashed #bbb;
-  border-radius: 8px;
+  height: 120px;
+  border: 2px dashed #bbb;
+  border-radius: 12px;
   cursor: pointer;
   overflow: hidden;
   position: relative;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  /* transition: border-color 0.3s, box-shadow 0.3s; */
+  transition: all 0.3s ease-in-out;
   background-color: #f9f9f9;
 }
 
 .image-upload-area:hover {
   border-color: #915970;
-  box-shadow: 0 0 0 4px rgba(145, 89, 112, 0.1);
+  /* box-shadow: 0 0 0 4px rgba(145, 89, 112, 0.1); */
+  background-color: #fff5f8;
 }
 
 .category-preview-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
-
+.image-upload-area:hover .category-preview-image {
+  transform: scale(1.05);
+}
 .input-form {
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -68,6 +76,10 @@
   outline: none;
 }
 
+.input-form::placeholder {
+  color: #aaa;
+  font-size: 14px;
+}
 .btn-save-category {
   background-color: #915970;
   color: white;
@@ -81,7 +93,11 @@
 .btn-save-category:hover {
   background-color: #7b4c62;
 }
-
+/* تحسين الزر عند التعطيل (Loading State) */
+.btn-save-category:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
 @media (max-width: 767px) {
   .admin-content-title {
     font-size: 24px;

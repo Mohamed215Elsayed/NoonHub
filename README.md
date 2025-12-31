@@ -1,70 +1,24 @@
-# Getting Started with Create React App
+/_--------------------------_/
+#for treat with multiple image there are 2 ways
+#first way by library (react-multiple-image-input)
+here all info for it
+https://github.com/codenaz/react-multiple-image-input
+#second way by (map) such in colors
+CompactPicker,react-color
+/_--------------------------_/
+/_react-color_/
+/_--------------------------_/
+/_react-select_/
+/_--------------------------_/
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. مرحلة الانطلاق (The Component)المستخدم بيدخل البيانات في Form وبيدوس على "إضافة منتج". هنا الـ Component بيعمل dispatch للـ Thunk اللي إنت كريته:JavaScriptdispatch(createProduct(formData));
+2. مرحلة الـ Middleware (The Thunk)بمجرد ما تعمل dispatch للـ createProduct الـ Thunk بيبدأ يشتغل ويمر بـ 3 حالات:حالة الـ Pending (انتظار): أول ما الـ Thunk يبدأ، بيبعت Action أوتوماتيك لـ Redux بيقوله "أنا بدأت، خلي الـ loading بـ true".داخل الـ Try block: الـ Thunk بينفذ الكود اللي كتبته insertData. هنا الـ JavaScript بتوقف (await) لحد ما الـ API يرد.3. مرحلة الـ API (Server Side)الطلب (Request) بيخرج من المتصفح يروح للسيرفر. السيرفر بيعالج البيانات، يخزنها في قاعدة البيانات، ويرد بـ Response (إما نجاح 201 أو فشل 400/500).4. مرحلة المعالجة (The Slice / Reducers)لما الـ API يرد، الـ Thunk بياخد النتيجة ويرجع للـ Slice:في حالة النجاح (Fulfilled): الـ Thunk بياخد الـ response اللي رجع من الـ API ويبعته كـ payload للـ Slice. الـ Slice بيقوم بتحديث الـ state.products بالبيانات الجديدة ويخلي الـ loading بـ false.في حالة الفشل (Rejected): لو حصل Error، الـ catch بتمسكه والـ Thunk بيبعت rejectWithValue. الـ Slice بياخد رسالة الخطأ دي ويحطها في الـ state.error.5. مرحلة التحديث النهائي (The UI)لأن الـ State اتغيرت في الـ Store، الـ Component اللي بيستخدم useSelector بيحس بالتغيير فوراً:الـ Spinner بيختفي (لأن loading بقى false).المنتج الجديد بيظهر في القائمة (لأن products اتحدثت).ملخص الخطوات في جدول بسيط:المرحلةالأداةالوظيفة1. TriggerComponentعمل dispatch للأكشن.2. RequestAsyncThunkتنفيذ الـ API Call وانتظار النتيجة.3. LogicSlice (ExtraReducers)استقبال البيانات وتحديث الـ State.4. UI UpdateSelectorإعادة رندر (Re-render) للصفحة بالبيانات الجديدة.
+/**************/
+npm install react-hook-form @hookform/resolvers zod
+/********discount******/
+الزرار ده بيتسمى CTA (Call To Action)، وهدفه الأساسي هو "تحويل الزائر لزبون".
 
-## Available Scripts
+بما إن القسم بيعرض خصم كبير (30%)، فالزرار ده هو "البوابة" اللي بتخلي المستخدم يستفيد من العرض فوراً قبل ما ينسى أو يكمل سكرول.
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+بيساعد في تنظيم حركة المرور (Traffic) جوه موقعك ويوجه الناس للأقسام اللي أنت عايز تبيع فيها أكتر (زي قسم اللاب توب حالياً).
+/*****************/

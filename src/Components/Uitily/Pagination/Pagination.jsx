@@ -1,9 +1,10 @@
 import "./Pagination.css";
 import ReactPaginate from "react-paginate";
 
-const Pagination = ({ pageCount = 10, onPageChange = () => {}, forcePage }) => {
+const Pagination = ({ pageCount, onPress, currentPage }) => {
+  // إرسال رقم الصفحة الحقيقي للأكشن (1-based index)
   const handlePageClick = (data) => {
-    onPageChange(data.selected + 1);
+    onPress(data.selected + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -16,7 +17,7 @@ const Pagination = ({ pageCount = 10, onPageChange = () => {}, forcePage }) => {
       marginPagesDisplayed={2}
       pageRangeDisplayed={4}
       onPageChange={handlePageClick}
-      forcePage={forcePage ? forcePage - 1 : undefined} // ← الحل السحري
+      forcePage={currentPage ? currentPage - 1 : 0}
       containerClassName="pagination-container"
       pageClassName="page-item"
       pageLinkClassName="page-link"

@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@reduxjs/toolkit": "^2.11.2",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
@@ -12,16 +14,22 @@
     "framer-motion": "^12.23.24",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
+    "react-color": "^2.19.3",
     "react-dom": "^19.2.0",
+    "react-hook-form": "^7.69.0",
     "react-icons": "^5.5.0",
     "react-image-gallery": "^1.4.0",
+    "react-multiple-image-input": "^2.0.0",
     "react-paginate": "^8.3.0",
     "react-rating-stars-component": "^2.2.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.6",
     "react-scripts": "5.0.1",
     "react-select": "^5.10.2",
+    "react-toastify": "^11.0.5",
     "swiper": "^12.0.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zod": "^4.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -5,7 +5,10 @@ import CardProductsContainer from "../../Components/Products/CardProductsContain
 import DiscountSection from "../../Components/Home/DiscountSection";
 import BrandFeatured from "../../Components/Brand/BrandFeatured";
 import { Container } from "react-bootstrap";
+import ViewHomeProductsHook from "../../Hook/product/view-home-products-hook";
+
 function HomePage() {
+  const [items, loading] = ViewHomeProductsHook();
   return (
     <div className="font">
       <Slider />
@@ -15,12 +18,16 @@ function HomePage() {
           title="الاكثر مبيعا"
           btntitle="المزيد"
           pathText="/products"
+          products={items}
+          loading={loading}
         />
         <DiscountSection />
         <CardProductsContainer
           title="احدث الازياء"
           btntitle="المزيد"
           pathText="/products"
+          products={items}
+          loading={loading}
         />
 
         <BrandFeatured title="أشهر الماركات" btntitle="عرض الكل" />

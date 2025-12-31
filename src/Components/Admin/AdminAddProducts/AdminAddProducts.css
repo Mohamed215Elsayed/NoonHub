@@ -1,7 +1,33 @@
+/*************************************************
+  Global Variables
+*************************************************/
+:root {
+  --primary: #915970;
+  --primary-hover: #7b4c62;
+  --danger: #dc3545;
+
+  --border-light: #e5e7eb;
+  --border-dark: #ddd;
+
+  --text-main: #444;
+  --text-muted: #555;
+
+  --bg-soft: #fafafa;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --transition: all 0.3s ease;
+}
+
+/*************************************************
+  Layout
+*************************************************/
 .admin-add-products-wrapper {
   background-color: #fff;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   direction: rtl;
   font-family: "Almarai", sans-serif;
@@ -10,120 +36,115 @@
 .admin-content-title {
   font-size: 28px;
   font-weight: 800;
-  color: #555;
+  color: var(--text-muted);
   padding-bottom: 10px;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid var(--border-dark);
   margin-bottom: 25px !important;
   text-align: right;
 }
+
 .text-form {
   font-size: 16px;
   font-weight: 700;
-  color: #444;
+  color: var(--text-main);
   text-align: right;
 }
-.input-form-area {
-  min-height: 120px;
-  resize: vertical;
-}
 
+/*************************************************
+  Inputs & Selects
+*************************************************/
 .input-form,
 .select-form-control {
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-sm);
   padding: 12px 15px;
   font-size: 16px;
   font-family: "Almarai", sans-serif;
-  transition: all 0.3s;
+  transition: var(--transition);
   width: 100%;
   color: #495057;
   background-color: #fff;
   height: 48px;
 }
 
+.input-form-area {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.input-form:hover,
+.select-form-control:hover {
+  border-color: var(--primary);
+}
+
+.input-form::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
+  font-size: 15px;
+}
+
 .input-form:focus,
 .select-form-control:focus {
-  border-color: #915970;
-  box-shadow: 0 0 0 0.25rem rgba(145, 89, 112, 0.25);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(145, 89, 112, 0.2);
   outline: none;
 }
+
+/*************************************************
+  Native Select Arrow
+*************************************************/
 .select-form-control {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: left 1rem center;
-  background-size: 1.25rem 1.25rem;
-  padding-right: 15px;
+  background-size: 1.25rem;
   padding-left: 2.5rem;
 }
-.product-images-container {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-}
 
-.image-upload-area {
-  display: inline-block;
-  width: 120px;
-  height: 100px;
-  border: 3px dashed #bbb;
-  border-radius: 8px;
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  transition: border-color 0.3s;
-  background-color: #f9f9f9;
-}
-
-.image-upload-area:hover {
-  border-color: #915970;
-}
-#upload-image-input {
-  display: none;
-}
-
-.product-preview-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+/*************************************************
+  React Select
+*************************************************/
 .react-select__control {
-  border: 1px solid #ddd !important;
-  border-radius: 8px !important;
+  border: 1px solid var(--border-dark) !important;
+  border-radius: var(--radius-sm) !important;
   box-shadow: none !important;
   min-height: 48px !important;
-  transition: all 0.3s;
   background-color: #fff !important;
+  transition: var(--transition);
 }
 
 .react-select__control--is-focused {
-  border-color: #915970 !important;
-  box-shadow: 0 0 0 0.25rem rgba(145, 89, 112, 0.25) !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(145, 89, 112, 0.2) !important;
+}
+
+.react-select__menu {
+  text-align: right;
+  direction: rtl;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
 }
 
 .react-select__multi-value {
-  background-color: #915970 !important;
-  color: white !important;
+  background-color: var(--primary) !important;
   border-radius: 4px;
-  padding-right: 8px;
-  padding-left: 2px;
   margin: 3px 6px 3px 0 !important;
+  height: 28px; /**/
 }
 
 .react-select__multi-value__label {
-  color: white !important;
+  color: #fff !important;
   font-size: 14px;
-  font-family: "Almarai", sans-serif;
 }
 
 .react-select__multi-value__remove {
   color: rgba(255, 255, 255, 0.7) !important;
-  transition: color 0.2s;
 }
 
 .react-select__multi-value__remove:hover {
-  color: white !important;
-  background-color: #7b4c62 !important;
+  background-color: var(--primary-hover) !important;
+  color: #fff !important;
 }
 
 .react-select__option--is-focused {
@@ -131,68 +152,251 @@
 }
 
 .react-select__option--is-selected {
-  background-color: #915970 !important;
-  color: white !important;
+  background-color: var(--primary) !important;
+  color: #fff !important;
 }
 
-.react-select__menu {
-  text-align: right;
-  direction: rtl;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
-}
-
-.react-select__placeholder,
-.react-select__input-container {
-  padding-left: 10px !important;
-  padding-right: 0 !important;
-  margin: 0 !important;
-  text-align: right;
-}
-
-.react-select__value-container {
-  padding: 0 8px !important;
-}
+/*************************************************
+  Save Button
+*************************************************/
 .btn-save-product {
-  background-color: #915970;
-  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary);
+  color: #fff;
   border: none;
   padding: 10px 30px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-weight: 700;
-  transition: background-color 0.3s;
+  transition: var(--transition);
+  min-width: 150px;
 }
 
 .btn-save-product:hover {
-  background-color: #7b4c62;
+  background-color: var(--primary-hover);
 }
 
+/*************************************************
+  Colors
+*************************************************/
+/* Colors container */
 .product-colors-list {
+  display: flex;
   align-items: center;
-}
-
-.color-swatch {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+  gap: 10px;
+  flex-wrap: wrap;
   position: relative;
 }
 
-.color-swatch:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 0 3px #915970;
+/* Color swatch */
+.color-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ddd;
+  /* box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15); */
+  box-shadow: 0 0 0 1px #ccc;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
 }
 
+/* Hover effect */
+.color-swatch:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 3px var(--primary, #915970);
+}
+
+/* Remove (X) badge */
+.color-swatch::after {
+  content: "×";
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  background-color: #dc3545;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Show remove button on hover */
+.color-swatch:hover::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Add color icon */
 .add-color-icon {
   cursor: pointer;
   opacity: 0.8;
-  transition: opacity 0.2s;
-  margin-right: 15px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .add-color-icon:hover {
   opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ============================= */
+/* Color Picker Wrapper */
+/* ============================= */
+.color-picker-wrapper {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  z-index: 999;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  animation: fadeInScale 0.25s ease;
+}
+
+/* Small arrow */
+.color-picker-wrapper::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  transform: rotate(45deg);
+  box-shadow: -3px -3px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* CompactPicker override */
+.color-picker-wrapper .compact-picker {
+  box-shadow: none !important;
+}
+
+/* Animation */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .color-picker-wrapper {
+    right: auto;
+    left: 0;
+  }
+}
+
+/*************************************************
+  Multi Image Input
+*************************************************/
+.react-multiple-image-input {
+  border: 2px dashed var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  background-color: var(--bg-soft);
+  transition: var(--transition);
+}
+
+.react-multiple-image-input:hover {
+  border-color: var(--primary);
+  background-color: #fff;
+}
+
+.react-multiple-image-input.drag-active {
+  border-color: #ff0e1f;
+  background-color: rgba(255, 14, 31, 0.04);
+}
+
+.react-multiple-image-input img {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  object-fit: cover;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.react-multiple-image-input img:hover {
+  transform: scale(1.04);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.react-multiple-image-input button {
+  border-radius: 999px !important;
+  font-weight: 700;
+  transition: var(--transition);
+}
+
+.react-multiple-image-input button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.15);
+}
+
+/*************************************************
+  Crop Modal
+*************************************************/
+.ReactModal__Content {
+  border-radius: var(--radius-lg) !important;
+  padding: 20px !important;
+}
+
+.ReactModal__Content button {
+  border-radius: 10px !important;
+  font-weight: 600;
+}
+
+/*************************************************
+  Error State
+*************************************************/
+.multi-image-error {
+  border-color: var(--danger) !important;
+  background-color: rgba(220, 53, 69, 0.05) !important;
+}
+
+.multi-image-error-text {
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 6px;
+  text-align: right;
+}
+
+/*************************************************
+  Mobile
+*************************************************/
+@media (max-width: 768px) {
+  .admin-content-title {
+    font-size: 22px;
+  }
+
+  .btn-save-product {
+    width: 100%;
+  }
+
+  .react-multiple-image-input {
+    padding: 12px;
+  }
+
+  .react-multiple-image-input img {
+    border-radius: 10px;
+  }
+}
+
+/*************************************************
+  UX polish
+*************************************************/
+.react-multiple-image-input * {
+  -webkit-tap-highlight-color: transparent;
 }
