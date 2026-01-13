@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Col, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {
@@ -9,9 +8,10 @@ import {
   FaStar,
 } from "react-icons/fa";
 import "./ProductCard.css";
+import ProductCardHook from "../../../Hook/wishList/product-card-hook";
 
 function ProductCard({ product }) {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { isFav, handleFav, loading } = ProductCardHook(product);
   const rating = product?.ratingsAverage || 0;
   const reviews = product?.ratingsQuantity || 0;
   const currentPrice = product?.priceAfterDiscount || product?.price;
@@ -38,13 +38,14 @@ function ProductCard({ product }) {
           )}
           <div className="hover-actions-bar">
             <button
-              className={`action-icon favorite ${isFavorite ? "active" : ""}`}
+              disabled={loading}
+              className={`action-icon favorite ${isFav ? "active" : ""}`}
               onClick={(e) => {
                 e.preventDefault();
-                setIsFavorite(!isFavorite);
+                handleFav();
               }}
             >
-              {isFavorite ? <FaHeart /> : <FaRegHeart />}
+              {isFav ? <FaHeart /> : <FaRegHeart />}
             </button>
             <button className="action-icon cart">
               <FaShoppingCart />

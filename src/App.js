@@ -4,8 +4,8 @@ import HomePage from "./Pages/Home/HomePage";
 import NavBarLogin from "./Components/Uitily/layouts/Navbar/NavBarLogin";
 import Footer from "./Components/Uitily/layouts/Footer/Footer";
 import ScrollToTopButton from "./Components/Uitily/ScrollToTop/ScrollToTopButton";
-import LoginPage from "./Pages/Auth/LoginPage";
-import RegisterPage from "./Pages/Auth/RegisterPage";
+import LoginPage from "./Pages/Auth/login/LoginPage";
+import RegisterPage from "./Pages/Auth/register/RegisterPage";
 import AllCategoryPage from "./Pages/Category/AllCategoryPage";
 import AllBrandPage from "./Pages/Brand/AllBrandPage";
 import ShopProductsPage from "./Pages/Products/ShopProductsPage";
@@ -27,6 +27,11 @@ import UserEditAddressPage from "./Pages/User/UserEditAddressPage";
 import UserProfilePage from "./Pages/User/UserProfilePage";
 import AdminEditProductsPage from "./Pages/Admin/AdminEditProductsPage";
 import { ToastContainer } from "react-toastify";
+import ForgetPasswordPage from "./Pages/Auth/ForgetPassword/ForgetPasswordPage";
+import VerifyPasswordPage from "./Pages/Auth/VerifyPassword/VerifyPasswordPage";
+import ResetPasswordPage from "./Pages/Auth/ResetPassword/ResetPasswordPage";
+import AdminAddCouponPage from "./Pages/Admin/AdminAddCouponPage";
+import AdminEditCouponPage from "./Pages/Admin/AdminEditCouponPage";
 function App() {
   return (
     <div className="font">
@@ -36,6 +41,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+
         <Route path="/allcategory" element={<AllCategoryPage />} />
         <Route path="/allbrand" element={<AllBrandPage />} />
         <Route path="/products" element={<ShopProductsPage />} />
@@ -43,10 +49,10 @@ function App() {
           path="/products/category/:categoryId"
           element={<ShopProductsPage />}
         />
-        {/* زرار الخصم */}
         <Route path="/products/:id" element={<ProductDetailsPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/order/paymethoud" element={<ChoosePayMethoudPage />} />
+
         <Route path="/admin/allproducts" element={<AdminAllProductsPage />} />
         <Route path="/admin/allorders" element={<AdminAllOrdersPage />} />
         <Route path="/admin/orders/:id" element={<AdminOrderDetailsPage />} />
@@ -57,6 +63,9 @@ function App() {
           element={<AdminAddSubCategoryPage />}
         />
         <Route path="/admin/addproduct" element={<AdminAddProductsPage />} />
+        <Route path="/admin/addcoupon" element={<AdminAddCouponPage />} />
+        <Route path="/admin/editcoupon/:id" element={<AdminEditCouponPage />} />
+
         <Route path="/user/allorders" element={<UserAllOrdersPage />} />
         <Route path="/user/wishlist" element={<UserWishlistPage />} />
         <Route path="/user/addresses" element={<UserAllAddresPage />} />
@@ -67,6 +76,9 @@ function App() {
           path="/admin/editproduct/:id"
           element={<AdminEditProductsPage />}
         />
+        <Route path="/user/forget-password" element={<ForgetPasswordPage />} />
+        <Route path="/user/verify-code" element={<VerifyPasswordPage />} />
+        <Route path="/user/reset-password" element={<ResetPasswordPage />} />
       </Routes>
       <ToastContainer
         position="top-right"

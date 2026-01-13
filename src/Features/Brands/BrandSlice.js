@@ -120,7 +120,6 @@ const brandSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
-    /*************** */
   },
 });
 export const { resetStatus } = brandSlice.actions;

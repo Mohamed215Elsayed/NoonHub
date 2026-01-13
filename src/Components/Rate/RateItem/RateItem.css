@@ -1,32 +1,190 @@
-.rate-item-section {
-  padding: 10px 0;
+/* ================= Rate Item ================= */
+.rate-item-container {
+  padding: 15px;
+  transition: background-color 0.2s ease;
 }
 
-.rate-item-section .rate-name {
-  font-size: 18px;
+.rate-item-container:hover {
+  background-color: #fcfcfc;
+}
+
+.rate-user-name {
+  font-size: 16px;
   font-weight: 700;
-  margin-left: 10px;
   color: #333;
 }
 
-.rate-item-section .cat-rate {
-  font-size: 16px;
-  font-weight: 600;
+.rate-number {
+  font-size: 13px;
+  font-weight: bold;
   color: #ffc107;
 }
 
-.rate-item-section .rate-description {
-  font-size: 16px;
+.rate-comment-text {
+  font-size: 15px;
   line-height: 1.6;
   color: #555;
-  padding: 0 10px;
 }
 
-.rate-item-section .row:first-child .col {
+/* ================= Action Menu ================= */
+.rate-actions {
+  position: relative;
+}
+
+.action-menu {
+  position: relative;
+}
+
+/* ===== Trigger (3 dots) ===== */
+.action-trigger {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color 0.25s ease;
+}
+
+.action-trigger:hover {
+  background-color: rgba(145, 89, 112, 0.1);
+}
+
+.action-trigger:focus-visible {
+  outline: 2px solid #0d6efd;
+  outline-offset: 2px;
+}
+
+.action-trigger .dot {
+  width: 4px;
+  height: 4px;
+  background-color: #915970;
+  border-radius: 50%;
+}
+
+/* ================= Dropdown ================= */
+.action-dropdown {
+  position: absolute;
+  top: 110%;
+  right: 0;
+
+  min-width: 160px;
+  padding: 8px;
+
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: all 0.2s ease;
+
+  z-index: 100;
+}
+
+/* Open state (controlled by JS) */
+.action-menu.open .action-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ================= Dropdown Header ================= */
+.dropdown-header {
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+}
+
+/* ================= Dropdown Items ================= */
+.action-item {
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: none;
+  border-radius: 8px;
+
   display: flex;
   align-items: center;
+  gap: 12px;
+
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
-.rate-item-section:last-of-type {
-  border-bottom: none;
-  margin-bottom: 0;
+
+.action-item:hover {
+  background-color: #f8f9fa;
+  transform: translateX(-5px);
+}
+
+.action-item:active {
+  background-color: #eee;
+}
+
+/* ===== Icons ===== */
+.icon-wrapper {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+}
+
+/* Edit */
+.action-item.edit {
+  color: #444;
+}
+
+.action-item.edit .icon-wrapper {
+  background: rgba(13, 110, 253, 0.1);
+  color: #0d6efd;
+}
+
+/* Delete */
+.action-item.delete {
+  color: #dc3545;
+}
+
+.action-item.delete .icon-wrapper {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+/* ================= Delete Modal ================= */
+.delete-modal .modal-content {
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.delete-modal .modal-header {
+  border-bottom: 1px solid #f1f1f1;
+  text-align: right;
+}
+
+.delete-modal .btn-close {
+  margin: 0 auto 0 0 !important;
+}
+
+.delete-modal .modal-footer .btn {
+  border-radius: 8px;
+  font-weight: 600;
 }

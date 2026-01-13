@@ -1,0 +1,60 @@
+.admin-add-coupon-container {
+  /* padding: 20px; */
+  direction: rtl;
+}
+
+.coupon-form-box {
+  border-radius: 12px !important;
+  border: 1px solid #f0f0f0 !important;
+  background-color: #ffffff;
+}
+
+.admin-content-title {
+  color: #555550;
+  font-family: "Almarai", sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 32px;
+  text-align: right;
+  margin-bottom: 28px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eeeeee;
+}
+
+.input-form {
+  border: 1px solid #e2e2e2;
+  border-radius: 8px;
+  height: 45px;
+  font-family: "Almarai", sans-serif;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-form:focus {
+  border-color: #915970;
+  box-shadow: 0 0 0 3px rgba(145, 89, 112, 0.1);
+}
+
+.btn-save {
+  background-color: #915970;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 30px;
+  font-family: "Almarai", sans-serif;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 160px;
+  transition: background 0.3s ease;
+}
+.btn-save:hover {
+  background-color: #7a4a5e;
+}
+
+hr {
+  border-top: 2px solid #eee;
+  opacity: 0.5;
+}

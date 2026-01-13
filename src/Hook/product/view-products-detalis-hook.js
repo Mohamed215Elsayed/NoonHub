@@ -34,6 +34,6 @@ const ViewProductsDetalisHook = (prodID) => {
     }
   }, [dispatch, item.category]);
   const similarProducts = productLikeResponse?.data?.slice(0, 4) || [];
-  return { item, images, cat, brand,similarProducts  };
+  return { item, images, cat, brand, similarProducts };
 };
 export default ViewProductsDetalisHook;

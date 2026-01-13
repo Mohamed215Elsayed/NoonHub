@@ -2,10 +2,8 @@ import baseURL from "../Api/baseURL";
 export const insertData = async (url, data) => {
   const config = {
     headers: {
-      // التبديل التلقائي لنوع البيانات
       "Content-Type":
         data instanceof FormData ? "multipart/form-data" : "application/json",
-      // إضافة التوكن إذا كان موجوداً في LocalStorage
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   };
@@ -61,5 +59,3 @@ export const insertData = async (url, data) => {
 //   const res = await baseURL.put(url, data, config);
 //   return res.data;
 // };
-
-

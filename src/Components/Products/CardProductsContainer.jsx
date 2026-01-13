@@ -1,9 +1,9 @@
 import { Container, Row } from "react-bootstrap";
 import SubTitle from "../Uitily/ButtonsTitles/SubTitle";
 import ProductCard from "./ProductCard/ProductCard";
-
 import CategorySkeleton from "../Uitily/Skelton/CategorySkeleton";
 import CategoryEmptyState from "../Uitily/CategoryEmptyState";
+import CardContainerHook from "../../Hook/wishList/card-container-hook";
 
 function CardProductsContainer({
   title,
@@ -12,6 +12,8 @@ function CardProductsContainer({
   products,
   loading,
 }) {
+  CardContainerHook();
+
   return (
     <Container>
       {title && (
@@ -24,8 +26,8 @@ function CardProductsContainer({
             <CategorySkeleton count={4} />
           </div>
         ) : products && products.length > 0 ? (
-          products.map((product, index) => (
-            <ProductCard key={product._id || index} product={product} />
+          products.map((product) => (
+            <ProductCard key={product._id} product={product} />
           ))
         ) : (
           <div className="w-100 text-center my-5">

@@ -241,7 +241,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { productSchema } from "../../Validation/productSchema";
+import { addProductSchema } from "../../Validation/productSchema";
 import { getAllCategory } from "../../Features/Categories/CategorySlice";
 import { getAllBrand } from "../../Features/Brands/BrandSlice";
 import { getSubCategoryOnCategory } from "../../Features/SubCategories/SubCategorySlice";
@@ -267,12 +267,12 @@ const AdminAddProductsHook = () => {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(productSchema),
+    resolver: zodResolver(addProductSchema),
     defaultValues: { catID: "0", brandID: "0", colors: [], selectedSubID: [] },
     mode: "onChange", // هذا سيجعل الرسائل تظهر بمجرد خروج المستخدم من الحقل أو الكتابة
   });
 
-  const selectedColors = watch("colors");
+  const selectedColors = watch("colors") || [];
   const selectedCat = watch("catID");
 
   // Redux Selectors
@@ -290,13 +290,23 @@ const AdminAddProductsHook = () => {
   }, [dispatch]);
 
   // Fetch subcategories when category changes
+  // useEffect(() => {
+  //   if (selectedCat && selectedCat !== "0") {
+  //     dispatch(getSubCategoryOnCategory(selectedCat));
+  //   } else {
+  //     setOptions([]);
+  //   }
+  //   setValue("selectedSubID", []);
+  // }, [selectedCat, dispatch, setValue]);
   useEffect(() => {
-    if (selectedCat !== "0") {
-      dispatch(getSubCategoryOnCategory(selectedCat));
-    } else {
+    if (!selectedCat || selectedCat === "0") {
       setOptions([]);
+      setValue("selectedSubID", []);
+      return;
     }
-    setValue("selectedSubID", []); // Reset subcat selection
+
+    dispatch(getSubCategoryOnCategory(selectedCat));
+    setValue("selectedSubID", []);
   }, [selectedCat, dispatch, setValue]);
 
   useEffect(() => {
@@ -306,10 +316,11 @@ const AdminAddProductsHook = () => {
   }, [subCat]);
 
   const colorToggler = () => setShowColor(!showColor);
-
   const handleColorChange = (color) => {
     if (!selectedColors.includes(color.hex)) {
-      setValue("colors", [...selectedColors, color.hex]);
+      setValue("colors", [...selectedColors, color.hex], {
+        shouldValidate: true,
+      });
     }
     setShowColor(false);
   };
@@ -345,24 +356,44 @@ const AdminAddProductsHook = () => {
     formData.append("category", data.catID);
     if (data.brandID !== "0") formData.append("brand", data.brandID);
 
+    // const imgArray = Object.values(images);
+    // formData.append(
+    //   "imageCover",
+    //   dataURLtoFile(imgArray[0], `cover-${Date.now()}.png`)
+    // );
+    // imgArray.forEach((img) =>
+    //   formData.append("images", dataURLtoFile(img, `prod-${Date.now()}.png`))
+    // );
     const imgArray = Object.values(images);
     formData.append(
       "imageCover",
       dataURLtoFile(imgArray[0], `cover-${Date.now()}.png`)
     );
-    imgArray.forEach((img) =>
-      formData.append("images", dataURLtoFile(img, `prod-${Date.now()}.png`))
-    );
-    data.colors.forEach((c) => formData.append("colors[]", c));
+
+    imgArray
+      .slice(1)
+      .forEach((img) =>
+        formData.append("images", dataURLtoFile(img, `prod-${Date.now()}.png`))
+      );
+
+    data.colors.forEach((c) => formData.append("colors", c));
     data.selectedSubID.forEach((s) =>
-      formData.append("subcategories[]", s.value)
+      formData.append("subcategories", s.value)
     );
 
     try {
-      await dispatch(createProduct(formData)).unwrap(); //استخدام unwrap ليتم الانتقال للـ catch في حال فشل الطلب
+      await dispatch(createProduct(formData)).unwrap();
       notify("تمت الإضافة بنجاح", "success");
-      reset();
+      // reset();
+      reset({
+        catID: "0",
+        brandID: "0",
+        colors: [],
+        selectedSubID: [],
+      });
       setImages({});
+      setShowColor(false);
+      setOptions([]);
     } catch (err) {
       if (err.errors) {
         err.errors.forEach((error) => notify(error.msg, "error"));

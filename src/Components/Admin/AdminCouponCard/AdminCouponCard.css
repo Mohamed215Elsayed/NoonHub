@@ -1,0 +1,132 @@
+.coupon-card {
+  background: #fff;
+  border: 2px dashed #915970;
+  border-radius: 15px;
+  position: relative;
+  transition: all 0.3s ease;
+  min-height: 160px;
+}
+
+.coupon-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(145, 89, 112, 0.15) !important;
+  border-style: solid;
+}
+
+.coupon-badge-name {
+  background-color: #f7f3f9;
+  color: #915970;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-weight: 800;
+  font-family: "monospace", sans-serif;
+  letter-spacing: 1px;
+  border: 1px solid rgba(145, 89, 112, 0.1);
+}
+
+.action-icon {
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.action-icon:hover {
+  transform: scale(1.25);
+}
+
+.discount-value {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.discount-value .amount {
+  font-size: 24px;
+  font-weight: 900;
+  color: #915970;
+  line-height: 1;
+}
+
+.discount-value .label {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.coupon-card::before,
+.coupon-card::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: #f9f9f9;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.coupon-card::before {
+  left: -11px;
+  box-shadow: inset -3px 0 3px rgba(0, 0, 0, 0.02);
+}
+
+.coupon-card::after {
+  right: -11px;
+  box-shadow: inset 3px 0 3px rgba(0, 0, 0, 0.02);
+}
+
+.icon-btn {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.edit-btn {
+  color: #475569;
+}
+
+.edit-btn:hover {
+  background-color: #e2e8f0;
+  color: #2563eb;
+  transform: rotate(15deg);
+}
+
+.delete-btn {
+  color: #94a3b8;
+}
+
+.delete-btn:hover {
+  background-color: #fee2e2;
+  color: #dc2626;
+  transform: scale(1.1);
+}
+
+.calendar-icon-wrapper {
+  color: #915970;
+  background: #fdf2f8;
+  padding: 5px;
+  border-radius: 6px;
+  display: inline-flex;
+}
+.animate-modal .modal-content {
+  animation: scaleFade 0.25s ease-in-out;
+}
+
+@keyframes scaleFade {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

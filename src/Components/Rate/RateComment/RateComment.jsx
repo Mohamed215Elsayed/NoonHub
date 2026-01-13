@@ -1,44 +1,86 @@
+import React from "react";
 import ReactStars from "react-rating-stars-component";
 import { Col, Row } from "react-bootstrap";
-import "./RateComment.css"
+import "./RateComment.css";
+import AddRateHook from "../../../Hook/review/add-rate-hook";
+import { useParams } from "react-router-dom";
+
 function RateComment() {
-      const setting = {
-        size: 20,
-        count: 5,
-        color: "#979797",
-        activeColor: "#ffc107",
-        value: 3.5,
-        edit: true,
-        a11y: true,
-        isHalf: true,
-        emptyIcon: <i className="far fa-star" />,
-        halfIcon: <i className="fa fa-star-half-alt" />,
-        filledIcon: <i className="fa fa-star" />,
-        onChange: newValue => {
-            console.log(`Example 2: new value is ${newValue}`);
-        }
-    };
+  const { id } = useParams();
+  const {
+    rateText,
+    rateValue,
+    user,
+    handleRateTextChange,
+    handleRateValueChange,
+    onSubmit,
+    loadingCreate,
+  } = AddRateHook(id);
+
+  if (!user) {
+    return (
+      <div className="rate-container text-center border-0 bg-light p-3">
+        <p className="text-muted m-0">يجب تسجيل الدخول لتتمكن من إضافة تقييم</p>
+      </div>
+    );
+  }
+  const userName = user?.name || "زائر";
+  const isDisabled =
+    loadingCreate || rateValue === 0 || rateText.trim().length === 0;
+  const starSettings = {
+    size: 22,
+    count: 5,
+    color: "#e0e0e0",
+    activeColor: "#ffc107",
+    value: rateValue,
+    edit: true,
+    a11y: true,
+    isHalf: true,
+    emptyIcon: <i className="far fa-star" />,
+    halfIcon: <i className="fa fa-star-half-alt" />,
+    filledIcon: <i className="fa fa-star" />,
+    onChange: handleRateValueChange,
+  };
+
   return (
-    <div>
-      <Row className="mt-3 ">
-        <Col sm="12" className="me-5  d-flex">
-          <div className="rate-name  d-inline ms-3 mt-1 ">علي محمد</div>
-          <ReactStars {...setting} />
+    <div className="rate-container shadow-sm mx-2 p-3">
+      <Row className="mb-2">
+        <Col className="d-flex align-items-center">
+          <div className="rate-avatar me-2">
+            {userName.charAt(0).toUpperCase()}
+          </div>
+          <span className="rate-name">{userName}</span>
         </Col>
       </Row>
-         <Row className="border-bottom mx-2">
-          <Col className="d-felx me-4 pb-2">
+
+      <Row className="mb-3">
+        <Col>
+          <ReactStars {...starSettings} />
+        </Col>
+      </Row>
+
+      <Row>
+        <Col>
+          <div className="comment-box-wrapper">
             <textarea
-              className="input-form-area p-2 mt-3"
-              rows="2"
-              cols="20"
-              placeholder="اكتب تعليقك...."
+              className="input-form-area"
+              rows={3}
+              value={rateText}
+              onChange={handleRateTextChange}
+              placeholder="اكتب تجربة استخدامك للمنتج هنا..."
+              aria-label="تعليق المستخدم"
             />
-            <div className=" d-flex justify-content-end al">
-              <div role="button" className="product-cart-add px-3  py-2 text-center d-inline">اضف تعليق</div>
-            </div>
-          </Col>
-        </Row>
+            <button
+              type="button"
+              className="btn-rate-submit"
+              onClick={onSubmit}
+              disabled={isDisabled || loadingCreate}
+            >
+              {loadingCreate ? "جارٍ الإرسال..." : "اضف تعليق"}
+            </button>
+          </div>
+        </Col>
+      </Row>
     </div>
   );
 }

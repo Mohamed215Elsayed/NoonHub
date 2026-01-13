@@ -6,15 +6,16 @@ import FilterDropDownCountResult from "../../Components/Uitily/FilterDropDownCou
 import SideFilter from "../../Components/Uitily/SideFilter/SideFilter";
 import ViewSearchProductsHook from "../../Hook/product/view-search-products-hook";
 function ShopProductsPage() {
-  const [items, pageCount, currentPage, getPage, resultsCount] =
-    ViewSearchProductsHook();
+  const { items, pageCount, currentPage, getPage,getProduct,resultsCount } = ViewSearchProductsHook();
   return (
     <div style={{ minHeight: "670px" }}>
       <CategoryHeader />
 
       <Container>
-        <FilterDropDownCountResult title={`هناك ${resultsCount} نتيجة بحث`} />
-
+        <FilterDropDownCountResult
+          resultsCount={resultsCount}
+          getProduct={getProduct}
+        />
         <Row className="gx-5">
           <Col xs={12} lg={3} xl={2} className="d-none d-lg-block">
             <SideFilter />

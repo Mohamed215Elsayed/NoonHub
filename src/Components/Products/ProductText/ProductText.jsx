@@ -12,7 +12,7 @@ const ProductText = () => {
     <div className="product-text-section">
       <Row className="mb-2">
         <Col>
-          <span className="product-category">{cat.name || "تصنيف عام"} :</span>
+          <span className="product-category">{cat.name || "تصنيف عام"} </span>
         </Col>
       </Row>
 
@@ -81,7 +81,7 @@ const ProductText = () => {
         <Col xs={12} md>
           <button
             type="button"
-            className="add-to-cart-btn w-100"
+            className="add-to-cart-btn "
             onClick={() => console.log("تم الضغط")}
           >
             <i className="fas fa-shopping-cart ms-2"></i>
