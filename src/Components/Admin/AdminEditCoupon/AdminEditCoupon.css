@@ -1,27 +1,24 @@
-/* الحاوية الرئيسية */
 .admin-add-coupon-container {
   padding: 30px;
   direction: rtl;
   min-height: 80vh;
 }
 
-/* عنوان الصفحة */
 .admin-content-title {
   font-family: "Almarai", sans-serif;
   font-size: 1.5rem;
   font-weight: 800;
-  color: #334155; /* Slate 700 */
+  color: #334155;
 }
 
-/* صندوق النموذج (النمط الموحد) */
 .coupon-form-box {
   background: #ffffff;
-  border: 1px solid #e2e8f0 !important; /* لون حدود ناعم */
+  border: 1px solid #e2e8f0 !important;
   border-radius: 16px !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* تنسيق حقول الإدخال */
 .input-form {
   border: 2px solid #f1f5f9;
   border-radius: 10px;
@@ -34,7 +31,6 @@
   outline: none;
 }
 
-/* تأثير عند التركيز على الحقل */
 .input-form:focus {
   background-color: #fff;
   border-color: #915970;
@@ -42,7 +38,6 @@
   transform: translateY(-1px);
 }
 
-/* تسميات الحقول (Labels) */
 .fw-bold {
   color: #475569;
   font-size: 0.9rem;
@@ -50,7 +45,6 @@
   display: block;
 }
 
-/* زر حفظ التعديلات */
 .btn-save {
   background: linear-gradient(135deg, #915970 0%, #7a4a5e 100%);
   color: white;
@@ -76,13 +70,11 @@
   transform: none;
 }
 
-/* تحسين شكل حقل التاريخ ليتناسب مع الـ CSS */
 input[type="date"] {
   cursor: pointer;
   position: relative;
 }
 
-/* خط فاصل أنيق */
 hr {
   border-top: 2px solid #f1f5f9;
   margin: 40px 0;

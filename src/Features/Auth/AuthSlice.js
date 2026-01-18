@@ -1,86 +1,126 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { insertData } from "../../Hooks/useInsertData";
-import { updateData } from "../../Hooks/useUpdateData";
-import { getDataWithToken } from "../../Hooks/useGetData";
-// Async Thunk for Signup
+import {
+  createAsyncThunk,
+  createSlice,
+  isPending,
+  isRejected,
+} from '@reduxjs/toolkit';
+
+import { getDataWithToken } from '../../Hooks/useGetData';
+import { insertData } from '../../Hooks/useInsertData';
+import { updateData } from '../../Hooks/useUpdateData';
+
+/* ===================== ASYNC THUNKS ===================== */
+
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (data, { rejectWithValue }) => {
     try {
       return await insertData("/api/v1/auth/signup", data);
     } catch (err) {
-      return rejectWithValue(
-        err.response?.data || { message: "حدث خطأ أثناء التسجيل" }
-      );
+      return rejectWithValue(err.response?.data || { message: "حدث خطأ أثناء التسجيل" });
     }
   }
 );
-// Async Thunk لتسجيل الدخول
+
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (data, { rejectWithValue }) => {
     try {
       return await insertData("/api/v1/auth/login", data);
     } catch (err) {
-      return rejectWithValue(
-        err.response?.data || { message: "حدث خطأ أثناء تسجيل الدخول" }
-      );
+      return rejectWithValue(err.response?.data || { message: "حدث خطأ أثناء تسجيل الدخول" });
     }
   }
 );
-export const getLoggedUser = createAsyncThunk(
-  "auth/getLoggedUser",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await getDataWithToken("/api/v1/users/getMe");
-      return response;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data || "Failed to fetch current user"
-      );
-    }
-  }
-);
+
 export const forgetPassword = createAsyncThunk(
   "auth/forgetPassword",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await insertData("/api/v1/auth/forgotPassword", data);
-      return response;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data || "حدث خطأ أثناء ارسال الكود"
-      );
+      return await insertData("/api/v1/auth/forgotPassword", data);
+    } catch (err) {
+      return rejectWithValue(err.response?.data || { message: "حدث خطأ أثناء إرسال الكود" });
     }
   }
 );
-// verify reset code
+
 export const verifyResetCode = createAsyncThunk(
   "auth/verifyResetCode",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await insertData("/api/v1/auth/verifyResetCode", data);
-      return response;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data || { message: "الكود غير صحيح" }
-      );
+      return await insertData("/api/v1/auth/verifyResetCode", data);
+    } catch (err) {
+      return rejectWithValue(err.response?.data || { message: "الكود غير صحيح" });
     }
   }
 );
+
 export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (data, { rejectWithValue }) => {
     try {
-      const res = await updateData("/api/v1/auth/resetPassword", data);
-      return res;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data || { message: "فشل تغيير كلمة السر" }
-      );
+      return await updateData("/api/v1/auth/resetPassword", data);
+    } catch (err) {
+      return rejectWithValue(err.response?.data || { message: "فشل تغيير كلمة السر" });
     }
   }
 );
+
+export const getLoggedUser = createAsyncThunk(
+  "auth/getLoggedUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      return await getDataWithToken("/api/v1/users/getMe");
+    } catch (err) {
+      return rejectWithValue(err.response?.data || { message: "فشل تحميل المستخدم" });
+    }
+  }
+);
+
+export const updateUserProfile = createAsyncThunk(
+  "auth/updateUserProfile",
+  async (body, { rejectWithValue }) => {
+    try {
+      return await updateData("/api/v1/users/updateMe", body);
+    } catch (err) {
+      return rejectWithValue(err.response?.data || { message: "فشل تحديث البيانات" });
+    }
+  }
+);
+
+export const changeUserPassword = createAsyncThunk(
+  "auth/changeUserPassword",
+  async (body, { rejectWithValue }) => {
+    try {
+      return await updateData("/api/v1/users/changeMyPassword", body);
+    } catch (err) {
+      return rejectWithValue(err.response?.data || { message: "فشل تغيير كلمة السر" });
+    }
+  }
+);
+
+/* ===================== HELPERS ===================== */
+
+const saveAuthToStorage = (data, token) => {
+  localStorage.setItem("user", JSON.stringify(data));
+  localStorage.setItem("token", token);
+};
+
+export const clearAuthStorage = () => {
+  localStorage.removeItem("user");
+  localStorage.removeItem("token");
+};
+
+const handleAuthSuccess = (state, action) => {
+  state.loading = false;
+  state.user = action.payload.data;
+  state.token = action.payload.token;
+  state.error = null;
+  saveAuthToStorage(action.payload.data, action.payload.token);
+};
+
+/* ===================== SLICE ===================== */
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -88,154 +128,101 @@ const authSlice = createSlice({
     token: null,
     loading: false,
     error: null,
-    forgetPassword: null,
-    verifyResetCode: null,
-    resetPassword: null,
+
+    // flags
+    profileUpdated: false,
+    passwordChanged: false,
   },
 
   reducers: {
     logoutUser: (state) => {
       state.user = null;
       state.token = null;
-      state.error = null;
       state.loading = false;
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
+      state.error = null;
+      state.profileUpdated = false;
+      state.passwordChanged = false;
+      clearAuthStorage();
     },
 
     clearError: (state) => {
       state.error = null;
     },
 
-    updateUser: (state, action) => {
-      if (state.user) {
-        state.user = { ...state.user, ...action.payload };
-        localStorage.setItem("user", JSON.stringify(state.user));
-      }
-    },
-
     loadUserFromStorage: (state) => {
       const user = localStorage.getItem("user");
       const token = localStorage.getItem("token");
-
       if (user && token) {
         state.user = JSON.parse(user);
         state.token = token;
       }
     },
+    resetFlags: (state) => {
+      state.profileUpdated = false;
+      state.passwordChanged = false;
+    }
+
   },
 
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
+      /* AUTH */
+      .addCase(registerUser.fulfilled, handleAuthSuccess)
+      .addCase(loginUser.fulfilled, handleAuthSuccess)
 
-      .addCase(registerUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload.data;
-        state.token = action.payload.token;
-        state.error = null;
-
-        localStorage.setItem("user", JSON.stringify(action.payload.data));
-        localStorage.setItem("token", action.payload.token);
-      })
-
-      .addCase(registerUser.rejected, (state, action) => {
-        state.loading = false;
-        if (action.payload?.errors && Array.isArray(action.payload.errors)) {
-          state.error = action.payload.errors.map((err) => err.msg).join(" | ");
-        } else {
-          // لو في رسالة واحدة
-          state.error = action.payload?.message || "حدث خطأ أثناء التسجيل";
-        }
-      })
-      /*=========================*/
-      .addCase(loginUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload.data;
-        state.token = action.payload.token;
-        state.error = null;
-
-        localStorage.setItem("user", JSON.stringify(action.payload.data));
-        localStorage.setItem("token", action.payload.token);
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.loading = false;
-        // لو في array من الأخطاء
-        if (action.payload?.errors && Array.isArray(action.payload.errors)) {
-          state.error = action.payload.errors.map((e) => e.msg).join(" | ");
-        } else {
-          state.error = action.payload?.message || "حدث خطأ أثناء تسجيل الدخول";
-        }
-      })
-      /* ============ GET LOGGED USER ============ */
-      .addCase(getLoggedUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
+      /* GET LOGGED USER */
       .addCase(getLoggedUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload?.data || action.payload;
+        state.user = action.payload.data;
+        localStorage.setItem("user", JSON.stringify(state.user));
       })
-      .addCase(getLoggedUser.rejected, (state, action) => {
+
+      /* UPDATE PROFILE */
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = null;
-        state.error = action.payload;
+        state.user = action.payload.data;
+        state.profileUpdated = true;
+        localStorage.setItem("user", JSON.stringify(state.user));
       })
-      /*=========================*/
-      .addCase(forgetPassword.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(forgetPassword.fulfilled, (state, action) => {
+
+      /* CHANGE PASSWORD */
+      .addCase(changeUserPassword.fulfilled, (state) => {
         state.loading = false;
-        state.forgetPassword = action.payload;
+        state.passwordChanged = true;
       })
-      .addCase(forgetPassword.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      /*=========================*/
-      .addCase(verifyResetCode.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(verifyResetCode.fulfilled, (state, action) => {
-        state.loading = false;
-        state.verifyResetCode = action.payload;
-      })
-      .addCase(verifyResetCode.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload?.message || "فشل التحقق من الكود";
-      })
-      // resetPassword
-      /*=========================*/
-      .addCase(resetPassword.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(resetPassword.fulfilled, (state, action) => {
-        state.loading = false;
-        state.resetPassword = action.payload;
-      })
-      .addCase(resetPassword.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload?.message || "فشل التحقق من الكود";
-      });
+
+      /* GLOBAL PENDING */
+      .addMatcher(
+        (action) => action.type.startsWith("auth/") && isPending(action),
+        (state) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      /* GLOBAL REJECTED */
+      .addMatcher(
+        (action) => action.type.startsWith("auth/") && isRejected(action),
+        (state, action) => {
+          state.loading = false;
+          state.error =
+            action.payload?.message ||
+            action.payload ||
+            "حدث خطأ غير متوقع";
+        }
+      )
+
   },
 });
 
-// Actions
-export const { logoutUser, clearError, updateUser, loadUserFromStorage } =
-  authSlice.actions;
+/* ===================== EXPORTS ===================== */
 
-// Selectors
+export const {
+  logoutUser,
+  clearError,
+  loadUserFromStorage,
+  resetFlags,
+} = authSlice.actions;
+
 export const selectAuth = (state) => state.auth;
 export const isAuthenticated = (state) => !!state.auth.token;
 

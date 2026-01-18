@@ -27,8 +27,12 @@ function AdminAddCoupon() {
           className="coupon-form-box p-4 shadow-sm border rounded bg-white"
         >
           <Form.Group>
-            <Form.Label className="fw-bold">اسم الكوبون</Form.Label>
+            <Form.Label htmlFor="couponName" className="fw-bold">
+              اسم الكوبون
+            </Form.Label>
             <input
+              id="couponName"
+              name="coupon-name"
               type="text"
               className="input-form d-block px-3 w-100"
               placeholder="مثال: EID_2026"
@@ -38,8 +42,12 @@ function AdminAddCoupon() {
           </Form.Group>
 
           <Form.Group className="mt-3">
-            <Form.Label className="fw-bold">تاريخ الانتهاء</Form.Label>
+            <Form.Label htmlFor="couponDate" className="fw-bold">
+              تاريخ الانتهاء
+            </Form.Label>
             <input
+              id="couponDate"
+              name="coupon-date"
               type="date"
               className="input-form d-block px-3 w-100"
               value={couponDate}
@@ -52,8 +60,12 @@ function AdminAddCoupon() {
           </Form.Group>
 
           <Form.Group className="mt-3">
-            <Form.Label className="fw-bold">نسبة الخصم (%)</Form.Label>
+            <Form.Label htmlFor="couponValue" className="fw-bold">
+              نسبة الخصم (%)
+            </Form.Label>
             <input
+              id="couponValue"
+              name="coupon-value"
               type="number"
               className="input-form d-block px-3 w-100"
               value={couponValue}
@@ -69,9 +81,10 @@ function AdminAddCoupon() {
               disabled={loading}
             >
               {loading ? (
-                <Spinner animation="border" size="sm" className="me-2" />
-              ) : null}
-              حفظ الكوبون
+                <Spinner animation="border" size="sm" />
+              ) : (
+                "حفظ الكوبون"
+              )}
             </button>
           </div>
         </Col>

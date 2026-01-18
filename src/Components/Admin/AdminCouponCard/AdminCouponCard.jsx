@@ -1,16 +1,17 @@
 import { FiEdit, FiTrash2, FiCalendar } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import "./AdminCouponCard.css";
+import { Button, Modal, Spinner } from "react-bootstrap";
 import { formatDate } from "../../Uitily/DatesFormat/formatDate";
 import CouponCardHook from "../../../Hook/coupon/coupon-card-hook";
-import { Button, Modal, Spinner } from "react-bootstrap";
+import "./AdminCouponCard.css";
 
 const AdminCouponCard = ({ coupon }) => {
   const { show, handleClose, handleShow, handleDelete, loading } =
     CouponCardHook(coupon._id);
+
   return (
-    <div className="coupon-card p-3 shadow-sm h-100 d-flex flex-column justify-content-between">
-      {/* Delete Confirmation Modal */}
+    <div className="coupon-card-wrapper h-100">
+    
       <Modal
         show={show}
         onHide={handleClose}
@@ -22,13 +23,10 @@ const AdminCouponCard = ({ coupon }) => {
         <Modal.Header closeButton>
           <Modal.Title className="fw-bold">تأكيد الحذف</Modal.Title>
         </Modal.Header>
-
         <Modal.Body className="text-center">
-          هل أنت متأكد من حذف الكوبون
-          <br />
+          هل أنت متأكد من حذف الكوبون <br />
           <b className="text-danger">{coupon.name}</b>؟
         </Modal.Body>
-
         <Modal.Footer className="justify-content-center border-0">
           <Button
             variant="outline-secondary"
@@ -49,44 +47,55 @@ const AdminCouponCard = ({ coupon }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <div>
-        <div className="d-flex justify-content-between align-items-start mb-3">
-          <div className="coupon-badge-name">{coupon.name}</div>
 
-          <div className="d-flex gap-1">
-            <Link
-              to={`/admin/editcoupon/${coupon._id}`}
-              className="icon-btn edit-btn"
-              title="تعديل"
-            >
-              <FiEdit size={18} />
-            </Link>
+    
+      <div className="coupon-card shadow-sm h-100 position-relative">
+    
+        <div className="coupon-cut cut-left"></div>
+        <div className="coupon-cut cut-right"></div>
 
-            <button
-              className="icon-btn delete-btn"
-              onClick={handleShow}
-              title="حذف"
-              disabled={loading}
-            >
-              <FiTrash2 size={18} />
-            </button>
+        <div className="coupon-inner-content p-4 d-flex flex-column justify-content-between h-100">
+          <div>
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <div className="coupon-badge-name" title={coupon.name}>
+                {coupon.name}
+              </div>
+
+              <div className="d-flex gap-2">
+                <Link
+                  to={`/admin/editcoupon/${coupon._id}`}
+                  className="icon-btn edit-btn shadow-sm"
+                  title="تعديل"
+                >
+                  <FiEdit size={16} />
+                </Link>
+                <button
+                  className="icon-btn delete-btn shadow-sm"
+                  onClick={handleShow}
+                  title="حذف"
+                  disabled={loading}
+                >
+                  <FiTrash2 size={16} />
+                </button>
+              </div>
+            </div>
+
+            <div className="d-flex align-items-center gap-2 text-muted">
+              <div className="calendar-icon-wrapper shadow-sm">
+                <FiCalendar size={14} />
+              </div>
+              <small className="fw-bold">
+                ينتهي: {formatDate(coupon.expire)}
+              </small>
+            </div>
           </div>
-        </div>
 
-        <div className="d-flex align-items-center gap-2 text-secondary mb-2">
-          <div className="calendar-icon-wrapper">
-            <FiCalendar size={14} />
+          <div className="text-center border-top pt-3 mt-3">
+            <div className="discount-value">
+              <span className="amount">{coupon.discount}%</span>
+              <span className="label">خصم الكوبون</span>
+            </div>
           </div>
-          <span style={{ fontSize: "13px", fontWeight: "500" }}>
-            ينتهي: {formatDate(coupon.expire)}
-          </span>
-        </div>
-      </div>
-
-      <div className="mt-3 text-center border-top pt-3">
-        <div className="discount-value">
-          <span className="amount">{coupon.discount}%</span>
-          <span className="label">خصم الكوبون</span>
         </div>
       </div>
     </div>

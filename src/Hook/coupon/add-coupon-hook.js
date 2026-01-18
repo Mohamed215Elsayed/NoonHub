@@ -24,9 +24,11 @@ const AddCouponHook = () => {
   const onChangeValue = (e) => setCouponValue(e.target.value);
 
   const onSubmit = async () => {
+    // 1. تنظيف البيانات
     const trimmedName = couponName.trim();
     const today = new Date().toISOString().split("T")[0]; // تاريخ اليوم بتنسيق YYYY-MM-DD
 
+    // 2. الفاليديشين المحسن
     if (trimmedName === "") {
       return notify("يجب إدخال اسم الكوبون", "warn");
     }
@@ -39,21 +41,15 @@ const AddCouponHook = () => {
     if (couponValue <= 0 || couponValue > 100) {
       return notify("نسبة الخصم يجب أن تكون بين 1 و 100", "warn");
     }
-    try {
-      setIsSubmitting(true);
-      await dispatch(
-        createCoupon({
-          name: trimmedName,
-          expire: couponDate,
-          discount: couponValue,
-        })
-      ).unwrap();
-      setIsSubmitting(false);
-    } catch (e) {
-      notify("حدث خطأ أثناء الاتصال بالسيرفر، حاول لاحقاً", "error");
-    } finally {
-      setIsSubmitting(false);
-    }
+    setIsSubmitting(true);
+    await dispatch(
+      createCoupon({
+        name: trimmedName,
+        expire: couponDate,
+        discount: couponValue,
+      })
+    );
+    setIsSubmitting(false);
   };
 
   useEffect(() => {
@@ -63,14 +59,10 @@ const AddCouponHook = () => {
         setCouponName("");
         setCouponDate("");
         setCouponValue("");
-      } else {
-        const errorMessage =
-          createStatus === 400
-            ? "الكوبون موجود مسبقاً"
-            : createStatus === 403
-            ? "غير مسموح لك بالإجراء"
-            : "حدث خطأ ما، حاول لاحقاً";
-        notify(errorMessage, "error");
+      } else if (createStatus === 400) {
+        notify("هذا الكوبون موجود من قبل أو البيانات غير صالحة", "error");
+      } else if (createStatus === 403) {
+        notify("أنت غير مسموح لك بالإضافة", "error");
       }
       dispatch(resetCouponStatus());
     }
