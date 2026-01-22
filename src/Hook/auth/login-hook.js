@@ -63,22 +63,22 @@
 
 // export default LoginHook;
 /*=============RHF+Zod===========*/
-import { useEffect, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser, clearError } from "../../Features/Auth/AuthSlice";
-import { useNavigate } from "react-router-dom";
-import notify from "../useNotifaction";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-
+import { useEffect, useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, clearError } from '../../Features/Auth/AuthSlice';
+import { useNavigate } from 'react-router-dom';
+import notify from '../useNotifaction';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { getAllUserCartItems } from "../../Features/Cart/CartSlice";
 // تحديد قواعد التحقق باستخدام Zod
 const loginSchema = z.object({
   email: z
     .string()
-    .email("البريد الإلكتروني غير صحيح")
-    .min(1, "البريد الإلكتروني مطلوب"),
-  password: z.string().min(6, "كلمة المرور يجب أن لا تقل عن 6 أحرف"),
+    .email('البريد الإلكتروني غير صحيح')
+    .min(1, 'البريد الإلكتروني مطلوب'),
+  password: z.string().min(6, 'كلمة المرور يجب أن لا تقل عن 6 أحرف'),
 });
 
 const LoginHook = () => {
@@ -101,20 +101,22 @@ const LoginHook = () => {
   const onSubmit = async (data) => {
     try {
       await dispatch(loginUser(data)).unwrap();
-      notify("تم تسجيل الدخول بنجاح", "success");
-      navigate("/");
+      await dispatch(getAllUserCartItems()).unwrap();
+      notify('تم تسجيل الدخول بنجاح', 'success');
+
+      navigate('/');
     } catch (err) {
       if (Array.isArray(err?.errors)) {
-        err.errors.forEach((e) => notify(e.msg, "error"));
+        err.errors.forEach((e) => notify(e.msg, 'error'));
       } else {
-        notify(err?.message || "حدث خطأ ما", "error");
+        notify(err?.message || 'حدث خطأ ما', 'error');
       }
     }
   };
 
   useEffect(() => {
     if (error) {
-      notify(error, "error");
+      notify(error, 'error');
       dispatch(clearError());
     }
   }, [error, dispatch]);

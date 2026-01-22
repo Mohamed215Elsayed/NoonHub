@@ -10,8 +10,7 @@
   padding: 8px 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
-
-/* =============== LOGO =============== */
+/* == LOGO ===== */
 .logo {
   width: 55px;
   height: 50px;
@@ -21,8 +20,7 @@
 .logo:hover {
   transform: scale(1.1);
 }
-
-/* =============== SEARCH BAR =============== */
+/* =======SEARCH BAR==== */
 .search-form {
   max-width: 550px;
   width: 100%;
@@ -48,7 +46,7 @@
   font-size: 14px;
 }
 
-/* =============== ICON LINKS =============== */
+/* =====ICON LINKS == */
 .icon-link {
   display: flex;
   align-items: center;
@@ -63,7 +61,7 @@
 
 .icon-link:hover {
   color: #915970 !important;
-  background: #faf5f8;
+  background: #faf5f8 !important;
   transform: translateY(-2px);
 }
 
@@ -82,8 +80,8 @@
   position: absolute;
   top: -8px;
   right: -8px;
-  background: #915970;
-  color: white;
+  background: #915970 !important;
+  color: white !important;
   font-size: 11px;
   width: 20px;
   height: 20px;
@@ -92,7 +90,19 @@
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  border: 2px solid #ffffff; 
   animation: pulse 2s infinite;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.icon-link:hover .cart-badge {
+  background: #915970 !important; 
+  color: white !important;
+}
+.icon-link:hover .cart-badge {
+  animation: none; 
+  transform: scale(1.1); 
+  background: #915970 !important;
 }
 
 @keyframes pulse {

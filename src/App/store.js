@@ -1,13 +1,16 @@
-import { configureStore } from "@reduxjs/toolkit";
-import categoryReducer from "../Features/Categories/CategorySlice";
-import brandReducer from "../Features/Brands/BrandSlice";
-import SubCategoryReducer from "../Features/SubCategories/SubCategorySlice";
-import ProductReducer from "../Features/Products/ProductSlice";
-import AuthReducer from "../Features/Auth/AuthSlice";
-import ReviewReducer from "../Features/Reviews/ReviewSlice";
-import wishListReducer from "../Features/WishList/wishListSlice";
-import CouponReducer from "../Features/Coupons/CouponSlice";
-import userAddressReducer from "../Features/Addresses/UserAddressSlice";
+import { configureStore } from '@reduxjs/toolkit';
+
+import userAddressReducer from '../Features/Addresses/UserAddressSlice';
+import AuthReducer from '../Features/Auth/AuthSlice';
+import brandReducer from '../Features/Brands/BrandSlice';
+import CartReducer from '../Features/Cart/CartSlice';
+import categoryReducer from '../Features/Categories/CategorySlice';
+import CouponReducer from '../Features/Coupons/CouponSlice';
+import ProductReducer from '../Features/Products/ProductSlice';
+import ReviewReducer from '../Features/Reviews/ReviewSlice';
+import SubCategoryReducer from '../Features/SubCategories/SubCategorySlice';
+import wishListReducer from '../Features/WishList/wishListSlice';
+
 const store = configureStore({
   reducer: {
     categories: categoryReducer,
@@ -19,6 +22,7 @@ const store = configureStore({
     wishLists: wishListReducer,
     coupons: CouponReducer,
     userAddress: userAddressReducer,
+    cart:CartReducer,
   },
 });
 export default store;

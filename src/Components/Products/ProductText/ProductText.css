@@ -1,151 +1,164 @@
+/* الإعدادات العامة */
 .product-text-section {
-  padding: 10px 0;
-  direction: rtl;
+    padding: 10px 0;
+    direction: rtl;
 }
 
+/* التصنيف */
 .product-category {
-  font-size: 17px;
-  font-weight: 700;
-  color: #915970;
+    font-size: 17px;
+    font-weight: 700;
+    color: #915970;
 }
 
+/* العنوان والتقييم */
 .product-title {
-  font-size: 30px;
-  font-weight: 900;
-  color: #333;
-  line-height: 1.4;
-  margin: 0;
+    font-size: 30px;
+    font-weight: 900;
+    color: #333;
+    line-height: 1.4;
+    margin: 0;
 }
 
 .product-rating {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #915970;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-  padding: 6px 12px;
-  border-radius: 50px;
-  box-shadow: 0 6px 20px rgba(145, 89, 112, 0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #915970;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 50px;
+    box-shadow: 0 6px 20px rgba(145, 89, 112, 0.25);
 }
 
-.product-brand-label,
-.product-brand-name {
-  font-size: 18px;
-  font-weight: 700;
+/* الماركة */
+.product-brand-label, .product-brand-name {
+    font-size: 18px;
+    font-weight: 700;
 }
 
-.product-brand-label {
-  color: #666;
-}
+.product-brand-label { color: #666; }
+.product-brand-name { color: #915970; }
 
-.product-brand-name {
-  color: #915970;
-}
-
+/* خيارات الألوان - مدمجة بدون تكرار */
 .color-options {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
 .color-swatch {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 3px solid transparent;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer !important;
+    border: 1px solid #ddd;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    vertical-align: middle;
+    user-select: none;
+    overflow: hidden;
+    margin: 0 5px;
 }
 
-.color-swatch:hover,
-.color-swatch.active {
-  border-color: #915970;
-  transform: scale(1.15);
-  box-shadow: 0 10px 30px rgba(145, 89, 112, 0.3);
+/* حالة الـ Hover وحل مشكلة علامة الـ X */
+.color-swatch:hover {
+    transform: scale(1.15);
+    border-color: #915970;
+    box-shadow: 0 10px 30px rgba(145, 89, 112, 0.3);
 }
 
+.color-swatch:hover::before,
+.color-swatch:hover::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* الوصف والمواصفات */
 .product-specs-title {
-  display: inline-block;
-  font-size: 21px;
-  font-weight: 800;
-  color: #915970;
-  padding-bottom: 6px;
-  border-bottom: 3px solid #915970;
+    display: inline-block;
+    font-size: 21px;
+    font-weight: 800;
+    color: #915970;
+    padding-bottom: 6px;
+    border-bottom: 3px solid #915970;
 }
 
 .product-description {
-  font-size: 16px;
-  line-height: 1.8;
-  color: #555;
-  text-align: justify;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  line-clamp: 2;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    text-align: justify;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
 }
 
 .product-description.expanded {
-  -webkit-line-clamp: unset;
-  line-clamp: unset;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
 }
 
 .read-more {
-  display: inline-block;
-  margin-top: 6px;
-  font-weight: 700;
-  color: #915970;
-  cursor: pointer;
+    display: inline-block;
+    margin-top: 6px;
+    font-weight: 700;
+    color: #915970;
+    cursor: pointer;
 }
 
+/* السعر وزر العربة */
 .product-price {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px 30px;
-  font-size: 22px;
-  font-weight: 700;
-  color: #915970;
-  background: #fdf6f9;
-  border-radius: 50px;
-  white-space: nowrap;
-  box-shadow: 0 10px 35px rgba(145, 89, 112, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 30px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #915970;
+    background: #fdf6f9;
+    border-radius: 50px;
+    white-space: nowrap;
+    box-shadow: 0 10px 35px rgba(145, 89, 112, 0.15);
 }
 
 .add-to-cart-btn {
-  margin-right: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5px 20px;
-  gap: 8px;
-  min-height: 52px;
-  font-size: 18px;
-  font-weight: 800;
-  color: #fff;
-  background: linear-gradient(135deg, #915970, #b36f8e);
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 12px 40px rgba(145, 89, 112, 0.3);
-  transition: all 0.3s ease;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 20px;
+    gap: 8px;
+    min-height: 52px;
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(135deg, #915970, #b36f8e);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 12px 40px rgba(145, 89, 112, 0.3);
+    transition: all 0.3s ease;
 }
 
-.add-to-cart-btn:hover {
-  background: linear-gradient(135deg, #7a4d61, #915970);
-  box-shadow: 0 22px 55px rgba(145, 89, 112, 0.5);
+.add-to-cart-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #7a4d61, #915970);
+    box-shadow: 0 22px 55px rgba(145, 89, 112, 0.5);
 }
 
-@media (max-width: 576px) {
-  .product-title {
-    font-size: 24px;
-  }
+.add-to-cart-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
 
-  .product-price {
-    width: 100%;
-    font-size: 20px;
-  }
+/* الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .product-title { font-size: 24px; }
+    .product-price { width: 100%; font-size: 20px; }
+    .add-to-cart-btn { margin-right: 0; width: 100%; }
 }

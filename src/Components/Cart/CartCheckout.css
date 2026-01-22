@@ -1,0 +1,104 @@
+.cart-checkout {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+  /* لضمان عدم خروج العناصر */
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* حل مشكلة حقل الكوبون والزر */
+.coupon-wrapper {
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+  /* لربط الحقل والزر ببعضهما */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.coupon-input {
+  flex-grow: 1; /* يأخذ المساحة المتاحة */
+  border: none;
+  padding: 12px 15px;
+  font-size: 14px;
+  outline: none;
+  width: 50%; /* تحديد عرض مبدئي ليسمح للزر بالظهور */
+}
+
+.coupon-btn {
+  background-color: #272727;
+  color: white;
+  border: none;
+  padding: 0 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap; /* يمنع نزول النص لسطر جديد */
+}
+
+.coupon-btn:hover {
+  background-color: #915970;
+}
+
+/* حاوية الأسعار بشكل أنيق */
+.total-price-container {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.old-price {
+  color: #999;
+  text-decoration: line-through;
+  font-size: 14px;
+}
+
+.final-price {
+  color: #915970;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* تنسيق الأزرار الرئيسية */
+.checkout-btn,
+.clear-cart-btn {
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
+}
+
+.checkout-btn {
+  background-color: #915970;
+  color: white !important;
+  border: none;
+}
+
+.checkout-btn:hover {
+  background-color: #7a4a5e;
+  transform: translateY(-2px);
+}
+
+.clear-cart-btn {
+  background-color: transparent;
+  color: #ff4d4d !important;
+  border: 1px solid #ff4d4d;
+}
+
+.clear-cart-btn:hover {
+  background-color: #ff4d4d;
+  color: white !important;
+}

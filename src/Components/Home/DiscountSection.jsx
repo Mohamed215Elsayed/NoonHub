@@ -1,7 +1,7 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import laptops from "../../Assets/Images/laptops.png";
-import "./DiscountSection.css";
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import laptops from '../../Assets/Images/laptops.png';
+import './DiscountSection.css';
 
 function DiscountSection() {
   return (
@@ -24,7 +24,8 @@ function DiscountSection() {
           <p className="discount-subtitle mb-4">
             عروض لفترة محدودة · أفضل الماركات · شحن مجاني
           </p>
-          <Link to="/products/category/654321">
+          {/* <Link to="/products/category/654321"> */}
+          <Link to="/products/694e971288d002aea56ad606">
             <Button className="discount-cta-btn">تسوق الآن</Button>
           </Link>
         </Col>

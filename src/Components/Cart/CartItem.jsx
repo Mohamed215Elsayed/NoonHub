@@ -1,159 +1,175 @@
-// import { Col, Row } from "react-bootstrap";
-// import mobile from "../../Assets/Images/mobile.png";
-// import "./CartItem.css";
-// import { FaTrashAlt, FaStar } from "react-icons/fa";
+import { Button, Col, Modal, Row } from 'react-bootstrap';
+import { FaTrashAlt, FaStar } from 'react-icons/fa';
+// import mobile from '../../Assets/Images/mobile.png';
+import DeleteCartHook from '../../Hook/cart/delete-cart-hook';
+import './CartItem.css';
+import UpdateQuantityCartHook from '../../Hook/cart/update-quanity-cart-hook';
 
-// function CartItem() {
-//   return (
-//     <Col xs="12" className="cart-item-card my-3 d-flex px-2">
-//       <img src={mobile} alt="product-img" className="item-image" />
+function CartItem({ item }) {
+  const { show, handleClose, handleShow, handelDeleteItem, isDeleting } =
+    DeleteCartHook(item);
+  const { itemCount, setItemCount, handleUpdate, isUpdating } =
+    UpdateQuantityCartHook(item);
+  const { product, color, price } = item || {};
 
-//       <div className="w-100 item-details-container">
-//         <Row className="justify-content-between item-header">
-//           <Col
-//             sm="12"
-//             className="d-flex justify-content-between align-items-start"
-//           >
-//             <div className="item-category">الالكترونيات</div>
-
-//             <div className="remove-item-btn d-flex align-items-center">
-//               <FaTrashAlt className="ms-1" />
-//               <span>ازاله</span>
-//             </div>
-//           </Col>
-//         </Row>
-
-//         <Row className="mt-2">
-//           <Col
-//             sm="12"
-//             className="d-flex justify-content-start align-items-baseline"
-//           >
-//             <div className="item-title me-auto">
-//               آيفون XR بذاكرة سعة 128 جيجابايت ويدعم تقنية 4G LTE مع تطبيق فيس
-//             </div>
-
-//             <div className="item-rate-section d-flex align-items-center">
-//               <FaStar className="star-icon" />
-//               <div className="item-rate">4.5</div>
-//             </div>
-//           </Col>
-//         </Row>
-
-//         <Row>
-//           <Col sm="12" className="mt-2 d-flex align-items-center">
-//             <div className="item-label">الماركة :</div>
-//             <div className="item-brand-value mx-1">ابل </div>
-//           </Col>
-//         </Row>
-
-//         <Row>
-//           <Col sm="12" className="mt-2 d-flex align-items-center">
-//             <div className="item-label">اللون:</div>
-//             <div
-//               className="item-color-swatch border ms-2"
-//               style={{ backgroundColor: "#E52C2C" }}
-//             ></div>
-//           </Col>
-//         </Row>
-
-//         <Row className="justify-content-between mt-3 item-footer">
-//           <Col
-//             sm="12"
-//             className="d-flex justify-content-between align-items-center"
-//           >
-//             <div className="d-flex align-items-center quantity-control">
-//               <div className="item-label">الكمية</div>
-//               <input
-//                 className="quantity-input mx-2"
-//                 type="number"
-//                 defaultValue="1"
-//               />
-//             </div>
-
-//             <div className="item-price">٣٠٠٠ جنية</div>
-//           </Col>
-//         </Row>
-//       </div>
-//     </Col>
-//   );
-// }
-
-// export default CartItem;
-
-import { Col, Row } from "react-bootstrap";
-import mobile from "../../Assets/Images/mobile.png";
-import "./CartItem.css";
-
-import { FaTrashAlt, FaStar } from "react-icons/fa";
-
-function CartItem() {
   return (
-    <Col xs="12" className="cart-item-card my-3 d-flex px-2">
-      <img src={mobile} alt="product-img" className="item-image" />
+    <Col xs={12} className="cart-item-card my-3 px-2">
+      <Modal
+        show={show}
+        onHide={handleClose}
+        centered
+        backdrop="static"
+        className="delete-modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title className="delete-modal-title">تأكيد الحذف</Modal.Title>
+        </Modal.Header>
 
-      <div className="w-100 item-details-container">
-        <Row className="justify-content-between item-header">
-          <Col
-            sm="12"
-            className="d-flex justify-content-between align-items-start"
+        <Modal.Body className="delete-modal-body">
+          <p>هل أنت متأكد من حذف هذا المنتج من عربة التسوق؟</p>
+          <span className="text-muted">لا يمكن التراجع عن هذا الإجراء</span>
+        </Modal.Body>
+
+        <Modal.Footer className="delete-modal-footer">
+          <Button
+            variant="outline-secondary"
+            onClick={handleClose}
+            className="modal-cancel-btn"
           >
-            <div className="item-category">الالكترونيات</div>
+            تراجع
+          </Button>
 
-            <div className="remove-item-btn d-flex align-items-center">
-              <FaTrashAlt className="ms-1" />
-              <span>ازاله</span>
+          <Button
+            variant="danger"
+            onClick={handelDeleteItem}
+            disabled={isDeleting}
+            className="modal-delete-btn"
+          >
+            {isDeleting ? 'جارٍ الحذف...' : 'حذف المنتج'}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <img
+        // src={product?.imageCover || mobile}
+        src={product?.imageCover}
+        alt={product?.title || 'product image'}
+        className="item-image"
+        // loading="lazy"
+      />
+
+      <div className="item-details-container">
+        <Row className="item-header">
+          <Col className="d-flex justify-content-between align-items-start">
+            <span className="item-category">
+              {product?.category?.name || 'بدون قسم'}
+            </span>
+
+            <button
+              className="remove-item-btn"
+              onClick={handleShow}
+              aria-label="remove item"
+            >
+              <FaTrashAlt />
+              <span>إزالة</span>
+            </button>
+          </Col>
+        </Row>
+
+        <Row className="mt-2">
+          <Col className="d-flex justify-content-between align-items-center">
+            <h3 className="item-title">
+              {product?.title || 'عنوان المنتج غير متوفر'}
+            </h3>
+
+            <div className="item-rate-section">
+              <FaStar className="star-icon" />
+              <span className="item-rate">{product?.ratingsAverage || 0}</span>
             </div>
           </Col>
         </Row>
 
         <Row className="mt-2">
-          <Col
-            sm="12"
-            className="d-flex justify-content-start align-items-baseline"
-          >
-            <div className="item-title">
-              آيفون XR بذاكرة سعة 128 جيجابايت ويدعم تقنية 4G LTE مع تطبيق فيس
-            </div>
-
-            <div className="item-rate-section d-flex align-items-center">
-              <FaStar className="star-icon" />
-              <div className="item-rate">4.5</div>
-            </div>
+          <Col className="d-flex align-items-center">
+            <span className="item-label">الماركة:</span>
+            <span className="item-brand-value mx-1">
+              {product?.brand?.name || 'لا يوجد'}
+            </span>
           </Col>
         </Row>
 
-        <Row>
-          <Col sm="12" className="mt-2 d-flex align-items-center">
-            <div className="item-label">الماركة :</div>
-            <div className="item-brand-value mx-1">ابل </div>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col sm="12" className="mt-2 d-flex align-items-center">
-            <div className="item-label">اللون:</div>
-            <div
-              className="item-color-swatch border ms-2"
-              style={{ backgroundColor: "#E52C2C" }}
-            ></div>
-          </Col>
-        </Row>
-
-        <Row className="justify-content-between mt-3 item-footer">
-          <Col
-            sm="12"
-            className="d-flex justify-content-between align-items-center"
-          >
-            <div className="d-flex align-items-center quantity-control">
-              <div className="item-label">الكمية</div>
-              <input
-                className="quantity-input mx-2"
-                type="number"
-                defaultValue="1"
+        {color && (
+          <Row className="mt-2">
+            <Col className="d-flex align-items-center">
+              <span className="item-label">اللون:</span>
+              <span
+                className="item-color-swatch mx-2"
+                style={{ backgroundColor: color }}
               />
+            </Col>
+          </Row>
+        )}
+
+        <Row className="item-footer mt-3">
+          <Col className="d-flex justify-content-between align-items-center">
+            {/* <div className="quantity-control">
+              <span className="item-label">الكمية</span>
+              <input
+                type="number"
+                min="1"
+                value={itemCount}
+                onChange={(e) => setItemCount(e.target.value)}
+                style={{ width: '60px' }}
+                className="quantity-input mx-2"
+              />
+              <button
+                onClick={handleUpdate}
+                className="update-qty-btn ms-2"
+                disabled={isUpdating || itemCount === item.quantity}
+              >
+               {isUpdating ? '...' : 'تحديث'}
+              </button>
+            </div> */}
+            <div className="quantity-control">
+              <span className="item-label">الكمية</span>
+              <button
+                className="qty-btn"
+                onClick={() =>
+                  setItemCount((prev) => Math.max(1, Number(prev) - 1))
+                }
+              >
+                -
+              </button>
+
+              <input
+                type="number"
+                value={itemCount}
+                readOnly
+                onChange={(e) => setItemCount(e.target.value)}
+                className="quantity-input mx-2"
+                style={{
+                  width: '45px',
+                  border: 'none',
+                  background: 'transparent',
+                }}
+              />
+              <button
+                className="qty-btn"
+                onClick={() => setItemCount((prev) => Number(prev) + 1)}
+              >
+                +
+              </button>
+
+              <button
+                onClick={handleUpdate}
+                className="update-qty-btn ms-3"
+                disabled={isUpdating || itemCount === item.quantity}
+              >
+                {isUpdating ? '...' : 'تحديث'}
+              </button>
             </div>
 
-            <div className="item-price">٣٠٠٠ جنية</div>
+            <div className="item-price">{price} جنية</div>
           </Col>
         </Row>
       </div>

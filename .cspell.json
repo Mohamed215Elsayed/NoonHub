@@ -1,0 +1,29 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "ignorePaths": [
+    "node_modules",
+    "build",
+    "dist",
+    "package-lock.json",
+    "yarn.lock"
+  ],
+  "words": [
+    "redux",
+    "thunk",
+    "middleware",
+    "useSelector",
+    "useDispatch",
+    "cartItems",
+    "formik",
+    "axios",
+    "bcrypt",
+    "jsonwebtoken",
+    "mongoose",
+    "nodemon",
+    "eslint",
+    "prettier",
+    "uuid",
+    "dto"
+  ]
+}

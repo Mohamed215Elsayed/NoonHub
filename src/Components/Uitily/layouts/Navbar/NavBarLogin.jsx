@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Navbar,
   Container,
@@ -7,20 +7,22 @@ import {
   Nav,
   Badge,
   NavDropdown,
-} from "react-bootstrap";
-import { FaUser, FaShoppingCart, FaHeart } from "react-icons/fa";
-import { FaUserCircle, FaSignOutAlt, FaColumns } from "react-icons/fa";
-import logo from "../../../../Assets/Images/logo.png";
-import "./navbar.css";
-import NavbarSearchHook from "../../../../Hook/search/navbar-search-hook";
-import { useSelector, useDispatch } from "react-redux";
+} from 'react-bootstrap';
+import { FaUser, FaShoppingCart, FaHeart } from 'react-icons/fa';
+import { FaUserCircle, FaSignOutAlt, FaColumns } from 'react-icons/fa';
+import logo from '../../../../Assets/Images/logo.png';
+import './navbar.css';
+import NavbarSearchHook from '../../../../Hook/search/navbar-search-hook';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   logoutUser,
   getLoggedUser,
   loadUserFromStorage,
-} from "../../../../Features/Auth/AuthSlice";
-import notify from "../../../../Hook/useNotifaction";
-import { useEffect } from "react";
+} from '../../../../Features/Auth/AuthSlice';
+import notify from '../../../../Hook/useNotifaction';
+import { useEffect } from 'react';
+import GetAllUserCartHook from '../../../../Hook/cart/get-all-user-cart-hook';
+import { clearCartState } from '../../../../Features/Cart/CartSlice';
 function NavBarLogin() {
   const { searchWord, OnChangeSearch } = NavbarSearchHook();
 
@@ -28,7 +30,7 @@ function NavBarLogin() {
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(loadUserFromStorage());
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem('token')) {
       dispatch(getLoggedUser());
     }
   }, [dispatch]);
@@ -37,9 +39,11 @@ function NavBarLogin() {
 
   const logOut = () => {
     dispatch(logoutUser());
-    notify("تم تسجيل الخروج بنجاح", "success");
-    navigate("/");
+    dispatch(clearCartState());
+    notify('تم تسجيل الخروج بنجاح', 'success');
+    navigate('/');
   };
+  const { numOfCartItems } = GetAllUserCartHook();
 
   return (
     <>
@@ -89,12 +93,12 @@ function NavBarLogin() {
                   <NavDropdown.Item
                     as={Link}
                     to={
-                      user.role === "admin"
-                        ? "/admin/allproducts"
-                        : "/user/profile"
+                      user.role === 'admin'
+                        ? '/admin/allproducts'
+                        : '/user/profile'
                     }
                   >
-                    {user.role === "admin" ? (
+                    {user.role === 'admin' ? (
                       <>
                         <FaColumns className="ms-2" /> لوحة التحكم
                       </>
@@ -124,7 +128,9 @@ function NavBarLogin() {
                 className="icon-link position-relative"
               >
                 <FaShoppingCart className="nav-icon" />
-                <Badge className="cart-badge">3</Badge>
+                <Badge className="cart-badge">
+                  {numOfCartItems > 0 ? numOfCartItems : 0}
+                </Badge>
                 <span className="d-none d-md-inline">العربة</span>
               </Nav.Link>
             </Nav>
