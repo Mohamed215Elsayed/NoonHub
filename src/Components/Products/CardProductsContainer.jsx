@@ -13,7 +13,7 @@ function CardProductsContainer({
   loading,
 }) {
   CardContainerHook();
-
+// console.log(products)
   return (
     <Container>
       {title && (

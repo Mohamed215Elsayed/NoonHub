@@ -1,15 +1,15 @@
-import { Container, Row, Col } from 'react-bootstrap'
-import CartCheckout from '../../Components/Cart/CartCheckout'
-import CartItem from '../../Components/Cart/CartItem'
-import './CartPage.css'
-import GetAllUserCartHook from '../../Hook/cart/get-all-user-cart-hook'
-import CartEmpty from '../../Assets/Images/shopping-bag-full.png'
+import { Container, Row, Col } from 'react-bootstrap';
+import CartCheckout from '../../Components/Cart/CartCheckout';
+import CartItem from '../../Components/Cart/CartItem';
+import './CartPage.css';
+import GetAllUserCartHook from '../../Hook/cart/get-all-user-cart-hook';
+import CartEmpty from '../../Assets/Images/shopping-bag-full.png';
 
 function CartPage() {
   const { cartItems, totalCartPrice, totalPriceAfterDiscount } =
-    GetAllUserCartHook()
+    GetAllUserCartHook();
 
-  const hasItems = cartItems?.length > 0
+  const hasItems = cartItems?.length > 0;
 
   return (
     <Container className="cart-page-container" style={{ minHeight: '670px' }}>
@@ -18,12 +18,10 @@ function CartPage() {
       </Row>
 
       <Row className="justify-content-center">
-
-        <Col xs={12} md={9}>
+        {/* <Col xs={12} md={9}> */}
+        <Col xs={12} lg={9}>
           {hasItems ? (
-            cartItems.map(item => (
-              <CartItem key={item._id} item={item} />
-            ))
+            cartItems.map((item) => <CartItem key={item._id} item={item} />)
           ) : (
             <div className="cart-item-body">
               <div className="empty-cart">
@@ -34,8 +32,8 @@ function CartPage() {
             </div>
           )}
         </Col>
-
-        <Col xs={12} md={3}>
+        <Col xs={12} lg={3} className="mt-3 mt-lg-0">
+          {/* <Col xs={12} md={3}> */}
           <CartCheckout
             totalCartPrice={totalCartPrice}
             totalPriceAfterDiscount={totalPriceAfterDiscount}
@@ -43,7 +41,7 @@ function CartPage() {
         </Col>
       </Row>
     </Container>
-  )
+  );
 }
 
-export default CartPage
+export default CartPage;

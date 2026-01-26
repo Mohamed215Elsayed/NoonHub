@@ -80,3 +80,27 @@ hr {
   margin: 40px 0;
   opacity: 1;
 }
+
+.btn-cancel {
+  background-color: #ffffff;
+  color: #64748b; 
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 35px;
+  font-family: "Almarai", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  margin-left: 10px; 
+}
+
+.btn-cancel:hover {
+  background-color: #f1f5f9;
+  color: #334155;
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+}
+
+.btn-cancel:active {
+  transform: translateY(0);
+}

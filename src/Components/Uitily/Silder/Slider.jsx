@@ -8,7 +8,7 @@ const HeroSlider = () => {
       controls={true}
       indicators={true}
       pause="hover"
-      interval={4000}
+      interval={2000}
       className="hero-carousel"
     >
       {/* Slide 1 */}
@@ -27,7 +27,7 @@ const HeroSlider = () => {
           </div>
         </div>
       </Carousel.Item>
-    {/* Slide 2 */}
+      {/* Slide 2 */}
       <Carousel.Item>
         <div className="hero-slide slide-2">
           <div className="hero-content">

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductWishListPage } from '../../Features/WishList/wishListSlice'; //getProductWishList,
+import { getProductWishListPage } from '../../Features/WishList/wishListSlice';
 
 const CardContainerHook = () => {
   const dispatch = useDispatch();
@@ -8,19 +8,18 @@ const CardContainerHook = () => {
     (state) => state.wishLists
   );
 
-  // useEffect(() => {
-  //   if (allWishList.length === 0 && !loading) {
-  //     //   dispatch(getProductWishList());
-  //     dispatch(getProductWishListPage(1));
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  const { user } = useSelector((state) => state.auth);
+
   useEffect(() => {
     const fetchWishlist = async () => {
-      await dispatch(getProductWishListPage(1));
+      const token = localStorage.getItem('token');
+      if (token && user?.role === 'user') {
+        await dispatch(getProductWishListPage(1));
+      }
     };
+
     fetchWishlist();
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   const onPress = async (page) => {
     await dispatch(getProductWishListPage(page));

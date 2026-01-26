@@ -4,7 +4,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   direction: rtl;
-  font-family: "Almarai", sans-serif;
+  font-family: 'Almarai', sans-serif;
 }
 
 .admin-content-title {
@@ -63,7 +63,7 @@
   border-radius: 8px;
   padding: 12px 15px;
   font-size: 16px;
-  font-family: "Almarai", sans-serif;
+  font-family: 'Almarai', sans-serif;
   transition: all 0.3s;
   width: 100%;
 }

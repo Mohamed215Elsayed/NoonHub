@@ -1,80 +1,54 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-/* =====================================================
-   Base Product Schema (مشترك)
-===================================================== */
 const baseProductSchema = z.object({
-  // اسم المنتج
-  prodName: z
-    .string()
-    .trim()
-    .min(3, "اسم المنتج يجب أن يكون 3 حروف على الأقل")
-    .max(100, "اسم المنتج طويل جداً"),
-
-  // الوصف
-  prodDescription: z
-    .string()
-    .trim()
-    .min(10, "الوصف يجب أن يكون تفصيلياً (10 حروف على الأقل)")
-    .max(2000, "الوصف طويل جداً"),
-
-  // السعر الأساسي
-  priceBefore: z.coerce
-    .number({ invalid_type_error: "يجب إدخال رقم صحيح للسعر" })
-    .positive("السعر يجب أن يكون رقماً موجباً أكبر من 0")
-    .min(1, "السعر لا يمكن أن يكون أقل من 1"),
-
-  // سعر الخصم (اختياري)
+  prodName: z.string().trim().min(3, 'اسم المنتج قصير جداً'),
+  prodDescription: z.string().trim().min(10, 'الوصف قصير جداً'),
+  priceBefore: z.coerce.number().positive('السعر يجب أن يكون موجباً'),
   priceAfterDiscount: z.preprocess(
-    (val) => (val === "" ? undefined : val),
-    z.coerce
-      .number()
-      .nonnegative("سعر الخصم لا يمكن أن يكون سالباً")
-      .optional()
+    (val) => (val === '' ? undefined : val),
+    z.coerce.number().nonnegative().optional()
   ),
+  qty: z.coerce.number().int().nonnegative(),
+  catID: z.string().refine((val) => val !== '0', 'اختر تصنيف رئيسي'),
+  brandID: z.string().optional(),
 
-  // الكمية
-  qty: z.coerce
-    .number()
-    .int("الكمية يجب أن تكون رقماً صحيحاً")
-    .nonnegative("الكمية لا يمكن أن تكون أقل من الصفر"),
+  colors: z.preprocess(
+    (val) => {
+      if (!val) return [];
+      if (Array.isArray(val)) return val;
 
-  // التصنيف الرئيسي
-  catID: z
-    .string()
-    .refine((val) => val !== "0" && val !== "", "من فضلك اختر تصنيف رئيسي"),
-
-  // البراند (اختياري)
-  brandID: z
-    .string()
-    .optional()
-    .refine((val) => !val || val !== "0", "من فضلك اختر براند صحيح"),
-
-  // الألوان (Hex)
-  colors: z
-    .array(
-      z.string().regex(/^#([0-9A-F]{3}){1,2}$/i, "لون غير صالح")
-    )
-    .default([]),
-
-  // التصنيفات الفرعية (react-select)
-  selectedSubID: z
-    .array(
-      z.object({
-        value: z.string(),
-        label: z.string(),
-      })
-    )
-    .default([]),
+      if (typeof val === 'string') return [val];
+      return val;
+    },
+    z
+      .array(z.string().regex(/^#([0-9A-F]{3}){1,2}$/i, 'لون غير صالح'))
+      .default([])
+  ),
+  selectedSubID: z.preprocess(
+    (val) => {
+      if (!val) return [];
+      if (typeof val === 'object' && !Array.isArray(val)) return [val];
+      return val;
+    },
+    z.array(z.object({ value: z.string(), label: z.string() })).default([])
+  ),
 });
 
-/* =====================================================
-   Add Product Schema
-===================================================== */
 export const addProductSchema = baseProductSchema.refine(
+  (data) =>
+    !data.priceAfterDiscount ||
+    Number(data.priceAfterDiscount) < Number(data.priceBefore),
+  {
+    message: 'سعر الخصم يجب أن يكون أقل من السعر الأصلي',
+    path: ['priceAfterDiscount'],
+  }
+);
+
+export const editProductSchema = baseProductSchema.partial().refine(
   (data) => {
     if (
       data.priceAfterDiscount &&
+      data.priceBefore &&
       Number(data.priceAfterDiscount) >= Number(data.priceBefore)
     ) {
       return false;
@@ -82,31 +56,7 @@ export const addProductSchema = baseProductSchema.refine(
     return true;
   },
   {
-    message: "سعر الخصم يجب أن يكون أقل من السعر الأصلي",
-    path: ["priceAfterDiscount"],
+    message: 'سعر الخصم يجب أن يكون أقل من السعر الأصلي',
+    path: ['priceAfterDiscount'],
   }
 );
-
-/* =====================================================
-   Edit Product Schema
-   (كل الحقول اختيارية ما عدا المنطق)
-===================================================== */
-export const editProductSchema = baseProductSchema
-  .partial()
-  .refine(
-    (data) => {
-      if (
-        data.priceAfterDiscount &&
-        data.priceBefore &&
-        Number(data.priceAfterDiscount) >= Number(data.priceBefore)
-      ) {
-        return false;
-      }
-      return true;
-    },
-    {
-      message: "سعر الخصم يجب أن يكون أقل من السعر الأصلي",
-      path: ["priceAfterDiscount"],
-    }
-  );
-

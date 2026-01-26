@@ -1,0 +1,33 @@
+.skeleton-card {
+  height: 190px;
+  border-radius: 32px;
+  background: linear-gradient(110deg, #f4eef1 25%, #faf5f7 50%, #f4eef1 75%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skeleton-img {
+  width: 80%;
+  height: 80%;
+  border-radius: 16px;
+  background: linear-gradient(
+    90deg,
+    rgba(145, 89, 112, 0.05) 25%,
+    rgba(145, 89, 112, 0.12) 50%,
+    rgba(145, 89, 112, 0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

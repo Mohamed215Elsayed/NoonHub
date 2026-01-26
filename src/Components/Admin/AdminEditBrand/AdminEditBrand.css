@@ -1,0 +1,145 @@
+.admin-add-brand-wrapper {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  direction: rtl;
+  font-family: 'Almarai', sans-serif;
+}
+
+.admin-content-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #444;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 30px !important;
+  text-align: right;
+}
+
+.text-form {
+  font-size: 15px;
+  font-weight: 700;
+  color: #555;
+  text-align: right;
+}
+
+#upload-image-input {
+  display: none;
+}
+
+.image-upload-area {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 130px !important;
+  height: 130px !important;
+  border: 2px dashed #915970;
+  border-radius: 14px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  background-color: #fafafa;
+}
+
+.image-upload-area input[type='file'] {
+  display: none;
+}
+.image-upload-area:hover {
+  border-color: #915970;
+  background-color: #fff3f7;
+}
+
+.brand-preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;
+  z-index: 10;
+  transition: transform 0.3s ease-in-out;
+}
+.logo-style {
+  object-fit: contain !important;
+  padding: 5px;
+}
+.image-upload-area input[type='file'] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.image-upload-area:hover .brand-preview-image {
+  transform: scale(1.05);
+}
+
+.input-form {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-size: 15px;
+  font-family: 'Almarai', sans-serif;
+  transition: all 0.25s;
+  width: 100%;
+}
+
+.input-form:focus {
+  border-color: #915970;
+  box-shadow: 0 0 0 0.2rem rgba(145, 89, 112, 0.25);
+  outline: none;
+}
+
+.input-form::placeholder {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.btn-save-brand {
+  background-color: #915970;
+  color: #fff;
+  border: none;
+  padding: 10px 32px;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.btn-save-brand:hover {
+  background-color: #7b4c62;
+  transform: translateY(-1px);
+}
+
+.btn-save-brand:disabled {
+  background-color: #c8b0bb;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.edit-mode-badge {
+  display: inline-block;
+  background-color: #f3e7ec;
+  color: #915970;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 767px) {
+  .admin-content-title {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .text-form {
+    text-align: center;
+  }
+
+  .btn-save-brand {
+    width: 100%;
+  }
+
+  .image-upload-area {
+    margin: auto;
+  }
+}

@@ -71,7 +71,7 @@ import notify from '../useNotifaction';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { getAllUserCartItems } from "../../Features/Cart/CartSlice";
+import { getAllUserCartItems } from '../../Features/Cart/CartSlice';
 // تحديد قواعد التحقق باستخدام Zod
 const loginSchema = z.object({
   email: z
@@ -101,7 +101,9 @@ const LoginHook = () => {
   const onSubmit = async (data) => {
     try {
       await dispatch(loginUser(data)).unwrap();
-      await dispatch(getAllUserCartItems()).unwrap();
+      try {
+        await dispatch(getAllUserCartItems()).unwrap();
+      } catch {}
       notify('تم تسجيل الدخول بنجاح', 'success');
 
       navigate('/');

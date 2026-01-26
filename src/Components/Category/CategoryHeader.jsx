@@ -1,63 +1,73 @@
-// import { Container, Row, Col } from "react-bootstrap";
-
-// const CategoryHeader = () => {
-//   return (
-//     <div className="cat-header">
-//       <Container>
-//         <Row>
-//           <Col className="d-flex justify-content-start py-2 flex-wrap">
-//             <div className="cat-text-header ">الكل</div>
-//             <div className="cat-text-header">الكترونيات</div>
-//             <div className="cat-text-header">ملابس</div>
-//             <div className="cat-text-header"> كهربيه</div>
-//             <div className="cat-text-header">تخفيضات</div>
-//             <div className="cat-text-header">تخفيضات</div>
-//             <div className="cat-text-header">تخفيضات</div>
-//             <div className="cat-text-header">تخفيضات</div>
-//             <div className="cat-text-header">تخفيضات</div>
-//             <div className="cat-text-header">المزيد</div>
-//           </Col>
-//         </Row>
-//       </Container>
-//     </div>
-//   );
-// };
-
-// export default CategoryHeader;
-
-import "./CategoryHeader.css";
-import { Container } from "react-bootstrap";
+import { useState, useEffect, useMemo } from 'react';
+import { Container } from 'react-bootstrap';
+import { Link, useLocation } from 'react-router-dom';
+import AllCategoryHook from '../../Hook/Category/all-category-page-hook';
+import './CategoryHeader.css';
 
 const CategoryHeader = () => {
-  const categories = [
-    "الكل",
-    "إلكترونيات",
-    "ملابس",
-    "أحذية",
-    "أجهزة منزلية",
-    "مكياج و عطور",
-    "موبايلات",
-    "ساعات",
-    "ألعاب أطفال",
-    "المزيد",
-  ];
+    const [category, loading] = AllCategoryHook();
 
-  return (
-    <div className="category-header">
-      <Container>
-        <div className="category-list">
-          {categories.map((cat, index) => (
-            <button
-              key={index}
-              className={`category-item ${cat === "الكل" ? "active" : ""}`}
-            >
-              {cat}
-            </button>
-          ))}
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+    const displayCategories = useMemo(() => {
+        const categoriesData = category?.data || [];
+        const limited = categoriesData.slice(0, 8);
+
+        return [
+            { _id: 'all', name: 'الكل', link: '/products' },
+            ...limited.map((cat) => ({
+                ...cat,
+                link: `/products/category/${cat._id}`,
+            })),
+            { _id: 'more', name: 'المزيد', link: '/allcategory' },
+        ];
+    }, [category]);
+
+    const [activeCategoryId, setActiveCategoryId] = useState('all');
+
+    useEffect(() => {
+        const matched = displayCategories.find((cat) =>
+            currentPath.startsWith(cat.link)
+        );
+        if (matched) {
+            setActiveCategoryId(matched._id);
+        } else if (currentPath === '/products') {
+            setActiveCategoryId('all');
+        }
+    }, [currentPath, displayCategories]);
+
+    return (
+        <>
+        <div className="category-header-wrapper">
+            <Container>
+                <div className="category-list">
+                    {loading
+                        ? Array.from({ length: 6 }).map((_, i) => (
+                              <div key={i} className="category-item skeleton"></div>
+                          ))
+                        : displayCategories.map((cat) => (
+                              <Link
+                                  key={cat._id}
+                                  to={cat.link}
+                                  style={{ textDecoration: 'none' }}
+                              >
+                                  <button
+                                      className={`category-item ${
+                                          activeCategoryId === cat._id ? 'active' : ''
+                                      }`}
+                                      onClick={() => setActiveCategoryId(cat._id)}
+                                  >
+                                      {cat.name}
+                                  </button>
+                              </Link>
+                          ))}
+                </div>
+            </Container>
         </div>
-      </Container>
-    </div>
-  );
+          <div className="category-header-spacer"></div>
+        </>
+    );
 };
 
 export default CategoryHeader;

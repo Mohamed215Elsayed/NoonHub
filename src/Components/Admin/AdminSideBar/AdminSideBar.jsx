@@ -72,8 +72,8 @@
 
 // export default AdminSideBar;
 
-import { NavLink } from "react-router-dom";
-import "./AdminSideBar.css";
+import { NavLink } from 'react-router-dom';
+import './AdminSideBar.css';
 import {
   FaClipboardList,
   FaBoxes,
@@ -82,46 +82,93 @@ import {
   FaLayerGroup,
   FaPlusSquare,
   FaTicketAlt,
-} from "react-icons/fa";
+  FaTrademark,
+  FaSitemap 
+} from 'react-icons/fa';
+import useAuth from '../../../Hook/auth/protected-route-hook';
 
 function AdminSideBar() {
+  const { isAdmin } = useAuth();
   const sidebarLinks = [
     {
-      to: "/admin/allorders",
-      text: "إدارة الطلبات",
+      to: '/admin/allorders',
+      text: 'إدارة الطلبات',
       icon: <FaClipboardList />,
+      adminOnly: true,
     },
-    { to: "/admin/allproducts", text: "إدارة المنتجات", icon: <FaBoxes /> },
-    { to: "/admin/addbrand", text: "أضف ماركة", icon: <FaTags /> },
-    { to: "/admin/addcategory", text: "أضف تصنيف", icon: <FaListAlt /> },
     {
-      to: "/admin/addsubcategory",
-      text: "أضف تصنيف فرعي",
-      icon: <FaLayerGroup />,
+      to: '/admin/allproducts',
+      text: 'إدارة المنتجات',
+      icon: <FaBoxes />,
+      adminOnly: false,
     },
-    { to: "/admin/addproduct", text: "أضف منتج", icon: <FaPlusSquare /> },
-    { to: "/admin/addcoupon", text: "أضف كوبون", icon: <FaTicketAlt /> },
+    {
+      to: '/admin/allbrands',
+      text: 'إدارة الماركات',
+      icon: <FaTrademark />,
+      adminOnly: false,
+    },
+    {
+      to: '/admin/allcategories',
+      text: 'إدارة التصنيفات',
+      icon: <FaSitemap  />,
+      adminOnly: false,
+    },
+    {
+      to: '/admin/addbrand',
+      text: 'أضف ماركة',
+      icon: <FaTags />,
+      adminOnly: false,
+    },
+    {
+      to: '/admin/addcategory',
+      text: 'أضف تصنيف',
+      icon: <FaListAlt />,
+      adminOnly: false,
+    },
+    {
+      to: '/admin/addsubcategory',
+      text: 'أضف تصنيف فرعي',
+      icon: <FaLayerGroup />,
+      adminOnly: false,
+    },
+    {
+      to: '/admin/addproduct',
+      text: 'أضف منتج',
+      icon: <FaPlusSquare />,
+      adminOnly: false,
+    },
+    {
+      to: '/admin/addcoupon',
+      text: 'أضف كوبون',
+      icon: <FaTicketAlt />,
+      adminOnly: true,
+    },
   ];
 
   return (
     <div className="sidebar">
       <div className="d-flex flex-column gap-1">
-        {sidebarLinks.map((link, index) => (
-          <NavLink
-            key={index}
-            to={link.to}
-            className={({ isActive }) =>
-              isActive ? "admin-side-text-link active" : "admin-side-text-link"
-            }
-          >
-            <div className="admin-side-text d-flex align-items-center">
-              {/* الأيقونة */}
-              <span className="icon-style mx-2">{link.icon}</span>
-              {/* النص */}
-              <span className="link-text">{link.text}</span>
-            </div>
-          </NavLink>
-        ))}
+        {sidebarLinks
+          .filter((link) => !link.adminOnly || isAdmin)
+          .map((link, index) => (
+            <NavLink
+              key={index}
+              to={link.to}
+              className={({ isActive }) =>
+                isActive
+                  ? 'admin-side-text-link active'
+                  : 'admin-side-text-link'
+              }
+            >
+              <div className="admin-side-text d-flex align-items-center">
+                {/* الأيقونة */}
+                <span className="icon-style mx-2">{link.icon}</span>
+                {/* النص */}
+                <span className="link-text">{link.text}</span>
+              </div>
+            </NavLink>
+          ))}
       </div>
     </div>
   );

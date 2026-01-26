@@ -5,8 +5,13 @@ import CardProductsContainer from "../../Components/Products/CardProductsContain
 import FilterDropDownCountResult from "../../Components/Uitily/FilterDropDownCountResult/FilterDropDownCountResult";
 import SideFilter from "../../Components/Uitily/SideFilter/SideFilter";
 import ViewSearchProductsHook from "../../Hook/product/view-search-products-hook";
+import { useEffect } from 'react';
 function ShopProductsPage() {
-  const { items, pageCount, currentPage, getPage,getProduct,resultsCount } = ViewSearchProductsHook();
+  const { items, pageCount, currentPage, getPage, getProduct, resultsCount } = ViewSearchProductsHook();
+
+useEffect(() => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}, [currentPage]);
   return (
     <div style={{ minHeight: "670px" }}>
       <CategoryHeader />

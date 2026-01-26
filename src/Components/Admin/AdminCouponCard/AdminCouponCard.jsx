@@ -1,9 +1,9 @@
-import { FiEdit, FiTrash2, FiCalendar } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import { Button, Modal, Spinner } from "react-bootstrap";
-import { formatDate } from "../../Uitily/DatesFormat/formatDate";
-import CouponCardHook from "../../../Hook/coupon/coupon-card-hook";
-import "./AdminCouponCard.css";
+import { FiEdit, FiTrash2, FiCalendar, FiX } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
+import { Button, Modal, Spinner } from 'react-bootstrap';
+import { formatDate } from '../../Uitily/DatesFormat/formatDate';
+import CouponCardHook from '../../../Hook/coupon/coupon-card-hook';
+import './AdminCouponCard.css';
 
 const AdminCouponCard = ({ coupon }) => {
   const { show, handleClose, handleShow, handleDelete, loading } =
@@ -11,7 +11,6 @@ const AdminCouponCard = ({ coupon }) => {
 
   return (
     <div className="coupon-card-wrapper h-100">
-    
       <Modal
         show={show}
         onHide={handleClose}
@@ -20,8 +19,14 @@ const AdminCouponCard = ({ coupon }) => {
         keyboard={!loading}
         dialogClassName="animate-modal"
       >
-        <Modal.Header closeButton>
-          <Modal.Title className="fw-bold">تأكيد الحذف</Modal.Title>
+        <Modal.Header
+          closeButton
+          className="d-flex justify-content-between align-items-center"
+        >
+          <Modal.Title className="fw-bold fs-5">تأكيد الحذف</Modal.Title>
+          <button className="custom-close-btn" onClick={handleClose}>
+            <FiX size={24} />
+          </button>
         </Modal.Header>
         <Modal.Body className="text-center">
           هل أنت متأكد من حذف الكوبون <br />
@@ -42,15 +47,13 @@ const AdminCouponCard = ({ coupon }) => {
                 جاري الحذف...
               </>
             ) : (
-              "تأكيد الحذف"
+              'تأكيد الحذف'
             )}
           </Button>
         </Modal.Footer>
       </Modal>
 
-    
       <div className="coupon-card shadow-sm h-100 position-relative">
-    
         <div className="coupon-cut cut-left"></div>
         <div className="coupon-cut cut-right"></div>
 

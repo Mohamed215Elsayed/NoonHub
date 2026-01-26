@@ -90,10 +90,10 @@
 // };
 
 // export default VerifyPasswordPage;
-import React from "react";
+
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import VerifyPasswordHook from "../../../Hook/auth/verify-password-hook";
-import { ToastContainer } from "react-toastify";
+
 import "./VerifyPasswordPage.css";
 
 const VerifyPasswordPage = () => {
@@ -139,7 +139,6 @@ const VerifyPasswordPage = () => {
           </Col>
         </Row>
 
-        <ToastContainer />
       </Container>
     </div>
   );

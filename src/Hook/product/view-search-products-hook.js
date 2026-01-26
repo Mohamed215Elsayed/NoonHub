@@ -1,16 +1,16 @@
-import { useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllProductsSearch } from "../../Features/Products/ProductSlice";
+import { useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProductsSearch } from '../../Features/Products/ProductSlice';
 const SORT_MAP = {
-  "": "",
-  price: "price",
-  "-price": "-price",
-  "-sold": "-sold",
-  "-ratingsAverage": "-ratingsAverage",
+  '': '',
+  price: 'price',
+  '-price': '-price',
+  '-sold': '-sold',
+  '-ratingsAverage': '-ratingsAverage',
 };
 const getSortQuery = () => {
-  const sortType = localStorage.getItem("sortType") || "";
-  return SORT_MAP[sortType] ?? "";
+  const sortType = localStorage.getItem('sortType') || '';
+  return SORT_MAP[sortType] ?? '';
 };
 
 const ViewSearchProductsHook = () => {
@@ -19,13 +19,13 @@ const ViewSearchProductsHook = () => {
 
   // دالة موحدة لجلب البيانات من التخزين المحلي
   const getValuesFromStorage = () => {
-    const word = localStorage.getItem("searchWord") || "";
-    const catChecked = JSON.parse(localStorage.getItem("catChecked") || "[]");
+    const word = localStorage.getItem('searchWord') || '';
+    const catChecked = JSON.parse(localStorage.getItem('catChecked') || '[]');
     const brandChecked = JSON.parse(
-      localStorage.getItem("brandChecked") || "[]"
+      localStorage.getItem('brandChecked') || '[]'
     );
-    const priceFrom = localStorage.getItem("priceFrom") || "";
-    const priceTo = localStorage.getItem("priceTo") || "";
+    const priceFrom = localStorage.getItem('priceFrom') || '';
+    const priceTo = localStorage.getItem('priceTo') || '';
 
     // بناء query array
     const params = [
@@ -34,11 +34,11 @@ const ViewSearchProductsHook = () => {
       ...brandChecked.map((id) => `brand[in][]=${encodeURIComponent(id)}`),
       priceFrom && +priceFrom > 0
         ? `price[gt]=${encodeURIComponent(priceFrom)}`
-        : "",
+        : '',
       priceTo && +priceTo > 0
         ? `price[lte]=${encodeURIComponent(priceTo)}`
-        : "",
-    ].filter((p) => p !== "");
+        : '',
+    ].filter((p) => p !== '');
 
     return params;
   };
@@ -46,7 +46,7 @@ const ViewSearchProductsHook = () => {
   const getProduct = useCallback(() => {
     const sort = getSortQuery();
     const params = getValuesFromStorage();
-    const queryString = [`sort=${sort}`, `limit=${limit}`, ...params].join("&");
+    const queryString = [`sort=${sort}`, `limit=${limit}`, ...params].join('&');
 
     dispatch(getAllProductsSearch(queryString));
   }, [dispatch, limit]);
@@ -63,7 +63,7 @@ const ViewSearchProductsHook = () => {
         `sort=${sort}`,
         `limit=${limit}`,
         ...params,
-      ].join("&");
+      ].join('&');
 
       dispatch(getAllProductsSearch(queryString));
     },
@@ -72,6 +72,7 @@ const ViewSearchProductsHook = () => {
 
   const allProducts = useSelector((state) => state.products.allProducts);
   const items = allProducts?.data || [];
+  // console.log(items);
   const currentPage = allProducts?.pagination?.currentPage || 1;
   const pageCount = allProducts?.pagination?.numberOfPages || 0;
   const resultsCount = allProducts?.results || 0;

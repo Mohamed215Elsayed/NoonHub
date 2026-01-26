@@ -1,20 +1,23 @@
-import "./CategoryCard.css";
-import { Col } from "react-bootstrap";
-const CategoryCard = ({ img, title, link = "/allcategory" }) => {
-  //, background
+import { Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import './CategoryCard.css';
+
+const CategoryCard = ({ img, name, id }) => {
   return (
-    <Col xs={6} sm={6} md={4} lg={2} className="px-2">
-      <a href={link} className="modern-cat-card d-block">
+    <Col xs={6} sm={6} md={4} lg={2} className="px-2 mb-4">
+      <Link
+        to={`/products/category/${id}`}
+        className="modern-cat-card d-block text-decoration-none"
+      >
         <div className="modern-cat-img-wrapper">
-          {/* <div
-            className="categoty-card "
-            style={{ backgroundColor: `${background}` }}
-          ></div> */}
-          <img src={img} alt={title} className="modern-cat-img" />
-          <div className="modern-cat-overlay"></div>
+          <img src={img} alt={name} className="modern-cat-img" />
+          <div className="modern-cat-overlay d-flex align-items-center justify-content-center">
+            <span className="view-text">عرض المنتجات</span>
+          </div>
         </div>
-        <p className="modern-cat-title">{title}</p>
-      </a>
+
+        <h5 className="modern-cat-title">{name}</h5>
+      </Link>
     </Col>
   );
 };

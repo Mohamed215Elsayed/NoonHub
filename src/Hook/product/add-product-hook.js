@@ -1,3 +1,186 @@
+// /*==============Second Way RHF and Zod============================*/
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { addProductSchema } from '../../Validation/productSchema';
+import { getAllCategory } from '../../Features/Categories/CategorySlice';
+import { getAllBrand } from '../../Features/Brands/BrandSlice';
+import { getSubCategoryOnCategory } from '../../Features/SubCategories/SubCategorySlice';
+import {
+  createProduct,
+  resetStatus,
+} from '../../Features/Products/ProductSlice';
+import notify from './../useNotifaction';
+
+const AdminAddProductsHook = () => {
+  const dispatch = useDispatch();
+  const [images, setImages] = useState({});
+  const [showColor, setShowColor] = useState(false);
+  const [options, setOptions] = useState([]);
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(addProductSchema),
+    defaultValues: { catID: '0', brandID: '0', colors: [], selectedSubID: [] },
+    mode: 'onChange',
+  });
+
+  const selectedColors = watch('colors') || [];
+  const selectedCat = watch('catID');
+
+  const category = useSelector((state) => state.categories.category);
+  const brand = useSelector((state) => state.brands.brand);
+  const subCat = useSelector(
+    (state) => state.subCategories.subCategoriesByCategory
+  );
+  const loading = useSelector((state) => state.products.loadingAllProducts);
+
+  useEffect(() => {
+    dispatch(getAllCategory());
+    dispatch(getAllBrand());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!selectedCat || selectedCat === '0') {
+      setOptions([]);
+      setValue('selectedSubID', []);
+      return;
+    }
+    dispatch(getSubCategoryOnCategory(selectedCat));
+    setValue('selectedSubID', []);
+  }, [selectedCat, dispatch, setValue]);
+
+  useEffect(() => {
+    if (subCat?.length > 0) {
+      setOptions(subCat.map((item) => ({ value: item._id, label: item.name })));
+    } else {
+      setOptions([]);
+    }
+  }, [subCat]);
+
+  const dataURLtoFile = (dataurl, filename) => {
+    const arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) u8arr[n] = bstr.charCodeAt(n);
+    return new File([u8arr], filename, { type: mime });
+  };
+
+  const onSubmit = async (data) => {
+    const imgArray = Object.values(images);
+    if (imgArray.length === 0)
+      return notify('أضف صورة واحدة على الأقل', 'warn');
+
+    const formData = new FormData();
+    formData.append('title', data.prodName);
+    formData.append('description', data.prodDescription);
+    formData.append('quantity', data.qty);
+    formData.append('price', data.priceBefore);
+    if (data.priceAfterDiscount)
+      formData.append('priceAfterDiscount', data.priceAfterDiscount);
+    formData.append('category', data.catID);
+    if (data.brandID !== '0') formData.append('brand', data.brandID);
+
+    // معالجة الصور
+    formData.append(
+      'imageCover',
+      dataURLtoFile(imgArray[0], `cover-${Date.now()}.png`)
+    );
+    imgArray
+      .slice(1)
+      .forEach((img) =>
+        formData.append('images', dataURLtoFile(img, `prod-${Date.now()}.png`))
+      );
+
+    const safeColors = Array.isArray(data.colors) ? data.colors : [data.colors];
+    if (safeColors.length > 0) {
+      safeColors.forEach((color) => {
+        formData.append('colors[]', color);
+      });
+    }
+
+    const safeSubs = Array.isArray(data.selectedSubID)
+      ? data.selectedSubID
+      : [data.selectedSubID];
+    if (safeSubs.length > 0) {
+      safeSubs.forEach((sub) => {
+        if (sub && sub.value) {
+          formData.append('subcategories[]', sub.value);
+        }
+      });
+    }
+
+    try {
+      await dispatch(createProduct(formData)).unwrap();
+      notify('تمت الإضافة بنجاح', 'success');
+      // reset({ catID: '0', brandID: '0', colors: [], selectedSubID: [] });
+      reset({
+        prodName: '',
+        prodDescription: '',
+        qty: '',
+        priceBefore: '',
+        priceAfterDiscount: '',
+        catID: '0',
+        brandID: '0',
+        colors: [],
+        selectedSubID: [],
+      });
+
+      setImages({});
+      setOptions([]);
+      setShowColor(false);
+    } catch (err) {
+      const errorMsg = err.errors
+        ? err.errors[0].msg
+        : err.message || 'حدث خطأ';
+      notify(errorMsg, 'error');
+    } finally {
+      dispatch(resetStatus());
+    }
+  };
+
+  return {
+    register,
+    onSubmit: handleSubmit(onSubmit),
+    errors,
+    control,
+    images,
+    setImages,
+    category,
+    brand,
+    options,
+    loading,
+    showColor,
+    colorToggler: () => setShowColor(!showColor),
+    colors: selectedColors,
+    colorRemove: (color) =>
+      setValue(
+        'colors',
+        selectedColors.filter((c) => c !== color)
+      ),
+    handleColorChange: (color) => {
+      if (!selectedColors.includes(color.hex)) {
+        setValue('colors', [...selectedColors, color.hex], {
+          shouldValidate: true,
+        });
+      }
+      setShowColor(false);
+    },
+  };
+};
+
+export default AdminAddProductsHook;
+
 // import { useState, useEffect } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import { getAllCategory } from "../../Features/Categories/CategorySlice";
@@ -235,194 +418,3 @@
 // };
 // export default AdminAddProductsHook;
 // /*==========================================*/
-// /*==============Second Way RHF and Zod============================*/
-
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { addProductSchema } from "../../Validation/productSchema";
-import { getAllCategory } from "../../Features/Categories/CategorySlice";
-import { getAllBrand } from "../../Features/Brands/BrandSlice";
-import { getSubCategoryOnCategory } from "../../Features/SubCategories/SubCategorySlice";
-import {
-  createProduct,
-  resetStatus,
-} from "../../Features/Products/ProductSlice";
-import notify from "./../useNotifaction";
-
-const AdminAddProductsHook = () => {
-  const dispatch = useDispatch();
-  const [images, setImages] = useState({});
-  const [showColor, setShowColor] = useState(false);
-  const [options, setOptions] = useState([]);
-
-  // RHF Setup
-  const {
-    register,
-    handleSubmit,
-    control,
-    setValue,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(addProductSchema),
-    defaultValues: { catID: "0", brandID: "0", colors: [], selectedSubID: [] },
-    mode: "onChange", // هذا سيجعل الرسائل تظهر بمجرد خروج المستخدم من الحقل أو الكتابة
-  });
-
-  const selectedColors = watch("colors") || [];
-  const selectedCat = watch("catID");
-
-  // Redux Selectors
-  const category = useSelector((state) => state.categories.category);
-  const brand = useSelector((state) => state.brands.brand);
-  const subCat = useSelector(
-    (state) => state.subCategories.subCategoriesByCategory
-  );
-  const loading = useSelector((state) => state.products.loading);
-  const loadingSub = useSelector((state) => state.subCategories.loading);
-
-  useEffect(() => {
-    dispatch(getAllCategory());
-    dispatch(getAllBrand());
-  }, [dispatch]);
-
-  // Fetch subcategories when category changes
-  // useEffect(() => {
-  //   if (selectedCat && selectedCat !== "0") {
-  //     dispatch(getSubCategoryOnCategory(selectedCat));
-  //   } else {
-  //     setOptions([]);
-  //   }
-  //   setValue("selectedSubID", []);
-  // }, [selectedCat, dispatch, setValue]);
-  useEffect(() => {
-    if (!selectedCat || selectedCat === "0") {
-      setOptions([]);
-      setValue("selectedSubID", []);
-      return;
-    }
-
-    dispatch(getSubCategoryOnCategory(selectedCat));
-    setValue("selectedSubID", []);
-  }, [selectedCat, dispatch, setValue]);
-
-  useEffect(() => {
-    if (subCat?.length > 0) {
-      setOptions(subCat.map((item) => ({ value: item._id, label: item.name })));
-    }
-  }, [subCat]);
-
-  const colorToggler = () => setShowColor(!showColor);
-  const handleColorChange = (color) => {
-    if (!selectedColors.includes(color.hex)) {
-      setValue("colors", [...selectedColors, color.hex], {
-        shouldValidate: true,
-      });
-    }
-    setShowColor(false);
-  };
-
-  const colorRemove = (color) => {
-    setValue(
-      "colors",
-      selectedColors.filter((c) => c !== color)
-    );
-  };
-
-  const dataURLtoFile = (dataurl, filename) => {
-    const arr = dataurl.split(","),
-      mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length,
-      u8arr = new Uint8Array(n);
-    while (n--) u8arr[n] = bstr.charCodeAt(n);
-    return new File([u8arr], filename, { type: mime });
-  };
-
-  const onSubmit = async (data) => {
-    if (Object.keys(images).length === 0)
-      return notify("أضف صورة واحدة على الأقل", "warn");
-
-    const formData = new FormData();
-    formData.append("title", data.prodName);
-    formData.append("description", data.prodDescription);
-    formData.append("quantity", data.qty);
-    formData.append("price", data.priceBefore);
-    if (data.priceAfterDiscount)
-      formData.append("priceAfterDiscount", data.priceAfterDiscount);
-    formData.append("category", data.catID);
-    if (data.brandID !== "0") formData.append("brand", data.brandID);
-
-    // const imgArray = Object.values(images);
-    // formData.append(
-    //   "imageCover",
-    //   dataURLtoFile(imgArray[0], `cover-${Date.now()}.png`)
-    // );
-    // imgArray.forEach((img) =>
-    //   formData.append("images", dataURLtoFile(img, `prod-${Date.now()}.png`))
-    // );
-    const imgArray = Object.values(images);
-    formData.append(
-      "imageCover",
-      dataURLtoFile(imgArray[0], `cover-${Date.now()}.png`)
-    );
-
-    imgArray
-      .slice(1)
-      .forEach((img) =>
-        formData.append("images", dataURLtoFile(img, `prod-${Date.now()}.png`))
-      );
-
-    data.colors.forEach((c) => formData.append("colors", c));
-    data.selectedSubID.forEach((s) =>
-      formData.append("subcategories", s.value)
-    );
-
-    try {
-      await dispatch(createProduct(formData)).unwrap();
-      notify("تمت الإضافة بنجاح", "success");
-      // reset();
-      reset({
-        catID: "0",
-        brandID: "0",
-        colors: [],
-        selectedSubID: [],
-      });
-      setImages({});
-      setShowColor(false);
-      setOptions([]);
-    } catch (err) {
-      if (err.errors) {
-        err.errors.forEach((error) => notify(error.msg, "error"));
-      } else {
-        notify(err.message || "حدث خطأ أثناء الإضافة", "error");
-      }
-    } finally {
-      dispatch(resetStatus());
-    }
-  };
-
-  return {
-    register,
-    onSubmit: handleSubmit(onSubmit),
-    errors,
-    control,
-    images,
-    setImages,
-    category,
-    brand,
-    options,
-    loading,
-    loadingSub,
-    showColor,
-    colorToggler,
-    colors: selectedColors,
-    colorRemove,
-    handleColorChange,
-  };
-};
-
-export default AdminAddProductsHook;

@@ -26,7 +26,7 @@ const AdminAddCategory = () => {
 
               <input
                 type="file"
-                name="photo"
+                name="img"
                 id="upload-image-input"
                 accept="image/*"
                 onChange={onImageChange}

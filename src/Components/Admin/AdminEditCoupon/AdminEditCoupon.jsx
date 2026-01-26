@@ -1,7 +1,8 @@
-import "./AdminEditCoupon.css";
-import { Row, Col, Form, Spinner } from "react-bootstrap";
-import EditCouponHook from "../../../Hook/coupon/edit-coupon-hook";
-import { useParams } from "react-router-dom";
+import './AdminEditCoupon.css';
+import { Row, Col, Form, Spinner } from 'react-bootstrap';
+import EditCouponHook from '../../../Hook/coupon/edit-coupon-hook';
+import { useParams, useNavigate } from 'react-router-dom';
+import useAuth from '../../../Hook/auth/protected-route-hook';
 
 const AdminEditCoupon = () => {
   const { id } = useParams();
@@ -16,13 +17,17 @@ const AdminEditCoupon = () => {
     onSubmit,
     isSubmitting,
   } = EditCouponHook(id);
+  const { isAdmin } = useAuth();
+  const navigate = useNavigate();
+  if (!isAdmin)
+    return <div className="alert alert-danger">غير مسموح لك بالدخول هنا</div>;
 
   return (
     <div className="admin-add-coupon-container">
       <Row className="justify-content-start">
         <div className="admin-content-title pb-2">تعديل بيانات الكوبون</div>
         <p className="text-muted mb-4">
-          تعديل معلومات الكوبون:{" "}
+          تعديل معلومات الكوبون:{' '}
           <span className="text-primary">{couponName}</span>
         </p>
 
@@ -64,7 +69,7 @@ const AdminEditCoupon = () => {
               نسبة الخصم (%)
             </Form.Label>
             <input
-              id="coupon-value" 
+              id="coupon-value"
               name="couponValue"
               value={couponValue}
               onChange={onChangeValue}
@@ -73,8 +78,14 @@ const AdminEditCoupon = () => {
               placeholder="نسبة خصم الكوبون"
             />
           </Form.Group>
-
           <div className="d-flex justify-content-end mt-4">
+            <button
+              className="btn-cancel px-4"
+              onClick={() => navigate('/admin/addcoupon')}
+              type="button"
+            >
+              إلغاء
+            </button>
             <button
               onClick={onSubmit}
               className="btn-save px-5 d-flex align-items-center"
@@ -83,7 +94,7 @@ const AdminEditCoupon = () => {
               {isSubmitting ? (
                 <Spinner animation="border" size="sm" />
               ) : (
-                "حفظ التعديلات"
+                'حفظ التعديلات'
               )}
             </button>
           </div>

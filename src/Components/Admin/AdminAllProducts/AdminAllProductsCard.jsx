@@ -1,8 +1,9 @@
-import { Col, Card, Modal, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import "./AdminAllProducts.css";
-import { FaTrashAlt, FaEdit, FaStar } from "react-icons/fa";
-import AdminDeleteProductHook from "../../../Hook/admin/delete-product-admin-hook";
+import { Col, Card, Modal, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import './AdminAllProducts.css';
+import { FaTrashAlt, FaEdit, FaStar } from 'react-icons/fa';
+import { FiX } from 'react-icons/fi';
+import AdminDeleteProductHook from '../../../Hook/admin/delete-product-admin-hook';
 
 function AdminAllProductsCard({ item, currentPage }) {
   const [show, handleClose, handleShow, handelDelete, loading] =
@@ -11,8 +12,14 @@ function AdminAllProductsCard({ item, currentPage }) {
   return (
     <Col xs="12" sm="6" md="6" lg="4" className="d-flex">
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
+        <Modal.Header
+          closeButton
+          className="d-flex justify-content-between align-items-center"
+        >
           <Modal.Title className="font-bold">تأكيد الحذف</Modal.Title>
+          <button className="custom-close-btn" onClick={handleClose}>
+            <FiX size={24} />
+          </button>
         </Modal.Header>
         <Modal.Body>
           <div className="font text-center py-3">
@@ -25,7 +32,7 @@ function AdminAllProductsCard({ item, currentPage }) {
             تراجع
           </Button>
           <Button variant="danger" onClick={handelDelete} disabled={loading}>
-            {loading ? "جاري الحذف..." : "تأكيد الحذف"}
+            {loading ? 'جاري الحذف...' : 'تأكيد الحذف'}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -38,7 +45,7 @@ function AdminAllProductsCard({ item, currentPage }) {
           </div>
           <Link
             to={`/admin/editproduct/${item._id}`}
-            style={{ textDecoration: "none" }}
+            style={{ textDecoration: 'none' }}
           >
             <div className="admin-action-btn edit-btn">
               <FaEdit className="icon" />
@@ -47,7 +54,7 @@ function AdminAllProductsCard({ item, currentPage }) {
           </Link>
         </div>
 
-        <Link to={`/products/${item._id}`} style={{ textDecoration: "none" }}>
+        <Link to={`/products/${item._id}`} style={{ textDecoration: 'none' }}>
           <Card.Img
             src={item.imageCover}
             alt={item.title}

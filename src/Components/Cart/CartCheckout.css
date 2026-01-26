@@ -4,29 +4,27 @@
   padding: 24px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   border: 1px solid #eee;
-  /* لضمان عدم خروج العناصر */
   max-width: 100%;
   overflow: hidden;
 }
 
-/* حل مشكلة حقل الكوبون والزر */
 .coupon-wrapper {
   display: flex;
   width: 100%;
   margin-bottom: 20px;
-  /* لربط الحقل والزر ببعضهما */
+
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
 }
 
 .coupon-input {
-  flex-grow: 1; /* يأخذ المساحة المتاحة */
+  flex-grow: 1;
   border: none;
   padding: 12px 15px;
   font-size: 14px;
   outline: none;
-  width: 50%; /* تحديد عرض مبدئي ليسمح للزر بالظهور */
+  width: 50%;
 }
 
 .coupon-btn {
@@ -36,7 +34,7 @@
   padding: 0 20px;
   font-weight: 600;
   transition: all 0.3s ease;
-  white-space: nowrap; /* يمنع نزول النص لسطر جديد */
+  white-space: nowrap;
 }
 
 .coupon-btn:hover {
@@ -67,7 +65,6 @@
   font-weight: 800;
 }
 
-/* تنسيق الأزرار الرئيسية */
 .checkout-btn,
 .clear-cart-btn {
   width: 100%;
@@ -101,4 +98,20 @@
 .clear-cart-btn:hover {
   background-color: #ff4d4d;
   color: white !important;
+}
+
+.coupon-wrapper {
+  display: flex;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 45px;
+}
+
+@media (max-width: 768px) {
+  .cart-checkout {
+    margin-top: 20px;
+    position: static;
+  }
 }

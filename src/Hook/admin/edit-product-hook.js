@@ -1,3 +1,216 @@
+/*===========third solution===========*/
+import { useState, useEffect } from 'react'; //, useCallback
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { editProductSchema } from '../../Validation/productSchema';
+import {
+  getOneProduct,
+  updateProducts,
+} from '../../Features/Products/ProductSlice';
+import { getAllCategory } from '../../Features/Categories/CategorySlice';
+import { getAllBrand } from '../../Features/Brands/BrandSlice';
+import { getSubCategoryOnCategory } from '../../Features/SubCategories/SubCategorySlice';
+import notify from './../useNotifaction';
+
+const AdminEditProductHook = (id) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [images, setImages] = useState({});
+  const [colors, setColors] = useState([]);
+  const [showColor, setShowColor] = useState(false);
+  const [options, setOptions] = useState([]);
+
+  // Redux Selectors
+  const item = useSelector((state) => state.products.oneProduct);
+  const category = useSelector((state) => state.categories.category);
+  const brand = useSelector((state) => state.brands.brand);
+  const subCat = useSelector(
+    (state) => state.subCategories.subCategoriesByCategory
+  );
+  const loadingSub = useSelector((state) => state.subCategories.loading);
+  const loading = useSelector((state) => state.products.loading);
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(editProductSchema),
+    mode: 'onChange',
+    defaultValues: { catID: '0', brandID: '0', selectedSubID: [] },
+  });
+
+  const selectedCat = watch('catID');
+
+  // 1. جلب البيانات الأولية
+  useEffect(() => {
+    dispatch(getAllCategory());
+    dispatch(getAllBrand());
+    dispatch(getOneProduct(id));
+  }, [id, dispatch]);
+
+  // 2. تعبئة النموذج عند وصول بيانات المنتج
+  useEffect(() => {
+    if (item?.data) {
+      const prod = item.data;
+      reset({
+        prodName: prod.title || '',
+        prodDescription: prod.description || '',
+        priceBefore: prod.price || '',
+        priceAfterDiscount: prod.priceAfterDiscount || '',
+        qty: prod.quantity || '',
+        catID: prod.category?._id || prod.category || '',
+        brandID: prod.brand?._id || prod.brand || '',
+      });
+      setColors(prod.colors || []);
+      // تحويل مصفوفة الصور القادمة من السيرفر إلى Object لـ MultiImageInput
+      if (prod.images) {
+        const imgObj = {};
+        prod.images.forEach((img, idx) => (imgObj[idx] = img));
+        setImages(imgObj);
+      }
+      if (prod.category) {
+        dispatch(getSubCategoryOnCategory(prod.category._id || prod.category));
+      }
+    }
+  }, [item, reset, dispatch]);
+
+  // 3. جلب التصنيفات الفرعية عند تغيير التصنيف الرئيسي يدوياً
+  // useEffect(() => {
+  //   if (selectedCat && selectedCat !== '0' && selectedCat !== '') {
+  //     dispatch(getSubCategoryOnCategory(selectedCat));
+  //   }
+  // }, [selectedCat, dispatch]);
+  useEffect(() => {
+  if (
+    selectedCat &&
+    selectedCat !== "0" &&
+    selectedCat !== item?.data?.category?._id
+  ) {
+    dispatch(getSubCategoryOnCategory(selectedCat));
+  }
+}, [selectedCat, dispatch, item]);
+
+
+  // 4. تحديث خيارات الـ Select ومزامنة المختار منها
+  useEffect(() => {
+    if (!subCat?.length) return;
+
+    const formattedOptions = subCat.map((s) => ({
+      value: s._id,
+      label: s.name,
+    }));
+
+    setOptions(formattedOptions);
+
+    if (item?.data?.subcategories) {
+      const serverSubIDs = item.data.subcategories.map((s) =>
+        typeof s === 'string' ? s : s._id
+      );
+
+      const selected = formattedOptions.filter((opt) =>
+        serverSubIDs.includes(opt.value)
+      );
+
+      setValue('selectedSubID', selected, { shouldValidate: false });
+    }
+  }, [subCat, item, setValue]);
+
+  // دالة تحويل الصور Base64 إلى ملفات (Files)
+  const convertToFile = async (urlOrBase64, filename) => {
+    try {
+      const response = await fetch(urlOrBase64);
+      const data = await response.blob();
+      return new File([data], filename, { type: data.type });
+    } catch {
+      return null;
+    }
+  };
+
+  const onSubmit = async (data) => {
+    if (!Object.keys(images).length) {
+      notify('من فضلك أضف صورة واحدة على الأقل', 'error');
+      return;
+    }
+    const formData = new FormData();
+    formData.append('title', data.prodName);
+    formData.append('description', data.prodDescription);
+    formData.append('quantity', data.qty);
+    formData.append('price', data.priceBefore);
+    if (data.priceAfterDiscount)
+      formData.append('priceAfterDiscount', data.priceAfterDiscount);
+    formData.append('category', data.catID);
+    if (data.brandID && data.brandID !== '0')
+      formData.append('brand', data.brandID);
+
+    colors.forEach((c) => formData.append('colors[]', c));
+    data.selectedSubID.forEach((s) =>
+      formData.append('subcategories[]', s.value)
+    );
+    // معالجة الصور (الجديدة والقديمة)
+    const imageValues = Object.values(images);
+    for (let i = 0; i < imageValues.length; i++) {
+      const img = imageValues[i];
+      let fileToAppend;
+
+      if (typeof img === 'string' && img.startsWith('http')) {
+        // إذا كان رابطاً قديماً، نقوم بتحويله لملف إذا كان السيرفر يتوقع ملفات دائماً
+        fileToAppend = await convertToFile(img, `old-prod-${i}.png`);
+      } else if (typeof img === 'string' && img.startsWith('data:image')) {
+        // إذا كان Base64 جديداً
+        fileToAppend = await convertToFile(img, `new-prod-${i}.png`);
+      } else {
+        fileToAppend = img; // ملف جاهز
+      }
+
+      if (fileToAppend) {
+        formData.append('images', fileToAppend);
+        if (i === 0) formData.append('imageCover', fileToAppend);
+      }
+    }
+
+    try {
+      await dispatch(updateProducts({ id, formData })).unwrap();
+      notify('تم تحديث المنتج بنجاح', 'success');
+      setTimeout(() => navigate('/admin/allproducts'), 1500);
+    } catch (err) {
+      notify(err?.message || 'فشل في عملية التحديث', 'error');
+    }
+  };
+
+  return {
+    register,
+    onSubmit: handleSubmit(onSubmit),
+    errors,
+    control,
+    images,
+    setImages,
+    category,
+    brand,
+    options,
+    loading,
+    loadingSub,
+    showColor,
+    colorToggler: () => setShowColor(!showColor),
+    colors,
+    colorRemove: (c) => setColors((prev) => prev.filter((col) => col !== c)),
+    handleColorChange: (color) => {
+      if (!colors.includes(color.hex)) setColors([...colors, color.hex]);
+      setShowColor(false);
+    },
+    item,
+  };
+};
+
+export default AdminEditProductHook;
+
 // import { useState, useEffect } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import { getAllCategory } from "../../Features/Categories/CategorySlice";
@@ -404,205 +617,3 @@
 // };
 
 // export default AdminEditProductHook;
-/*===========third solution===========*/
-import { useState, useEffect } from "react"; //, useCallback
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { editProductSchema } from "../../Validation/productSchema";
-import {
-  getOneProduct,
-  updateProducts,
-} from "../../Features/Products/ProductSlice";
-import { getAllCategory } from "../../Features/Categories/CategorySlice";
-import { getAllBrand } from "../../Features/Brands/BrandSlice";
-import { getSubCategoryOnCategory } from "../../Features/SubCategories/SubCategorySlice";
-import notify from "./../useNotifaction";
-
-const AdminEditProductHook = (id) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const [images, setImages] = useState({});
-  const [colors, setColors] = useState([]);
-  const [showColor, setShowColor] = useState(false);
-  const [options, setOptions] = useState([]);
-
-  // Redux Selectors
-  const item = useSelector((state) => state.products.oneProduct);
-  const category = useSelector((state) => state.categories.category);
-  const brand = useSelector((state) => state.brands.brand);
-  const subCat = useSelector(
-    (state) => state.subCategories.subCategoriesByCategory
-  );
-  const loadingSub = useSelector((state) => state.subCategories.loading);
-  const loading = useSelector((state) => state.products.loading);
-
-  const {
-    register,
-    handleSubmit,
-    control,
-    watch,
-    reset,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(editProductSchema),
-    mode: "onChange",
-    defaultValues: { catID: "0", brandID: "0", selectedSubID: [] },
-  });
-
-  const selectedCat = watch("catID");
-
-  // 1. جلب البيانات الأولية
-  useEffect(() => {
-    dispatch(getAllCategory());
-    dispatch(getAllBrand());
-    dispatch(getOneProduct(id));
-  }, [id, dispatch]);
-
-  // 2. تعبئة النموذج عند وصول بيانات المنتج
-  useEffect(() => {
-    if (item?.data) {
-      const prod = item.data;
-      reset({
-        prodName: prod.title || "",
-        prodDescription: prod.description || "",
-        priceBefore: prod.price || "",
-        priceAfterDiscount: prod.priceAfterDiscount || "",
-        qty: prod.quantity || "",
-        catID: prod.category?._id || prod.category || "",
-        brandID: prod.brand?._id || prod.brand || "",
-      });
-      setColors(prod.colors || []);
-      // تحويل مصفوفة الصور القادمة من السيرفر إلى Object لـ MultiImageInput
-      if (prod.images) {
-        const imgObj = {};
-        prod.images.forEach((img, idx) => (imgObj[idx] = img));
-        setImages(imgObj);
-      }
-      if (prod.category) {
-        dispatch(getSubCategoryOnCategory(prod.category._id || prod.category));
-      }
-    }
-  }, [item, reset, dispatch]);
-
-  // 3. جلب التصنيفات الفرعية عند تغيير التصنيف الرئيسي يدوياً
-  useEffect(() => {
-    if (selectedCat && selectedCat !== "0" && selectedCat !== "") {
-      dispatch(getSubCategoryOnCategory(selectedCat));
-    }
-  }, [selectedCat, dispatch]);
-
-  // 4. تحديث خيارات الـ Select ومزامنة المختار منها
-  useEffect(() => {
-    if (!subCat?.length) return;
-
-    const formattedOptions = subCat.map((s) => ({
-      value: s._id,
-      label: s.name,
-    }));
-
-    setOptions(formattedOptions);
-
-    if (item?.data?.subcategories) {
-      const serverSubIDs = item.data.subcategories.map((s) =>
-        typeof s === "string" ? s : s._id
-      );
-
-      const selected = formattedOptions.filter((opt) =>
-        serverSubIDs.includes(opt.value)
-      );
-
-      setValue("selectedSubID", selected, { shouldValidate: false });
-    }
-  }, [subCat, item, setValue]);
-
-  // دالة تحويل الصور Base64 إلى ملفات (Files)
-  const convertToFile = async (urlOrBase64, filename) => {
-    try {
-      const response = await fetch(urlOrBase64);
-      const data = await response.blob();
-      return new File([data], filename, { type: data.type });
-    } catch {
-      return null;
-    }
-  };
-
-  const onSubmit = async (data) => {
-    if (!Object.keys(images).length) {
-      notify("من فضلك أضف صورة واحدة على الأقل", "error");
-      return;
-    }
-    const formData = new FormData();
-    formData.append("title", data.prodName);
-    formData.append("description", data.prodDescription);
-    formData.append("quantity", data.qty);
-    formData.append("price", data.priceBefore);
-    if (data.priceAfterDiscount)
-      formData.append("priceAfterDiscount", data.priceAfterDiscount);
-    formData.append("category", data.catID);
-    if (data.brandID && data.brandID !== "0")
-      formData.append("brand", data.brandID);
-
-    colors.forEach((c) => formData.append("colors", c));
-    data.selectedSubID.forEach((s) =>
-      formData.append("subcategories", s.value)
-    );
-    // معالجة الصور (الجديدة والقديمة)
-    const imageValues = Object.values(images);
-    for (let i = 0; i < imageValues.length; i++) {
-      const img = imageValues[i];
-      let fileToAppend;
-
-      if (typeof img === "string" && img.startsWith("http")) {
-        // إذا كان رابطاً قديماً، نقوم بتحويله لملف إذا كان السيرفر يتوقع ملفات دائماً
-        fileToAppend = await convertToFile(img, `old-prod-${i}.png`);
-      } else if (typeof img === "string" && img.startsWith("data:image")) {
-        // إذا كان Base64 جديداً
-        fileToAppend = await convertToFile(img, `new-prod-${i}.png`);
-      } else {
-        fileToAppend = img; // ملف جاهز
-      }
-
-      if (fileToAppend) {
-        formData.append("images", fileToAppend);
-        if (i === 0) formData.append("imageCover", fileToAppend);
-      }
-    }
-
-    try {
-      await dispatch(updateProducts({ id, formData })).unwrap();
-      notify("تم تحديث المنتج بنجاح", "success");
-      setTimeout(() => navigate("/admin/allproducts"), 1500);
-    } catch (err) {
-      notify(err?.message || "فشل في عملية التحديث", "error");
-    }
-  };
-
-  return {
-    register,
-    onSubmit: handleSubmit(onSubmit),
-    errors,
-    control,
-    images,
-    setImages,
-    category,
-    brand,
-    options,
-    loading,
-    loadingSub,
-    showColor,
-    colorToggler: () => setShowColor(!showColor),
-    colors,
-    colorRemove: (c) => setColors((prev) => prev.filter((col) => col !== c)),
-    handleColorChange: (color) => {
-      if (!colors.includes(color.hex)) setColors([...colors, color.hex]);
-      setShowColor(false);
-    },
-    item,
-  };
-};
-
-export default AdminEditProductHook;

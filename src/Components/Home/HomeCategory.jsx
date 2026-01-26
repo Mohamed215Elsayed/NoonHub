@@ -1,9 +1,9 @@
-import { Container, Row } from "react-bootstrap";
-import SubTitle from "../Uitily/ButtonsTitles/SubTitle";
-import CategoryCard from "../Category/CategoryCard";
-import CategoryEmptyState from "../Uitily/CategoryEmptyState";
-import CategorySkeleton from "../Uitily/Skelton/CategorySkeleton";
-import HomeCategoryHook from "../../Hook/Category/home-category-hook";
+import { Container, Row } from 'react-bootstrap';
+import SubTitle from '../Uitily/ButtonsTitles/SubTitle';
+import CategoryCard from '../Category/CategoryCard';
+import CategoryEmptyState from '../Uitily/CategoryEmptyState';
+import CategorySkeleton from '../Uitily/Skelton/CategorySkeleton';
+import HomeCategoryHook from '../../Hook/Category/home-category-hook';
 const HomeCategory = () => {
   const [categoryArrayData, loading] = HomeCategoryHook();
   return (
@@ -14,15 +14,14 @@ const HomeCategory = () => {
         {loading ? (
           <CategorySkeleton count={6} />
         ) : categoryArrayData?.data?.length > 0 ? (
-          categoryArrayData.data
-            .slice(0, 6)
-            .map((itemcat, index) => (
-              <CategoryCard
-                key={itemcat._id}
-                img={itemcat.image}
-                title={itemcat.name}
-              />
-            ))
+          categoryArrayData.data.slice(0, 6).map((itemcat, index) => (
+            <CategoryCard
+              key={itemcat._id || index}
+              img={itemcat.image}
+              name={itemcat.name}
+              id={itemcat._id} 
+            />
+          ))
         ) : (
           <CategoryEmptyState />
         )}

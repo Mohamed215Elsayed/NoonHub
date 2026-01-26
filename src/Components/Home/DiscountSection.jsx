@@ -24,8 +24,8 @@ function DiscountSection() {
           <p className="discount-subtitle mb-4">
             عروض لفترة محدودة · أفضل الماركات · شحن مجاني
           </p>
-          {/* <Link to="/products/category/654321"> */}
-          <Link to="/products/694e971288d002aea56ad606">
+    
+          <Link to="/products/category/694b02e966771bdf705b1958">
             <Button className="discount-cta-btn">تسوق الآن</Button>
           </Link>
         </Col>

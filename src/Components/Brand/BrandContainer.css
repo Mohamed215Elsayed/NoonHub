@@ -11,8 +11,8 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin: 0 0 30px;
-  padding-top: 20px;
+  /* margin: 0 0 30px; */
+  padding-top: 24px;
 }
 
 .brand-line {
@@ -96,5 +96,34 @@
 @media (max-width: 400px) {
   .brand-title {
     font-size: 34px;
+  }
+}
+.brand-title {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.brand-line {
+  animation: scaleIn 0.7s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
   }
 }
