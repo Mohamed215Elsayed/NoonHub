@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { insertData } from '../../Hooks/useInsertData';
-// import { getDataWithToken } from '../../Hooks/useGetData';
+import { getDataWithToken } from '../../Hooks/useGetData';
 
 export const createOrderCash = createAsyncThunk(
   'checkout/createOrderCash',
@@ -17,11 +17,11 @@ export const createOrderCard = createAsyncThunk(
   'checkout/createOrderCard',
   async ({ cartId, body }, { rejectWithValue }) => {
     try {
-      const response = await insertData(
+      const response = await getDataWithToken(
         `/api/v1/orders/checkout-session/${cartId}`,
         body
       );
-      // console.log(response);
+      console.log(response);
       return response;
     } catch (error) {
       return rejectWithValue(error?.response?.data || 'خطأ في عملية الدفع');
