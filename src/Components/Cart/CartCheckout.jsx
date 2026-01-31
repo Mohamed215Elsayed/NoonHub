@@ -61,10 +61,3 @@ function CartCheckout({ totalCartPrice, totalPriceAfterDiscount, cartItems }) {
 }
 
 export default CartCheckout;
-// import { Link } from 'react-router-dom';
-     {/* <Link
-          to="/order/paymethoud"
-          className="checkout-btn text-decoration-none"
-        >
-          اتمام الشراء
-        </Link> */}

@@ -7,11 +7,11 @@ const useDeleteOrder = (orderId) => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
 
   const handleClose = () => {
     setShow(false);
-    setError(null); 
+    // setError(null); 
   };
   const handleShow = () => setShow(true);
 const handleShowModal = (e) => {
@@ -23,20 +23,20 @@ const handleShowModal = (e) => {
 
   const handleDelete = useCallback(async () => {
     setLoading(true);
-    setError(null);
+    // setError(null);
     try {
       await dispatch(removeOrder(orderId)).unwrap();
       setShow(false);
       notify('تم الحذف بنجاح', 'success');
     } catch (err) {
-      setError(err?.message || 'فشل في حذف الطلب');
+      // setError(err?.message || 'فشل في حذف الطلب');
       notify(err?.message || 'فشل في حذف الطلب', 'error');
     } finally {
       setLoading(false);
     }
   }, [dispatch, orderId]);
 
-  return { show,  handleClose, handleDelete, loading,handleShowModal };//handleShow,
+  return { show,  handleClose, handleDelete, loading,handleShowModal }
 };
 
 export default useDeleteOrder;

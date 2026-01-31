@@ -46,7 +46,7 @@ import notify from '../useNotifaction';
 
 const OrderPayCardHook = () => { // شيلنا addressDetails من هنا
   const dispatch = useDispatch();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [, setIsSubmitting] = useState(false);
   const { cartID } = GetAllUserCartHook();
 
   const handleCreateOrderCard = async (addressDetails) => { // هنستلم العنوان هنا
@@ -70,8 +70,7 @@ const OrderPayCardHook = () => { // شيلنا addressDetails من هنا
       ).unwrap();
 
       if (res.status === 'success' && res.session?.url) {
-        notify('جاري الانتقال لصفحة الدفع الآمنة...', 'success');
-        // تأخير بسيط عشان المستخدم يلحق يشوف الرسالة
+        // notify('جاري الانتقال لصفحة الدفع الآمنة...', 'success');
         setTimeout(() => {
           window.location.href = res.session.url;
         }, 1500);
