@@ -17,7 +17,7 @@ export const createOrderCard = createAsyncThunk(
   'checkout/createOrderCard',
   async ({ cartId, body }, { rejectWithValue }) => {
     try {
-      const response = await getDataWithToken(
+      const response = await insertData(
         `/api/v1/orders/checkout-session/${cartId}`,
         body
       );
