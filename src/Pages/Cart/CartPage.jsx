@@ -37,6 +37,7 @@ function CartPage() {
           <CartCheckout
             totalCartPrice={totalCartPrice}
             totalPriceAfterDiscount={totalPriceAfterDiscount}
+            cartItems={cartItems}
           />
         </Col>
       </Row>

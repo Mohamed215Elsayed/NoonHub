@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { applyCouponCart } from '../../Features/Cart/CartSlice';
-import notify from '../useNotifaction';
+import { useNavigate } from 'react-router-dom';
+import notify from '../../Hook/useNotifaction';
 
-const ApplayCouponHook = () => {
+const ApplayCouponHook = (cartItems) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { loading, appliedCoupon } = useSelector((state) => state.cart);
   const [couponName, setCouponName] = useState('');
   const onChangeCoupon = (e) => {
@@ -34,8 +37,21 @@ const ApplayCouponHook = () => {
       notify(error || 'هذا الكوبون غير صحيح أو منتهي الصلاحية', 'warn');
     }
   };
+  const handleCheckout = () => {
+    if (!cartItems || cartItems.length === 0) {
+      notify('لا يمكن اتمام الشراء، السلة فارغة', 'warn');
+      return;
+    }
+    navigate('/order/paymethoud');
+  };
 
-  return { couponName, onChangeCoupon, handleSubmitCoupon, loading };
+  return {
+    couponName,
+    onChangeCoupon,
+    handleSubmitCoupon,
+    handleCheckout,
+    loading,
+  };
 };
 
 export default ApplayCouponHook;

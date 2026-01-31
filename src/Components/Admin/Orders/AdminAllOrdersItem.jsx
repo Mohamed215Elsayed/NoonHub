@@ -1,87 +1,105 @@
-import { Col, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { FaTrashAlt, FaStar } from "react-icons/fa";
-import mobile from "../../../Assets/Images/mobile.png";
-import "./AdminAllOrders.css";
+import { Col, Modal, Button, Spinner } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { FaTrashAlt, FaUser, FaEnvelope } from 'react-icons/fa';
+import { FiX } from 'react-icons/fi';
+import './AdminAllOrdersItem.css';
+import useDeleteOrder from '../../../Hook/admin/DeleteOrderHook';
 
-function AdminAllOrdersItem() {
+function AdminAllOrdersItem({ order }) {
+  const orderImage = order?.cartItems?.[0]?.product?.imageCover;
+  const {
+    show,
+    // handleShow,
+    handleClose,
+    handleDelete,
+    loading,
+    handleShowModal,
+  } = useDeleteOrder(order?._id);
   return (
-    <Col sm="12">
-      <div className="order-item-card my-2">
-        <Link
-          to="/admin/orders/23"
-          className="cart-item-body my-2 px-1 d-flex"
-          style={{ textDecoration: "none" }}
-        >
-          <img src={mobile} alt="order-img" />
-          <div className="w-100">
-            <Row className="justify-content-between">
-              <Col sm="12" className="d-flex justify-content-between">
-                <div className="order-header-info">طلب رقم #2321</div>
-                <div className="order-remove-btn d-flex align-items-center">
-                  <FaTrashAlt className="me-1" />
-                  <span>ازاله</span>
-                </div>
-              </Col>
-            </Row>
+    <Col xs="12">
+      <Modal
+        show={show}
+        onHide={handleClose}
+        centered
+        backdrop="static"
+        className="delete-modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title className="fw-bold">تأكيد الحذف</Modal.Title>
+          <button className="custom-close-btn" onClick={handleClose}>
+            <FiX size={24} />
+          </button>
+        </Modal.Header>
+        <Modal.Body className="text-center py-4">
+          هل أنت متأكد من حذف الطلب رقم <br />
+          <span className="text-danger fw-bold">#{order?._id}</span>؟
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
+          <Button variant="secondary" onClick={handleClose} disabled={loading}>
+            تراجع
+          </Button>
+          <Button variant="danger" onClick={handleDelete} disabled={loading}>
+            {loading ? <Spinner animation="border" size="sm" /> : 'تأكيد الحذف'}
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-            <Row className="mt-2">
-              <Col
-                sm="12"
-                className="d-flex justify-content-start align-items-baseline"
-              >
-                <div className="product-order-title ">
-                  آيفون XR بذاكرة سعة 128 جيجابايت ويدعم تقنية 4G LTE مع تطبيق
-                  فيس تايم (برودكت) أحمر
-                </div>
-                <div className="d-flex align-items-center ms-auto">
-                  <FaStar className="star-icon" />
-                  <div className="product-order-rate">4.5</div>
-                </div>
-              </Col>
-            </Row>
-            {/* <Row>
-              <Col sm="12" className="d-flex align-items-center">
-                <div className="detail-label">الماركة :</div>
-                <div className="detail-value ">ابل</div>
-                <div
-                  className="product-color-swatch"
-                  style={{ backgroundColor: "#E52C2C" }}
-                ></div>
-              </Col>
-            </Row> */}
-            <Row>
-              <Col
-                sm="12"
-                className="d-flex align-items-center product-specs-row"
-              >
-                <div className="detail-label">الماركة :</div>
-                <div className="detail-value brand-value">ابل</div>
-                <div className="separator mx-3">|</div>
-                <div className="detail-label">اللون:</div>
-                <div
-                  className="product-color-swatch"
-                  style={{ backgroundColor: "#E52C2C" }}
-                ></div>
-              </Col>
-            </Row>
+      <div className="order-item-card">
+        <Link to={`/admin/orders/${order?._id}`} className="cart-item-body">
+          <div className="order-img-container">
+            <img src={orderImage} alt="order" />
+          </div>
 
-            <Row className="justify-content-between mt-3">
-              <Col
-                sm="12"
-                className="d-flex justify-content-between align-items-center"
-              >
-                <div className="d-flex align-items-center">
-                  <div className="order-quantity-label">الكميه</div>
-                  <input
-                    className="mx-2 order-quantity-input"
-                    type="number"
-                    defaultValue="1"
-                  />
-                </div>
-                <div className="order-final-price">٣٠٠٠ جنية</div>
-              </Col>
-            </Row>
+          <div className="order-content">
+            <div className="order-header">
+              <span className="order-id">
+                طلب رقم #{order?._id?.slice(-6).toUpperCase()}
+              </span>
+
+              <button className="order-remove-btn" onClick={handleShowModal}>
+                <FaTrashAlt /> إزالة
+              </button>
+            </div>
+
+            <div className="customer-info">
+              <div className="info-item">
+                <FaUser />
+                <span>{order?.user?.name}</span>
+              </div>
+              <div className="info-item email">
+                <FaEnvelope />
+                <span>{order?.user?.email}</span>
+              </div>
+            </div>
+
+            <div className="order-footer">
+              <div className="status-container">
+                <span className="stat-badge">
+                  التوصيل:
+                  <b className={order?.isDelivered ? 'success' : 'warning'}>
+                    ● {order?.isDelivered ? 'تم' : 'قيد التنفيذ'}
+                  </b>
+                </span>
+
+                <span className="stat-badge">
+                  الدفع:
+                  <b className={order?.isPaid ? 'success' : 'danger'}>
+                    ● {order?.isPaid ? 'تم' : 'معلق'}
+                  </b>
+                </span>
+
+                <span className="stat-badge">
+                  الوسيلة:
+                  <b className="primary">
+                    {order?.paymentMethodType === 'cash' ? 'كاش' : 'بطاقة'}
+                  </b>
+                </span>
+              </div>
+
+              <div className="order-final-price-box">
+                {order?.totalOrderPrice?.toLocaleString()} جنيه
+              </div>
+            </div>
           </div>
         </Link>
       </div>

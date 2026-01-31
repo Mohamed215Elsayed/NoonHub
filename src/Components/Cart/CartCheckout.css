@@ -1,3 +1,6 @@
+/* ===============================
+   Cart Checkout Wrapper
+================================ */
 .cart-checkout {
   background: #ffffff;
   border-radius: 12px;
@@ -8,11 +11,14 @@
   overflow: hidden;
 }
 
+/* ===============================
+   Coupon Section
+================================ */
 .coupon-wrapper {
   display: flex;
   width: 100%;
+  height: 45px;
   margin-bottom: 20px;
-
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
@@ -20,11 +26,20 @@
 
 .coupon-input {
   flex-grow: 1;
+  width: 50%;
   border: none;
   padding: 12px 15px;
   font-size: 14px;
   outline: none;
-  width: 50%;
+}
+
+.coupon-input::placeholder {
+  color: #aaa;
+  font-size: 13px;
+}
+
+.coupon-input:focus {
+  background-color: #fafafa;
 }
 
 .coupon-btn {
@@ -33,15 +48,17 @@
   border: none;
   padding: 0 20px;
   font-weight: 600;
-  transition: all 0.3s ease;
   white-space: nowrap;
+  transition: all 0.3s ease;
 }
 
 .coupon-btn:hover {
   background-color: #915970;
 }
 
-/* حاوية الأسعار بشكل أنيق */
+/* ===============================
+   Total Price Section
+================================ */
 .total-price-container {
   background-color: #f9f9f9;
   border-radius: 8px;
@@ -63,8 +80,12 @@
   color: #915970;
   font-size: 22px;
   font-weight: 800;
+  letter-spacing: 0.5px;
 }
 
+/* ===============================
+   Buttons
+================================ */
 .checkout-btn,
 .clear-cart-btn {
   width: 100%;
@@ -75,9 +96,11 @@
   font-weight: 700;
   margin-bottom: 10px;
   text-decoration: none !important;
+  white-space: nowrap;
   transition: all 0.3s ease;
 }
 
+/* Checkout Button */
 .checkout-btn {
   background-color: #915970;
   color: white !important;
@@ -89,6 +112,13 @@
   transform: translateY(-2px);
 }
 
+.checkout-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Clear Cart Button */
 .clear-cart-btn {
   background-color: transparent;
   color: #ff4d4d !important;
@@ -100,15 +130,15 @@
   color: white !important;
 }
 
-.coupon-wrapper {
-  display: flex;
-  width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  height: 45px;
+/* Active State */
+.checkout-btn:active,
+.clear-cart-btn:active {
+  transform: scale(0.97);
 }
 
+/* ===============================
+   Responsive
+================================ */
 @media (max-width: 768px) {
   .cart-checkout {
     margin-top: 20px;

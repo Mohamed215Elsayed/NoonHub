@@ -67,14 +67,6 @@ function App() {
         />
         <Route path="/products/brand/:id" element={<ProductsByBrandPage />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route
-          path="/order/paymethoud"
-          element={
-            <ProtectedRoute allowedRoles={['user']}>
-              <ChoosePayMethoudPage />
-            </ProtectedRoute>
-          }
-        />
 
         {/* ================================================ */}
         <Route element={<ProtectedRoute allowedRoles={['admin', 'manager']} />}>
@@ -122,6 +114,7 @@ function App() {
             element={<UserEditAddressPage />}
           />
           <Route path="/user/profile" element={<UserProfilePage />} />
+          <Route path="/order/paymethoud" element={<ChoosePayMethoudPage />} />
         </Route>
       </Routes>
       {/* ================================================ */}

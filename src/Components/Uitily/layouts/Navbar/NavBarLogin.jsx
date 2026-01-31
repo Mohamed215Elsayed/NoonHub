@@ -46,9 +46,7 @@ function NavBarLogin() {
   };
   const { numOfCartItems } = GetAllUserCartHook();
   useNavbarScroll();
-  {
-    /* <Navbar expand="sm" className="sticky-top main-navbar"> */
-  }
+
   return (
     <>
       <div className="sticky-top" style={{ zIndex: 1050 }}>
@@ -74,10 +72,12 @@ function NavBarLogin() {
               </Form>
 
               <Nav className="ms-auto align-items-center gap-3">
-                <Nav.Link as={Link} to="/user/wishlist" className="icon-link">
-                  <FaHeart className="nav-icon" />
-                  <span className="d-none d-md-inline">المفضلة</span>
-                </Nav.Link>
+                {user?.role === 'user' && (
+                  <Nav.Link as={Link} to="/user/wishlist" className="icon-link">
+                    <FaHeart className="nav-icon" />
+                    <span className="d-none d-md-inline">المفضلة</span>
+                  </Nav.Link>
+                )}
                 {user ? (
                   <NavDropdown
                     title={
@@ -125,18 +125,19 @@ function NavBarLogin() {
                     <span className="d-none d-md-inline">دخول</span>
                   </Nav.Link>
                 )}
-
-                <Nav.Link
-                  as={Link}
-                  to="/cart"
-                  className="icon-link position-relative"
-                >
-                  <FaShoppingCart className="nav-icon" />
-                  <Badge className="cart-badge">
-                    {numOfCartItems > 0 ? numOfCartItems : 0}
-                  </Badge>
-                  <span className="d-none d-md-inline">العربة</span>
-                </Nav.Link>
+                {user?.role === 'user' && (
+                  <Nav.Link
+                    as={Link}
+                    to="/cart"
+                    className="icon-link position-relative"
+                  >
+                    <FaShoppingCart className="nav-icon" />
+                    <Badge className="cart-badge">
+                      {numOfCartItems > 0 ? numOfCartItems : 0}
+                    </Badge>
+                    <span className="d-none d-md-inline">العربة</span>
+                  </Nav.Link>
+                )}
               </Nav>
             </Navbar.Collapse>
           </Container>

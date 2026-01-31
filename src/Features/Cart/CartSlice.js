@@ -15,17 +15,51 @@ export const addProductToCart = createAsyncThunk(
     }
   }
 );
-
 export const getAllUserCartItems = createAsyncThunk(
   'cart/getAll',
   async (_, { rejectWithValue }) => {
     try {
-      return await getDataWithToken('/api/v1/cart');
-    } catch (e) {
-      return rejectWithValue(e?.response?.data?.message || 'فشل جلب العربة');
+      const response = await getDataWithToken('/api/v1/cart');
+      return response;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        return {
+          status: 'success',
+          numOfCartItems: 0,
+          data: {
+            cartItems: [],
+            totalCartPrice: 0,
+            totalPriceAfterDiscount: 0,
+          },
+        };
+      }
+      return rejectWithValue(error?.response?.data || 'حدث خطأ ما');
     }
   }
 );
+
+// export const getAllUserCartItems = createAsyncThunk(
+//   'cart/getAll',
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const response = await getDataWithToken('/api/v1/cart');
+//       return response;
+//     } catch (error) {
+//       if (error.response && error.response.status === 404) {
+//         return {
+//           status: 'success',
+//           numOfCartItems: 0,
+//           data: {
+//             cartItems: [],
+//             totalCartPrice: 0,
+//             totalPriceAfterDiscount: 0,
+//           },
+//         };
+//       }
+//       return rejectWithValue(error?.response?.data || 'حدث خطأ ما');
+//     }
+//   }
+// );
 
 export const clearAllCartItem = createAsyncThunk(
   'cart/clearAll',
@@ -103,13 +137,13 @@ const cartSlice = createSlice({
     builder
       /* -------- fulfilled -------- */
       .addCase(getAllUserCartItems.fulfilled, (state, action) => {
-        const data = action.payload?.data;
+        const data = action.payload?.data || {};
         if (!data) return;
-        state.cartItems = data.cartItems;
-        state.numOfCartItems = action.payload.numOfCartItems;
-        state.totalCartPrice = data.totalCartPrice;
+        state.cartItems = data.cartItems || [];
+        state.numOfCartItems = action.payload.numOfCartItems || 0;
+        state.totalCartPrice = data.totalCartPrice || 0;
         state.totalPriceAfterDiscount = data.totalPriceAfterDiscount || 0;
-        state.cartId = data._id;
+        state.cartId = data._id || null;
         state.loading = false;
       })
       .addCase(addProductToCart.fulfilled, (state, action) => {

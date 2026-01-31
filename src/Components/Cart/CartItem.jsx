@@ -11,7 +11,10 @@ function CartItem({ item }) {
   const { itemCount, setItemCount, handleUpdate, isUpdating } =
     UpdateQuantityCartHook(item);
   const { product, color, price } = item || {};
-
+  
+  const user = JSON.parse(localStorage.getItem('user'));
+  const role = user?.role; // 'admin' | 'manager' | 'user'
+  const isAdmin = role === 'admin' || role === 'manager';
   return (
     <Col xs={12} className="cart-item-card my-3 px-2">
       <Modal
@@ -114,24 +117,6 @@ function CartItem({ item }) {
           <Col className="d-flex justify-content-between align-items-center">
             {/* <div className="quantity-control">
               <span className="item-label">الكمية</span>
-              <input
-                type="number"
-                min="1"
-                value={itemCount}
-                onChange={(e) => setItemCount(e.target.value)}
-                style={{ width: '60px' }}
-                className="quantity-input mx-2"
-              />
-              <button
-                onClick={handleUpdate}
-                className="update-qty-btn ms-2"
-                disabled={isUpdating || itemCount === item.quantity}
-              >
-               {isUpdating ? '...' : 'تحديث'}
-              </button>
-            </div> */}
-            <div className="quantity-control">
-              <span className="item-label">الكمية</span>
               <button
                 className="qty-btn"
                 onClick={() =>
@@ -167,6 +152,52 @@ function CartItem({ item }) {
               >
                 {isUpdating ? '...' : 'تحديث'}
               </button>
+            </div> */}
+            <div className="quantity-control">
+              <span className="item-label">الكمية</span>
+
+              <button
+                className="qty-btn"
+                disabled={isAdmin}
+                onClick={() =>
+                  setItemCount((prev) => Math.max(1, Number(prev) - 1))
+                }
+              >
+                -
+              </button>
+
+              <input
+                type="number"
+                value={itemCount}
+                readOnly
+                className="quantity-input mx-2"
+                style={{
+                  width: '45px',
+                  border: 'none',
+                  background: 'transparent',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  color: isAdmin ? '#6c757d' : '#000',
+                }}
+              />
+
+              <button
+                className="qty-btn"
+                disabled={isAdmin}
+                onClick={() => setItemCount((prev) => Number(prev) + 1)}
+              >
+                +
+              </button>
+
+              {!isAdmin && (
+                <button
+                  onClick={handleUpdate}
+                  className="update-qty-btn ms-3"
+                  disabled={isUpdating || itemCount === item.quantity}
+                >
+                  {isUpdating ? '...' : 'تحديث'}
+                </button>
+              )}
             </div>
 
             <div className="item-price">{price} جنية</div>

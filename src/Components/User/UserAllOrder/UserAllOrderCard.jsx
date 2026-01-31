@@ -1,48 +1,88 @@
-import { Row, Col } from "react-bootstrap";
-import mobile from "../../../Assets/Images/mobile.png";
-import { FaTrashAlt } from "react-icons/fa";
+import { Row, Col } from 'react-bootstrap';
+import './UserAllOrderCard.css';
+import { Link } from 'react-router-dom';
+import { FaStar } from 'react-icons/fa';
 
-const UserAllOrderCard = () => {
+const UserAllOrderCard = ({ item }) => {
   return (
-    <div className="product-item-card mb-2 p-2">
-      <Row>
+    <div className="product-order-card mb-3 p-3">
+      <Row className="align-items-center">
         <Col xs="4" sm="3" md="2" className="d-flex justify-content-center">
-          <img className="product-img" src={mobile} alt="Product" />
+          <Link
+            to={item?.product?._id ? `/products/${item.product._id}` : '#'}
+            style={{ textDecoration: 'none' }}
+          >
+            <div className="img-container">
+              <img
+                className="order-item-img"
+                src={item?.product?.imageCover}
+                alt={item?.product?.title || 'صورة المنتج'}
+                loading="lazy"
+              />
+            </div>
+          </Link>
         </Col>
 
-        <Col xs="8" sm="9" md="8">
-          <div className="card-item-details">
-            <h6 className="card-item-title mb-1">
-              سماعات راس أذن سلكية برأس 3.5 ملم
-            </h6>
+        <Col xs="8" sm="9" md="7">
+          <div className="order-details-content">
+            <Link
+              to={item?.product?._id ? `/products/${item.product._id}` : '#'}
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <h6 className="order-item-title d-inline">
+                {item?.product?.title}
+              </h6>
+            </Link>
 
-            <p className="card-item-brand mb-1">
-              الماركة: <span className="brand-value">أبل</span>
-            </p>
+            <div className="rating-row mt-1">
+              <span className="cat-rate text-warning">
+                <FaStar fontSize="12px" />
+                {item?.product?.ratingsAverage || 0}
+              </span>
 
-            <div className="card-item-color mb-1 d-flex align-items-center">
-              اللون:
+              <span className="rate-count text-muted">
+                ({item?.product?.ratingsQuantity || 0} تقييم)
+              </span>
+            </div>
+
+            <div className="order-item-info mt-2">
+              <span className="info-label">الماركة: </span>
+              <span className="info-value brand-name">
+                {item?.product?.brand?.name || 'بدون ماركة'}
+              </span>
+            </div>
+
+            <div className="order-item-info d-flex align-items-center">
+              <span className="info-label">اللون:</span>
               <div
-                className="color-swatch-sm ms-2"
-                style={{ backgroundColor: "#E52C2C", border: "1px solid #333" }}
+                className="color-circle ms-2"
+                title={item?.color ? 'لون المنتج' : 'بدون لون'}
+                style={{ backgroundColor: item?.color || '#eee' }}
               ></div>
             </div>
 
-            <p className="card-item-quantity mb-0">
-              الكمية: <span className="quantity-value">2</span>
-            </p>
+            <div className="order-item-info d-flex align-items-center mt-2">
+              <span className="info-label">الكمية: </span>
+              <input
+                readOnly
+                value={item.quantity}
+                className="mx-2 text-center d-flex align-items-center justify-content-center"
+                type="number"
+                style={{
+                  width: '45px',
+                  height: '25px',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                }}
+              />
+            </div>
           </div>
         </Col>
 
-        <Col
-          xs="12"
-          md="2"
-          className="d-flex flex-column justify-content-between align-items-end pt-3 pt-md-0"
-        >
-          <div className="price-tag text-end">1500 جنيه</div>
-
-          <div className="remove-icon">
-            <FaTrashAlt />
+        <Col xs="12" md="3" className="text-md-end mt-3 mt-md-0">
+          <div className="order-item-price">
+            {item?.price ? item.price.toLocaleString('ar-EG') : '—'}{' '}
+            <span className="currency">جنيه</span>
           </div>
         </Col>
       </Row>

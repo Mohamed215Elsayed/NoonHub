@@ -10,7 +10,8 @@ import ProductReducer from '../Features/Products/ProductSlice';
 import ReviewReducer from '../Features/Reviews/ReviewSlice';
 import SubCategoryReducer from '../Features/SubCategories/SubCategorySlice';
 import wishListReducer from '../Features/WishList/wishListSlice';
-
+import CheckoutReducer from '../Features/Checkout/CheckoutSlice';
+import OrderReducer from '../Features/Orders/OrderSlice';
 const store = configureStore({
   reducer: {
     categories: categoryReducer,
@@ -22,7 +23,9 @@ const store = configureStore({
     wishLists: wishListReducer,
     coupons: CouponReducer,
     userAddress: userAddressReducer,
-    cart:CartReducer,
+    cart: CartReducer,
+    checkout: CheckoutReducer,
+    orders: OrderReducer,
   },
 });
 export default store;

@@ -100,13 +100,21 @@ const LoginHook = () => {
   }, []);
   const onSubmit = async (data) => {
     try {
-      await dispatch(loginUser(data)).unwrap();
-      try {
-        await dispatch(getAllUserCartItems()).unwrap();
-      } catch {}
+      const res = await dispatch(loginUser(data)).unwrap();
+      const userRole = res?.data?.role;
+      if (userRole === 'user') {
+        try {
+          await dispatch(getAllUserCartItems()).unwrap();
+        } catch {}
+      }
+
       notify('تم تسجيل الدخول بنجاح', 'success');
 
-      navigate('/');
+      if (userRole === 'admin' || userRole === 'manager') {
+        navigate('/admin/allorders');
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       if (Array.isArray(err?.errors)) {
         err.errors.forEach((e) => notify(e.msg, 'error'));

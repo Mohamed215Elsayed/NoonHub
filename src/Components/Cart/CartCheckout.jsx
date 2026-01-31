@@ -1,13 +1,18 @@
 import { Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import DeleteCartHook from '../../Hook/cart/delete-cart-hook';
 import './CartCheckout.css';
 import ApplayCouponHook from '../../Hook/cart/applay-coupon-hook';
 
-function CartCheckout({ totalCartPrice, totalPriceAfterDiscount }) {
-  const { handleDeleteCart } = DeleteCartHook();
-  const { couponName, onChangeCoupon, handleSubmitCoupon } = ApplayCouponHook();
 
+function CartCheckout({ totalCartPrice, totalPriceAfterDiscount, cartItems }) {
+  const { handleDeleteCart } = DeleteCartHook();
+  const {
+    couponName,
+    onChangeCoupon,
+    handleSubmitCoupon,
+    handleCheckout,
+    loading,
+  } = ApplayCouponHook(cartItems);
   const hasDiscount = totalPriceAfterDiscount > 0;
 
   return (
@@ -39,12 +44,13 @@ function CartCheckout({ totalCartPrice, totalPriceAfterDiscount }) {
           )}
         </div>
 
-        <Link
-          to="/order/paymethoud"
-          className="checkout-btn text-decoration-none"
+        <button
+          onClick={handleCheckout}
+          className="checkout-btn"
+          disabled={loading || !cartItems || cartItems.length === 0}
         >
-          اتمام الشراء
-        </Link>
+          {loading ? 'جاري المعالجة...' : 'اتمام الشراء'}
+        </button>
 
         <button onClick={handleDeleteCart} className="clear-cart-btn">
           مسح العربة
@@ -55,3 +61,10 @@ function CartCheckout({ totalCartPrice, totalPriceAfterDiscount }) {
 }
 
 export default CartCheckout;
+// import { Link } from 'react-router-dom';
+     {/* <Link
+          to="/order/paymethoud"
+          className="checkout-btn text-decoration-none"
+        >
+          اتمام الشراء
+        </Link> */}
