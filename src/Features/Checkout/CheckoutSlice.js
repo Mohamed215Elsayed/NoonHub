@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { insertData } from '../../Hooks/useInsertData';
-import { getDataWithToken } from '../../Hooks/useGetData';
+// import { getDataWithToken } from '../../Hooks/useGetData';
 
 export const createOrderCash = createAsyncThunk(
   'checkout/createOrderCash',
